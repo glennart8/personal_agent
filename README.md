@@ -55,3 +55,4 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 - [ ] Sammanfatta youtube-klipp till .md-fil och/eller .mp3-fil
 - [ ] Koppla nyhetesläget till börsen
 - [ ] Spotify - byta låt, hitta genre/vart hör den hemma, vilken lista borde låten vara i
+- [ ] Personlig dagbok (prata med den, ställ frågor till den) TTS
