@@ -1,0 +1,15 @@
+[project]
+name = "personal-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "google-generativeai>=0.8.6",
+    "lancedb>=0.26.1",
+    "pandas>=2.3.3",
+    "fastapi>=0.128.0",
+    "pydantic>=2.12.5",
+    "pydantic-ai>=1.44.0",
+]

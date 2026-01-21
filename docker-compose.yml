@@ -1,0 +1,29 @@
+services:
+  personal_agent_backend:
+    build: ./backend
+    container_name: pa_backend
+    env_file: .env
+    ports:
+      - 8000:8000
+    environment:
+      - VECTOR_DATABASE_PATH=/app/knowledge_base
+    volumes:
+      - ./knowledge_base:/app/knowledge_base
+    networks:
+      - pa_network
+  
+  personal_agent_frontend:
+    build: ./frontend
+    container_name: pa_frontend
+    ports:
+      - 8501:8501
+    environment:
+      - BACKEND_URL=http://personal_agent_backend:8000
+    depends_on:
+      - personal_agent_backend
+    networks:
+      - pa_network
+
+networks:
+  pa_network:
+    driver: bridge
