@@ -25,11 +25,11 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 ## Sprints (Kanban)
 
 ### Sprint 1 - MVP (tillsammans)
-- [ ] Sätt upp API-server
+- [x] Sätt upp API-server
 - [ ] Sätt upp databas (för strukturerad output, plots)
-- [ ] Sätt upp LanceDB-databas
-- [ ] Skapa tables och ingesta data
-- [ ] Sätt upp pydantic-modeller
+- [x] Sätt upp LanceDB-databas
+- [x] Skapa tables och ingesta data
+- [x] Sätt upp pydantic-modeller
 - [ ] Skapa RAG-agent
 - [ ] Koppla ihop samtliga till en enkel Streamlit
 - [ ] Skapa Docker volumes/container så att det funkar för alla

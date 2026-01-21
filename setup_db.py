@@ -14,8 +14,8 @@ def ingest_docs_to_vector_db(table):
     file_path = DATA_PATH / "dagbok.csv"
     df = pd.read_csv(file_path)
     
-    # Lägger in activity och mood i content för vektorsökning
-    df['content'] = "Aktivitet: " + df['activity'] + ". Mående: " + df['mood']
+    # Lägger in activity, mood och veckodagi content för vektorsökning
+    df['content'] =  "Veckodag: " + df['weekday'] + ". Aktivitet: " + df['activity'] + ". Mående: " + df['mood']
     
     table.add(df.to_dict(orient="records"))
     
