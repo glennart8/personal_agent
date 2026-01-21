@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from backend.rag_agent import rag_agent
-from backend.data_models import Prompt
+from rag_agent import rag_agent
+from data_models import Prompt
 
 
 app = FastAPI()
