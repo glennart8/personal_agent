@@ -5,7 +5,7 @@ import lancedb
 
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 
-rag_agent = Agent(
+diary_agent = Agent(
     model="google-gla:gemini-2.5-flash", 
     retries=2,
     system_prompt=(
@@ -20,7 +20,7 @@ rag_agent = Agent(
     output_type=RagResponse,
 )
 
-@rag_agent.tool_plain
+@diary_agent.tool_plain
 def search_vector_db(query: str) -> str:
     table = vector_db.open_table("diary")
     response = table.search(query).to_list()
