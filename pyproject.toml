@@ -11,4 +11,6 @@ dependencies = [
     "lancedb>=0.26.1",
     "pandas>=2.3.3",
     "pydantic>=2.12.5",
+    "pydantic-ai>=1.44.0",
+    "streamlit>=1.53.0",
 ]

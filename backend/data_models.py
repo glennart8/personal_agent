@@ -12,5 +12,14 @@ class Daily_mood(LanceModel):
     activity: str
     mood: str
     date: datetime = Field(default_factory=datetime.now)
+    weekday: str
     content: str = embedding_model.SourceField()
     embedding: Vector(dim=3072) = embedding_model.VectorField()
+    
+    
+class RagResponse(BaseModel):
+    answer: str = Field(description="answer based on the retrieved file")
+    
+class Prompt(BaseModel):
+    prompt: str = Field(description="prompt from user, if empty consider it as missing")
+    

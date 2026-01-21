@@ -50,7 +50,6 @@ oauth_tokens.json
 .lancedb/
 *.lance
 data/lancedb/
-/data
 
 # --- AI & Models ---
 # Ignorera stora modellfiler om du laddar ner dem lokalt (t.ex. whisper-modeller)
