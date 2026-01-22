@@ -53,7 +53,7 @@ date,weekday,activity,mood
 2026-01-10,Lördag,Bio med partner,Kärleksfull
 2026-01-11,Söndag,Söndagsmealprep inför veckan,Organiserad
 2026-01-12,Måndag,Mörkt när jag gick mörkt när jag kom hem,Deppig över vintern
-2026-01-13,Tisdag,Bra flyt i Python-koden,I "zonen"
+2026-01-13,Tisdag,Bra flyt i Python-koden,"I ""zonen"""
 2026-01-14,Onsdag,Fick beröm av chefen,Uppskattad
 2026-01-15,Torsdag,Huvudvärk hela dagen,Smärtpåverkad och sur
 2026-01-16,Fredag,AW med brädspel,Tävlingsinriktad och glad
@@ -61,3 +61,4 @@ date,weekday,activity,mood
 2026-01-18,Söndag,Fixade Streamlit-dashboarden,Konstnärlig
 2026-01-19,Måndag,Måndagsmöten hela förmiddagen,Uttråkad
 2026-01-20,Tisdag,Projektstart för Sprint 1,Taggad och redo
+2026-01-21,Onsdag,Börjat ett nytt grupprojekt,Mycket exalterad och positiv
