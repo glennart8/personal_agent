@@ -7,8 +7,10 @@ services:
       - 8000:8000
     environment:
       - VECTOR_DATABASE_PATH=/app/knowledge_base
+      - DATA_PATH=/app/data
     volumes:
       - ./knowledge_base:/app/knowledge_base
+      - ./data:/app/data
     networks:
       - pa_network
   

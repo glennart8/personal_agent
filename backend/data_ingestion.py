@@ -5,7 +5,7 @@ import pandas as pd
 def add_data(data: dict, table: str = "diary"):
     db = lancedb.connect(VECTOR_DATABASE_PATH)
     
-    file_path = DATA_PATH / "dagbok.csv"
+    file_path = f"{DATA_PATH}/dagbok.csv"
     
     print("Sparar data...")
     

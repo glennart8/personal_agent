@@ -1,7 +1,9 @@
 import os
 from pathlib import Path
 
-DATA_PATH = Path(__file__).parents[1] / "data"
+DEFAULT_DATA_PATH = Path(__file__).parents[1] / "data"
+DATA_PATH = os.getenv("DATA_PATH", DEFAULT_DATA_PATH)
+
 
 
 DEFAULT_VECTOR_DATABASE_PATH = Path(__file__).parents[1] / "knowledge_base"
