@@ -30,13 +30,11 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 - [x] Sätt upp pydantic-modeller
 - [x] Skapa RAG-agent (Diary)
 - [x] Koppla ihop samtliga till en enkel Streamlit
-- [x] Personlig dagbok (Berätta hur dagen har varit) STT, sparas i .csv
-- [ ] Personlig dagbok (ställ frågor till den) STT
+- [x] Personlig dagbok (Berätta hur dagen har varit) STT, sparas i .csv, just nu sparas WAV - hur göra?
+- [x] Personlig dagbok (ställ frågor till den) STT
 - [x] Skapa Docker volumes/container så att det funkar för alla
 - [x] Få till Speech-to-text (transkribering)
 - [ ] Få till Text-to-speech
-
-
 
 ### Sprint 2 - TOOLS/MCP
 - [ ] Scrapa nyhetssite och - sammanfatta - läs upp

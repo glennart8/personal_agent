@@ -3,6 +3,7 @@ from datetime import datetime
 from faster_whisper import WhisperModel
 from backend.constants import DATA_PATH
 from backend.agents import stt_agent
+from backend.rag_agent import diary_agent
 import locale
 import sounddevice as sd
 from scipy.io.wavfile import write
@@ -25,7 +26,7 @@ def transcribe_audio(audio_path: str) -> str:
 async def process_voice_entry(audio_path: str):
     print("Transkriberar ljud...")
     raw_text = transcribe_audio(audio_path)
-    print(f"   Transkription: '{raw_text}'")
+    print(f"Transkription: '{raw_text}'")
 
     if not raw_text:
         print("Inget tal uppfattades.")
@@ -77,3 +78,31 @@ def record_audio(filename, duration=10, fs=48000):
     sd.wait() 
     write(filename, fs, recording) # 
     print("Inspelning klar.")
+    
+    return recording
+
+# Ställ frågor till databasen
+
+# Spela in ljudet
+# Transkribera det
+# Skicka som query till Vektor-db
+
+# Kör duration här för att man ibland kan vilja ha olika längd på frågorna/snacket
+async def ask_db_with_voice(duration=7):
+    # tillfällig fil 
+    temp_file = "voice_query.wav"
+    
+    record_audio(temp_file, duration=duration)
+    
+    print("Transkriberar fråga...")
+    query_text = transcribe_audio(temp_file)
+    print(f"Transkriberad text: '{query_text}'")
+    
+    if not query_text:
+        print("Ingen fråga uppfattades.")
+        return None
+
+    print("Söker i databasen...")
+    result = await diary_agent.run(query_text)
+    
+    return result.output
