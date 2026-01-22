@@ -14,4 +14,4 @@ Henrik Pilback, Natali Harju, Pontus Ågren Grundström
 ### Underskrifter:
 | Henke | Pontus | Natali |
 | --- | --- | --- |
-| [x] | [x] | [] |
+| [x] | [x] | [x] |

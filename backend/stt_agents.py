@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from backend.data_models import DiaryExtraction
+from data_models import DiaryExtraction
 
 # Agent för extraktion (STT), borde testa att köra med OLLAMA
 stt_agent = Agent(
