@@ -7,7 +7,6 @@ from backend.rag_agent import diary_agent
 import locale
 import sounddevice as sd
 from scipy.io.wavfile import write
-import asyncio
 
 # Måste ha detta för att få ut svenska ord för veckodagarna..........
 try:
@@ -81,7 +80,6 @@ def record_audio(filename, duration=10, fs=48000):
     print("Inspelning klar.")
     
     return recording
-
 
 # Ställ frågor till databasen
 
