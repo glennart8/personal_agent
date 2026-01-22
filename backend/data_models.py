@@ -1,8 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from datetime import datetime
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
+from pathlib import Path
+from typing import Optional
 
 load_dotenv()
 
@@ -28,3 +30,10 @@ class RagResponse(BaseModel):
 class Prompt(BaseModel):
     prompt: str = Field(description="prompt from user, if empty consider it as missing")
     
+# En klass så vi kan använda olika röster
+# Använder Path för att kunna köra stem() och read_text()
+class TTSConfig(BaseModel):
+    input_file: Path = Field(..., description="Sökväg till textfilen som ska läsas")
+    output_file: Optional[Path] = None
+    voice: str = Field("sv-SE-SofieNeural") # "sv-SE-MattiasNeural"
+
