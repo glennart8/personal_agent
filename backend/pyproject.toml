@@ -13,4 +13,6 @@ dependencies = [
     "pydantic>=2.12.5",
     "pydantic-ai>=1.44.0",
     "faster-whisper>=1.2.1",
+    "sounddevice>=0.5.3",
+    "scipy>=1.17.0",
 ]
