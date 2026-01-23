@@ -32,3 +32,21 @@ def record_audio(filename, samplerate, device, channels, duration=5):
     
     return transcribe_audio(filename)
     # return recording
+
+async def ask_db_with_voice(duration=7):
+    temp_file = f"{DATA_PATH}/audio/voice_query.wav"
+    
+    record_audio(temp_file, duration=duration)
+    
+    print("Transkriberar fråga...")
+    query_text = transcribe_audio(temp_file)
+    print(f"Transkriberad text: '{query_text}'")
+    
+    if not query_text:
+        print("Ingen fråga uppfattades.")
+        return None
+
+    print("Söker i databasen...")
+    result = await diary_agent.run(query_text)
+    
+    return result.output
