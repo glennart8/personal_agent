@@ -1,6 +1,7 @@
 import lancedb
 from constants import VECTOR_DATABASE_PATH, DATA_PATH
 import pandas as pd
+from pypdf import PdfReader
 
 def add_data(data: dict, table: str = "diary"):
     db = lancedb.connect(VECTOR_DATABASE_PATH)
@@ -21,4 +22,8 @@ def add_data(data: dict, table: str = "diary"):
     db[table].add(new_df)
     
     print("Data sparad")
+    
+def add_pdf_data(data: dict, table: str = "science"):
+    pass
+    
     
