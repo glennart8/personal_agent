@@ -1,0 +1,17 @@
+[project]
+name = "pa-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Pontus Ågren Grundström", email = "pontus.agrengrundstrom@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = ["backend", "frontend"]
+
+[tool.uv.sources]
+frontend = {workspace = true}
+backend = {workspace = true}
+
+[tool.uv.workspace]
+members = ["src/pa_agent/frontend", "src/pa_agent/backend"]
