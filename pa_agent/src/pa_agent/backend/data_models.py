@@ -29,7 +29,13 @@ class RagResponse(BaseModel):
     
 class Prompt(BaseModel):
     prompt: str = Field(description="prompt from user, if empty consider it as missing")
-    
+
+# För vetenskapliga artiklar
+class Article(LanceModel):
+    title: str
+    content: str = embedding_model.SourceField()
+    embedding: Vector(dim=3072) = embedding_model.VectorField()
+
 # En klass så vi kan använda olika röster
 # Använder Path för att kunna köra stem() och read_text()
 class TTSConfig(BaseModel):
