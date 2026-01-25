@@ -38,6 +38,7 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 
 
 ### Sprint 2 - TOOLS/MCP
+- [ ] Ingesta V-db med WorldHealthReport25 och hämta ut grejer
 - [ ] Scrapa nyhetssite och - sammanfatta - läs upp
 - [ ] Läs upp mail, schema för dagen/veckan
 - [ ] Plotta fördelningen mellan nyhetskategorier

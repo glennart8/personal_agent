@@ -23,7 +23,5 @@ def add_data(data: dict, table: str = "diary"):
     
     print("Data sparad")
     
-def add_pdf_data(data: dict, table: str = "science"):
-    pass
     
     
