@@ -61,17 +61,31 @@ async def search_vector_db_science_table(query: Prompt):
     return result.output
 
 
+@app.post("/text_input")
+async def text_input(query: Prompt):
+    text_input = query.prompt
+    
+    output_text = await route_input(text_input)
+
+    audio_output = await transcribe_text(output_text)
+    
+    audio_base64 = base64.b64encode(audio_output).decode('utf-8')
+
+    return {
+        "text_input": text_input,
+        "text_output": output_text,
+        "audio": audio_base64
+    }
+
+
 
 @app.post("/transcribe")
 async def transcribe(file: UploadFile = File(...)):
     audio_bytes = await file.read()
     transcribed_text = await transcribe_audio(audio_bytes)
     
-    text = f"Dagens datum: {datetime.now().strftime("%Y-%m-%d")} - {transcribed_text}"
-    result = await diary_agent.run(text)
-    
-    
-    output_text = result.output.answer
+    output_text = await route_input(transcribed_text)
+        
     audio_output = await transcribe_text(output_text)
     
     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
@@ -83,4 +97,38 @@ async def transcribe(file: UploadFile = File(...)):
     }
 
     
+async def route_input(text: str) -> str:
+    prompt = f"""
+    Du är en router-agent. Din uppgift är att kategorisera användarens input.
+    Input: "{text}"
     
+    Välj en av följande kategorier:
+    - ENTRY: Om användaren berättar om sin dag, sina känslor eller vad de har gjort (t.ex. "Idag känner jag mig glad och jag har tränat").
+    - QUERY: Om användaren ställer en fråga om sitt förflutna eller sin dagbok (t.ex. "Hur mådde jag förra veckan?").
+    
+    Svara endast med ordet ENTRY eller QUERY.
+    """
+    
+    intent = await diary_agent.run(prompt) 
+    
+    if intent.output.answer.strip() == "ENTRY":
+        result = await stt_agent.run(f"Analysera detta dagboksinlägg: {text}")
+    
+        new_entry = {
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "weekday": datetime.now().strftime("%A").capitalize(),
+            "activity": result.output.activity,
+            "feelings": result.output.feelings,
+            "mood": result.output.mood
+        }
+        add_data(new_entry)
+        
+        output_text = f"Jag har sparat ditt inlägg i dagboken. {new_entry}"
+        
+    else:
+        text = f"Dagens datum: {datetime.now().strftime("%Y-%m-%d")} - {text}"
+        result = await diary_agent.run(text)
+        
+        output_text = result.output.answer
+    
+    return output_text
