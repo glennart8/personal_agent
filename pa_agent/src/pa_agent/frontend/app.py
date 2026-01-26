@@ -29,9 +29,10 @@ def show_kpis(df, mood):
     percentage = f"{round(len(df_mood) / all * 100)}%"
     
     # MIN SÄMSTA DAG
-    worst_or_best_day = df.query("mood == 'negativt'")['weekday'].value_counts().idxmax()
+    worst_or_best_day = df[df['mood'] == mood]['weekday'].value_counts().idxmax()
+    
     return percentage, worst_or_best_day
-     
+    
      
 def layout():
     response = requests.get(f"{BACKEND_BASE_URL}/diary")
