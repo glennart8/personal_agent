@@ -5,6 +5,8 @@ from data_models import Prompt
 from datetime import datetime
 import locale
 from data_ingestion import add_data
+from constants import DATA_PATH
+import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
 import base64
 
@@ -22,6 +24,11 @@ app = FastAPI()
 async def root():
     return {"message": "Health check"}
 
+@app.get("/diary")
+async def read_diary():
+    file_path = f"{DATA_PATH}/dagbok.csv"
+    df = pd.read_csv(file_path)
+    return df.to_dict(orient="records")
 
 @app.post("/query")
 async def search_vector_db(query: Prompt):

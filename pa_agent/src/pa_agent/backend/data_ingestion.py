@@ -1,7 +1,6 @@
 import lancedb
 from constants import VECTOR_DATABASE_PATH, DATA_PATH
 import pandas as pd
-from pypdf import PdfReader
 
 def add_data(data: dict, table: str = "diary"):
     db = lancedb.connect(VECTOR_DATABASE_PATH)
@@ -17,7 +16,12 @@ def add_data(data: dict, table: str = "diary"):
     df.to_csv(file_path, index=False)
     print(df)
     
-    new_df['content'] = "Veckodag: " + df['weekday'] + ". Aktivitet: " + df['activity'] + ". Mående: " + df['feelings'] + ". Humör: " + df['mood']
+    new_df['content'] = (
+        "Veckodag: " + df['weekday'] + 
+        ". Aktivitet: " + df['activity'].str.capitalize() + 
+        ". Mående: " + df['feelings'].str.capitalize() + 
+        ". Humör: " + df['mood']
+    )
     
     db[table].add(new_df)
     
