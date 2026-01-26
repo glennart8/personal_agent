@@ -1,23 +1,28 @@
 import os
 import streamlit as st
 import requests
-# from pa_agent.src.pa_agent.backend.speech_to_text import get_devices, record_audio, transcribe_audio
-from pathlib import Path
+import base64
+
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
-
 
 audio = st.audio_input("Record")
 if audio:
     # text = transcribe_audio(audio)
     files = {"file": ("recording.wav", audio, "audio/wav")}
     # st.write(text)
-    response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
-    
-    if response.status_code == 200:
-        audio_output = response.content
+    with st.spinner("Transkriberar..."):
+        response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
         
-        st.audio(audio_output, format="audio/wav", autoplay=True)
-    
-    else:
-        st.error("Backend suger")
+        if response.status_code == 200:
+            data = response.json()
+            
+            st.write(data["text_input"])
+            # Gör om base64-strängen tillbaka till bytes för uppspelning
+            audio_bytes = base64.b64decode(data["audio"])
+            st.audio(audio_bytes, format="audio/wav", autoplay=True)
+
+            st.write(data["text_output"])  # Visa texten
+            
+        else:
+            st.error("Backend suger")
