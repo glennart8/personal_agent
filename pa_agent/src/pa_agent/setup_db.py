@@ -17,7 +17,13 @@ def ingest_csv_to_vector_db(table):
     df = pd.read_csv(file_path)
     
     # Lägger in activity, mood och veckodag i content för vektorsökning
-    df['content'] =  "Veckodag: " + df['weekday'] + ". Aktivitet: " + df['activity'] + ". Mående: " + df['mood']
+    # första bokstaven stor på mood och feelings
+    df['content'] = (
+        "Veckodag: " + df['weekday'] + 
+        ". Aktivitet: " + df['activity'].str.capitalize() + 
+        ". Mående: " + df['feelings'].str.capitalize() + 
+        ". Humör: " + df['mood'].str.capitalize()
+    )
     
     table.add(df.to_dict(orient="records"))
     

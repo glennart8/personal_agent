@@ -1,66 +1,97 @@
 import os
 import streamlit as st
 import requests
-from speech_to_text import get_devices, record_audio, transcribe_audio
-from pathlib import Path
+import pandas as pd
+from css import get_css
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
-# AUDIO_PATH = Path(__file__).parents[0] / "recording.wav"
 
-# input = st.text_input(label = "Vad undrar du?")
+get_css()
 
-# if input:
-#     answer=requests.post(f"{BACKEND_BASE_URL}/query", json={"prompt": input})
+def show_activities(mood: str, count = 5):
+    """
+    Use either 'positivt' or 'negativt' as in parameter
+    Returns a list of activities which could be linked to negative feelings 
+    """
+    response = requests.get(f"{BACKEND_BASE_URL}/diary")
+    df = pd.DataFrame(response.json())
+    df = df[df['mood'] == mood]
     
-#     st.write(answer.json())
-
+    # Få de mest förekommande aktiviteterna
+    activities = df['activity'].value_counts().head(count).index.tolist()
+    
+    # Formatera som text
+    return "\n".join([f"{activity}\n" for activity in activities])
+    
     
 def layout():
+    tab1, tab2, tab3 = st.tabs(["Dashboard", "Diary", "News"])
     
-    col1, col2, col3 = st.columns(3)
+    with tab1:
+        col1, col2, col3 = st.columns(3)
 
-    with col1:
-        st.header("DARK SIDE")
-        st.write("När du har en dålig dag, glöm inte att du är ful också")
+        with col1:
+            with st.container(border=True):
+                st.markdown('<div class="dark-side-bg">', unsafe_allow_html=True)
+                
+                st.header("DARK SIDE")
+                st.subheader("This makes you feel shitty..")
+                mood = "negativt"
+                activities = show_activities(mood)
+                st.write(activities)
+                
+                st.markdown('</div>', unsafe_allow_html=True)
+
+        with col2:
+            st.header("WZUP?!")
+            user_input = st.text_input(label="Please, just tell me..")
+            
+            if user_input:
+                pass
+                
+            # AUDIO INPUT    
+            audio = st.audio_input("Record")
+            if audio:
+                # text = transcribe_audio(audio)
+                files = {"file": ("recording.wav", audio, "audio/wav")}
+                # st.write(text)
+                response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
+                
+                if response.status_code == 200:
+                    audio_output = response.content
+                    
+                    st.audio(audio_output, format="audio/wav", autoplay=True)
+                
+                else:
+                    st.error("Backend suger")
+
+        with col3:
+            st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
+            
+            st.header("HAPPY PLACE")
+            st.subheader("Sunshine, melted ice cream and drink sticks")
+            mood = "positivt"
+            activities = show_activities(mood)
+            st.write(activities)
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    with tab2:
+        col1, col2 = st.columns(2)
         
-        # Visa topp 5 aktiviteter som påverkar dig negativt
-
-    with col2:
-        st.header("WZUP?!")
-        st.write("Snälla berätta..")
-
-    with col3:
-        st.header("HAPPY PLACE")
-        st.write("Solsken, smält glass och drinkpinnar")
+        with col1:
+            st.header("Diary")
+            response = requests.get(f"{BACKEND_BASE_URL}/diary")
+            df = pd.DataFrame(response.json())
+            df = df.sort_values(by="date", ascending=False)
+            st.dataframe(df, use_container_width=True)
         
-        # Visa topp 5 aktiviteter som påverkar dig positivt
-    
-    
-    # input_info = get_devices()
-    # output_info = get_devices("output")
-    # # st.write(output_info)
-    
-    # name = input_info["name"]
-    # output_name = output_info["name"]
-    
-    # id = int(input_info["index"])
-    # samplerate = int(input_info["default_samplerate"])
-    # channels = int(input_info["max_input_channels"])
-    
-    # st.write(f"Input device: {name}")
-    # st.write(f"Output device: {output_name}")
-    
-    # if st.button("Record Audio"):
-    #     transcription = record_audio(AUDIO_PATH, samplerate, id, channels)
-        
-    #     st.write(transcription)
-    
-    audio = st.audio_input("Record")
-    if audio:
-        text = transcribe_audio(audio)
-        st.write(text)
-        requests.post(f"{BACKEND_BASE_URL}/add_text", json={"prompt": text})
+        with col2:
+            pass
 
+
+    with tab3:
+        pass
 
 if __name__ == "__main__":
     layout()

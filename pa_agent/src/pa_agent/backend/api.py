@@ -9,6 +9,9 @@ import io
 from speech_to_text import transcribe_audio
 import edge_tts
 from faster_whisper import WhisperModel
+from constants import DATA_PATH
+import pandas as pd
+
 # from text_to_speech import 
 
 # Måste ha detta för att få ut svenska ord för veckodagarna..........
@@ -22,6 +25,12 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Health check"}
+
+@app.get("/diary")
+async def read_diary():
+    file_path = f"{DATA_PATH}/dagbok.csv"
+    df = pd.read_csv(file_path)
+    return df.to_dict(orient="records")
 
 @app.post("/query")
 async def search_vector_db(query: Prompt):
