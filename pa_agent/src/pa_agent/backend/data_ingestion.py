@@ -17,7 +17,7 @@ def add_data(data: dict, table: str = "diary"):
     df.to_csv(file_path, index=False)
     print(df)
     
-    new_df['content'] = "Veckodag: " + df['weekday'] + ". Aktivitet: " + df['activity'] + ". Mående: " + df['mood']
+    new_df['content'] = "Veckodag: " + df['weekday'] + ". Aktivitet: " + df['activity'] + ". Mående: " + df['feelings'] + ". Humör: " + df['mood']
     
     db[table].add(new_df)
     
