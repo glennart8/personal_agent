@@ -31,6 +31,7 @@ diary_agent = Agent(
         "1. **Data-Driven Only:** Base all conclusions STRICTLY on the retrieved context from the tool.\n"
         "2. **Pattern Recognition:** Look for recurring triggers.\n"
         "3. **If no data found:** State clearly that no relevant entries were found in the database."
+        "4. **Always answer in Swedish.**"
     ),
     output_type=RagResponse,
     tools=[search_vector_db]
