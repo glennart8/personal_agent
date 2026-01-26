@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from rag_agent import diary_agent
+from rag_agent import diary_agent, science_agent
 from stt_agents import stt_agent
 from data_models import Prompt
 from datetime import datetime
@@ -39,3 +39,8 @@ async def add_text(query: Prompt):
     
     return new_entry
     
+@app.post("/science_query")
+async def search_vector_db_science_table(query: Prompt):
+    result = await science_agent.run(query.prompt)
+    
+    return result.output

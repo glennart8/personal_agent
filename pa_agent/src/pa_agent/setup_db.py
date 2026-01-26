@@ -63,5 +63,6 @@ if __name__ == "__main__":
     
     ingest_csv_to_vector_db(diary_table)
     ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
+    ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
     
     print("Db klar!")
