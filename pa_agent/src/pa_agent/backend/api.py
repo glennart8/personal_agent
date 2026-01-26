@@ -32,6 +32,7 @@ async def add_text(query: Prompt):
         "date": datetime.now().strftime("%Y-%m-%d"),
         "weekday": datetime.now().strftime("%A").capitalize(),
         "activity": result.output.activity,
+        "feelings": result.output.feelings,
         "mood": result.output.mood
     }
     print(new_entry)

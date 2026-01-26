@@ -13,6 +13,7 @@ embedding_model = get_registry().get("gemini-text").create(name="gemini-embeddin
 # För sökning i V-db
 class Daily_mood(LanceModel):
     activity: str
+    feelings: str
     mood: str
     date: datetime = Field(default_factory=datetime.now)
     weekday: str
@@ -22,7 +23,8 @@ class Daily_mood(LanceModel):
 # För STT    
 class DiaryExtraction(BaseModel):
     activity: str = Field(description="A short summary of what the user did the current day")
-    mood: str = Field(description="A word or short frase, describing the mood of the user")
+    feelings: str = Field(description="A word or short frase, describing the mood of the user")
+    mood: str = Field(description="Positive or negative")
 
 class RagResponse(BaseModel):
     answer: str = Field(description="answer based on the retrieved file")
