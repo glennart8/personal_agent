@@ -1,10 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Response
 from rag_agent import diary_agent, science_agent
 from stt_agents import stt_agent
 from data_models import Prompt
 from datetime import datetime
 import locale
 from data_ingestion import add_data
+import io
+from speech_to_text import transcribe_audio
+import edge_tts
+from faster_whisper import WhisperModel
+# from text_to_speech import 
 
 # Måste ha detta för att få ut svenska ord för veckodagarna..........
 try:
@@ -45,3 +50,35 @@ async def search_vector_db_science_table(query: Prompt):
     result = await science_agent.run(query.prompt)
     
     return result.output
+
+
+model = WhisperModel("base", device="cpu", compute_type="int8")
+
+def transcribe_audio(audio_path: str) -> str:
+    segments, _ = model.transcribe(audio_path, language="sv")
+    # Slå ihop alla segment till en sträng
+    text = " ".join([segment.text for segment in segments])
+    
+    return text.strip()
+
+@app.post("/transcribe")
+async def transcribe(file: UploadFile = File(...)):
+    audio_bytes = await file.read()
+    audio_file = io.BytesIO(audio_bytes)
+    
+    transcribed_text = transcribe_audio(audio_file)
+    
+    result = await diary_agent.run(transcribed_text)
+    
+    communicate = edge_tts.Communicate(result.output.answer, "sv-SE-SofieNeural")
+    audio_output = io.BytesIO()
+    
+    async for chunk in communicate.stream():
+        if chunk["type"] == "audio":
+            audio_output.write(chunk["data"])
+    
+    audio_output.seek(0)
+    
+    return Response(content=audio_output.getvalue(), media_type="audio/wav")
+    
+    
