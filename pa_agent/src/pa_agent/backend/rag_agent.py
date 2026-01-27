@@ -77,5 +77,6 @@ stt_agent = Agent(
     output_type=DiaryExtraction,
     system_prompt="""Du är en assistent som extraherar dagboksdata ur talspråk. 
                 Var koncis och använd gärna användarens egna ord
+                För kolumnen 'mood' - använd ENDAST 'positivt' eller 'negativt'
                 """
 )
