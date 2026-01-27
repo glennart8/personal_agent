@@ -22,7 +22,7 @@ def ingest_csv_to_vector_db(table):
         "Veckodag: " + df['weekday'] + 
         ". Aktivitet: " + df['activity'].str.capitalize() + 
         ". Mående: " + df['feelings'].str.capitalize() + 
-        ". Humör: " + df['mood'].str.capitalize()
+        ". Humör: " + df['mood']
     )
     
     table.add(df.to_dict(orient="records"))
