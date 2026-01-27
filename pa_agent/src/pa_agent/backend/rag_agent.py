@@ -76,7 +76,9 @@ stt_agent = Agent(
     retries=5,
     output_type=DiaryExtraction,
     system_prompt="""Du är en assistent som extraherar dagboksdata ur talspråk. 
-                Var koncis och använd gärna användarens egna ord
-                För kolumnen 'mood' - använd ENDAST 'positivt' eller 'negativt'
+                1. Var mycket kort och koncis.
+                2. Använd användarens egna ord för aktiviteten.
+                3. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+                4. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
                 """
 )

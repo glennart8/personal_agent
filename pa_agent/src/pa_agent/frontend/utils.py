@@ -87,7 +87,21 @@ def show_trend(df, num_days=3):
     neg_count = last_num_days.get('negativt', 0)
     
     if pos_count > neg_count:
-        st.success("Positiv trend", icon=":material/thumb_up:")
+        st.success("Positive trend", icon=":material/thumb_up:")
     else:
-        st.error("Negativ trend", icon=":material/thumb_down:")     
+        st.error("Negative trend", icon=":material/thumb_down:")     
      
+     
+def get_exploded_keywords(df):
+    all_keywords = df.copy()
+    
+    # dela upp strängen "Jobb, Stress" till en lista ["Jobb", "Stress"]
+    all_keywords['keyword'] = all_keywords['keywords'].astype(str).str.split(',')
+    
+    # explodera listan (skapar en ny rad för varje keyword)
+    all_keywords = all_keywords.explode('keyword')
+    
+    # ta bort whitespace
+    all_keywords['keyword'] = all_keywords['keyword'].str.strip()
+    
+    return all_keywords

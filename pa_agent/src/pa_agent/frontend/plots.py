@@ -1,4 +1,119 @@
 import plotly.express as px
+from utils import get_exploded_keywords
+import pandas as pd
+
+def plot_negative_triggers(df):
+    all_keywords = get_exploded_keywords(df)
+    
+    # Filtrera på negativt och räkna förekomst
+    neg_counts = all_keywords[all_keywords['mood'] == 'negativt']['keyword'].value_counts().reset_index()
+    neg_counts.columns = ['keyword', 'count']
+    neg_counts = neg_counts.head(10)
+    
+    fig = px.bar(
+        neg_counts, 
+        x='count', 
+        y='keyword',
+        orientation='h', # liggande staplaar
+        title="Top 10 shitty activities",
+        color='count',
+        color_continuous_scale='Reds'
+    )
+    
+    # transparent style
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        yaxis=dict(autorange="reversed"), # Mest frekvent högst upp
+        margin=dict(t=30, l=0, r=0, b=0),
+        xaxis_title=None,
+        yaxis_title=None
+    )
+    
+    return fig
+
+
+def plot_keyword_sunburst(df):
+    df_exp = get_exploded_keywords(df)
+    
+    fig = px.sunburst(
+        df_exp,
+        path=['mood', 'keyword'], # Först Pos/Neg, sen Aktivitet
+        color='mood',
+        color_discrete_map={
+            'positivt': 'rgba(0, 128, 0, 0.6)', 
+            'negativt': 'rgba(255, 0, 0, 0.6)'
+        }
+        
+    )
+    
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        margin=dict(t=0, l=0, r=0, b=0)
+    )
+    
+    fig.update_traces(
+        # sätter textfärgen till vit
+        insidetextfont=dict(color="white", size=14) 
+    )
+    
+    return fig
+
+
+# Denna fick jag mycket hjälp av LLM med..
+def plot_combined_triggers(df):
+    all_keywords = get_exploded_keywords(df)
+    
+    # räkna antal per mood och keyword
+    counts = all_keywords.groupby(['mood', 'keyword']).size().reset_index(name='count')
+    top_neg = counts[counts['mood'] == 'negativt'].nlargest(10, 'count')
+    top_pos = counts[counts['mood'] == 'positivt'].nlargest(10, 'count')
+    
+    # slå ihop dem
+    combined = pd.concat([top_neg, top_pos])
+    
+    # Gör negativa värden negativa matematiskt (för att de ska peka åt vänster)
+    combined['plot_value'] = combined.apply(
+        lambda x: -x['count'] if x['mood'] == 'negativt' else x['count'], axis=1
+    )
+    
+    # sortera
+    combined = combined.sort_values(by='plot_value', ascending=True)
+
+    fig = px.bar(
+        combined,
+        x='plot_value',
+        y='keyword',
+        orientation='h',
+        color='mood',
+        color_discrete_map={'positivt': "#12641D", 'negativt': "#9E3127"},
+        title="Impact of different triggers",
+        # Custom data för att visa korrekta siffror i tooltippen (inte minus)
+        custom_data=['count']
+    )
+
+    # Fixa layouten
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        margin=dict(t=40, l=0, r=0, b=0),
+        xaxis=dict(
+            title=None,
+            showticklabels=False, # döljer x-axeln 
+            zeroline=True,
+            zerolinecolor='rgba(255,255,255,0.2)'
+        ),
+        yaxis=dict(title=None),
+        barmode='relative', # för att staplarna ska utgå från mitten
+        legend_title=None
+    )
+    
+    # fixar tooltippen så den visar absolutvärdet (t.ex. "5" istället för "-5")
+    fig.update_traces(hovertemplate="%{y}: %{customdata[0]}<extra></extra>")
+
+    return fig
+
 
 def line_plot(df, x, y, hover_data=None):
     fig = px.line(
@@ -6,6 +121,8 @@ def line_plot(df, x, y, hover_data=None):
             x=x,
             y=y,
             hover_data=hover_data,
+            # denna lägger positivt i toppen och negativt i botten (byter plats)
+            category_orders={y: ["positivt", "negativt"]}
             )
     
     # ta bort rutan
@@ -16,6 +133,7 @@ def line_plot(df, x, y, hover_data=None):
     )
 
     return fig
+
 
 def pie_plot(df, x, y):
     fig = px.sunburst(
