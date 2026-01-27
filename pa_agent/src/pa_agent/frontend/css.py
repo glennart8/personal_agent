@@ -17,7 +17,7 @@ def get_css():
             background-size: cover;
             background-position: center;
         }
-        
+               
         
         .happy-place-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 

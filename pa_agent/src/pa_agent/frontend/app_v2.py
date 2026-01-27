@@ -3,6 +3,9 @@ import streamlit as st
 import requests
 import pandas as pd
 from css import get_css
+import base64
+import ploty.express as px
+
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
@@ -28,6 +31,7 @@ def show_activities(df, mood: str, count = 5):
     return activities
     
 # SKAPA EN METOD SOM TAR IN AKTIVITETERNA FRÅN SHOW_ACTIVITIES OCH HÄMTA HJÄLPSAM TEXT FRÅN SCIENCE     
+# Borde man kasta in en knapp som aktiverar denna?
     
 def give_helpful_advices(df, mood: str):
     activities = show_activities(df, mood)
@@ -99,7 +103,7 @@ def layout():
     
     # Sidebar istället
     with st.sidebar:
-        st.title("Personal Agent")
+        st.title("dAygent")
         page = st.radio(
             "Välj sida:",
             ["Dashboard", "Diary", "News"],
@@ -112,7 +116,7 @@ def layout():
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            with st.container(border=True):
+            with st.container():
                 st.markdown('<div class="dark-side-bg">', unsafe_allow_html=True)
                 
                 st.header("DARK SIDE")
@@ -133,37 +137,56 @@ def layout():
                     st.metric("Worst Day", worst_day)
                 with col_kpi3:
                     st.metric("Longest Streak", f"{streak} days")
-                                       
-                #st.write(give_helpful_advices(df, mood))
-                st.markdown(give_helpful_advices(df, mood))
+                           
+                #st.markdown(give_helpful_advices(df, mood))
                 
                 st.markdown('</div>', unsafe_allow_html=True)
 
         with col2:
             st.header("Whats on your mind?")
-            user_input = st.text_input(label="Please, just tell me..")
             
-            if user_input:
-                pass
-                
-            # AUDIO INPUT    
-            audio = st.audio_input("Record")
+            audio = st.audio_input("Please, say something..")
+            chat_input = st.chat_input("Just tell me..")
+            
             if audio:
-                # text = transcribe_audio(audio)
                 files = {"file": ("recording.wav", audio, "audio/wav")}
-                # st.write(text)
-                response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
-                
-                if response.status_code == 200:
-                    audio_output = response.content
+                with st.spinner("Transkriberar..."):
+                    response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
                     
-                    st.audio(audio_output, format="audio/wav", autoplay=True)
-                
-                else:
-                    st.error("Backend suger")
+                    if response.status_code == 200:
+                        data = response.json()
+                        
+                        st.write(data["text_input"])
+                        
+                        # Gör om base64-strängen tillbaka till bytes för uppspelning
+                        audio_bytes = base64.b64decode(data["audio"])
+                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
+
+                        st.write(data["text_output"])  # Visa texten
+                        
+                    else:
+                        st.error("Backend suger")
+                        
+            if chat_input:
+                with st.spinner("Tänker..."):
+                    response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": chat_input})
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        
+                        st.write(data["text_input"])
+                        
+                        # Gör om base64-strängen tillbaka till bytes för uppspelning
+                        audio_bytes = base64.b64decode(data["audio"])
+                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
+
+                        st.write(data["text_output"])  # Visa texten
+                        
+                    else:
+                        st.error("Backend suger")
 
         with col3:
-            with st.container(border=True):
+            with st.container():
                 st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
                 
                 st.header("HAPPY PLACE")
@@ -193,6 +216,15 @@ def layout():
             st.dataframe(diary_df, use_container_width=True)
         
         with col2:
+            # Visa plottar
+            # 1. Skapa en funktion som bygger en plott beroende på inparametrar
+            #   Lineplot - Timeline över mood - punkterna för dagarna får olika färg beroende på true/false typ
+            #   Kunna hoovra - visa innehållet för den dagen
+            #   X - data, Y - mood, hoover = activity
+            #   Timeline kan täcka hela bredden
+            
+            # 2. Pieplot per veckodag , pos / neg, två stycken
+            
             pass
 
     elif page == "News":
