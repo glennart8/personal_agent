@@ -96,7 +96,7 @@ async def transcribe(file: UploadFile = File(...)):
         "audio": audio_base64
     }
 
-    
+# Borde det vara en annan agent eller ska det va samma som bara får ny prompt?    
 async def route_input(text: str) -> str:
     prompt = f"""
     Du är en router-agent. Din uppgift är att kategorisera användarens input.
