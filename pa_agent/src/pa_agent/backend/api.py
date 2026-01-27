@@ -1,6 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from rag_agent import diary_agent, science_agent
-from stt_agents import stt_agent
+from rag_agent import diary_agent, science_agent, stt_agent
 from data_models import Prompt
 from datetime import datetime
 import locale
@@ -29,30 +28,7 @@ async def read_diary():
     file_path = f"{DATA_PATH}/dagbok.csv"
     df = pd.read_csv(file_path)
     return df.to_dict(orient="records")
-
-@app.post("/query")
-async def search_vector_db(query: Prompt):
-    result = await diary_agent.run(query.prompt)
-    
-    return result.output
-
-
-@app.post("/add_text")
-async def add_text(query: Prompt):
-    result = await stt_agent.run(f"Analysera detta dagboksinlägg: {query.prompt}")
-    
-    new_entry = {
-        "date": datetime.now().strftime("%Y-%m-%d"),
-        "weekday": datetime.now().strftime("%A").capitalize(),
-        "activity": result.output.activity,
-        "feelings": result.output.feelings,
-        "mood": result.output.mood
-    }
-    print(new_entry)
-    add_data(new_entry)
-    
-    return new_entry
-    
+  
     
 @app.post("/science_query")
 async def search_vector_db_science_table(query: Prompt):
@@ -76,7 +52,6 @@ async def text_input(query: Prompt):
         "text_output": output_text,
         "audio": audio_base64
     }
-
 
 
 @app.post("/transcribe")
