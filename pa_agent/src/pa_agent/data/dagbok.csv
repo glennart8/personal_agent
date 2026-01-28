@@ -1,71 +1,71 @@
-date,weekday,activity,feelings,mood
-2025-11-20,Torsdag,Började skissa på arkitekturen för AI-agenten,Entusiastisk och fokuserad,positivt
-2025-11-21,Fredag,Lång dag på jobbet med många möten,Trött och dränerad,negativt
-2025-11-22,Lördag,Långpromenad i skogen och lyssnade på podcast,Lugn och harmonisk,positivt
-2025-11-23,Söndag,Felsökte Docker-containers hela förmiddagen,Frustrerad och irriterad,negativt
-2025-11-24,Måndag,Tog en vilodag och kollade på film,Avslappnad,positivt
-2025-11-25,Tisdag,Fick igenom en stor pull request på jobbet,Stolt och nöjd,positivt
-2025-11-26,Onsdag,Glömde matlådan och åt dålig snabbmat,Seg och ofokuserad,negativt
-2025-11-27,Torsdag,Tungt pass på gymmet (ben),Fysiskt trött men mentalt pigg,positivt
-2025-11-28,Fredag,After work med kollegorna,Glad och social,positivt
-2025-11-29,Lördag,Städade lägenheten och fixade hemma,Uttråkad men nöjd efteråt,positivt
-2025-11-30,Söndag,Kodade på hobbyprojektet sent in på natten,Inspirerad men sömnig,positivt
-2025-12-01,Måndag,Första advent-fika hos föräldrarna,Mysigt och familjärt,positivt
-2025-12-02,Tisdag,Svårt att sova pga stress inför deadline,Orolig och stressad,negativt
-2025-12-03,Onsdag,Presentation för ledningsgruppen gick bra,Lättad och glad,positivt
-2025-12-04,Torsdag,Hemma med lätt förkylning,Hängig och låg,negativt
-2025-12-05,Fredag,Fortfarande sjuk men bingade en serie,Uttråkad,negativt
-2025-12-06,Lördag,Friskare igen tog en kort promenad,Piggare,positivt
-2025-12-07,Söndag,Söndagsångest inför veckan,Lite nedstämd,negativt
-2025-12-08,Måndag,Effektiv dag fick mycket gjort,Produktiv och stark,positivt
-2025-12-09,Tisdag,Konfigurerade Ollama lokalt för första gången,Nyfiken och exalterad,positivt
-2025-12-10,Onsdag,Regnigt och mörkt hela dagen,Melankolisk,negativt
-2025-12-11,Torsdag,Lunchträning med kompis,Energifylld,positivt
-2025-12-12,Fredag,Julbord med jobbet,Mätt och belåten,positivt
-2025-12-13,Lördag,Sovmorgon och långfrukost,Utsövd,positivt
-2025-12-14,Söndag,Julhandlade i stan (kaos),Stressad och varm,negativt
-2025-12-15,Måndag,Installerade LanceDB och testade vektorer,Nördigt glad,positivt
-2025-12-16,Tisdag,Grälade med en vän om struntsaker,Arg och ledsen,negativt
-2025-12-17,Onsdag,Löste problemet med vännen,Lättad,positivt
-2025-12-18,Torsdag,Sista rycket på jobbet innan ledighet,Fokuserad stress,negativt
-2025-12-19,Fredag,Gick på semester!,Euforisk och fri,positivt
-2025-12-20,Lördag,Spelade datorspel halva dagen,Avkopplad,positivt
-2025-12-21,Söndag,Lagas mat inför jul,Kreativ,positivt
-2025-12-22,Måndag,Träffade gamla vänner från studietiden,Nostalgisk och glad,positivt
-2025-12-23,Tisdag,Uppesittarkväll,Förväntansfull,positivt
-2025-12-24,Onsdag,Julafton med släkten,Glad men trött på slutet,positivt
-2025-12-25,Torsdag,Åt rester och gjorde ingenting,Lat och nöjd,positivt
-2025-12-26,Fredag,Mellandagsrea (vände i dörren),Irriterad på folk,negativt
-2025-12-27,Lördag,Kodade integration mot Gemini API,Fascinerad,positivt
-2025-12-28,Söndag,Långlöpning 10km,Utmattad men stolt,positivt
-2025-12-29,Måndag,Läste en bok hela dagen,Intellektuellt stimulerad,positivt
-2025-12-30,Tisdag,Planerade nyårsmiddagen,Stressad över detaljer,negativt
-2025-12-31,Onsdag,Nyårsfest,Festlig och hoppfull,positivt
-2026-01-01,Torsdag,Nyårsdagen (pizza),Seg och bakis,negativt
-2026-01-02,Fredag,Tillbaka till rutiner städade ut julen,Vemodig,negativt
-2026-01-03,Lördag,Testade Whisper för röstigenkänning,Imponerad,positivt
-2026-01-04,Söndag,Promenad i snöstorm,Kall men uppfriskad,positivt
-2026-01-05,Måndag,Klämdag jobbade lite hemifrån,Omotiverad,negativt
-2026-01-06,Tisdag,Ledig dag fixade med nätverket hemma,Nöjd problemlösare,positivt
-2026-01-07,Onsdag,Första riktiga arbetsdagen efter jul,Chockad över tempot,negativt
-2026-01-08,Torsdag,Glömde ett viktigt möte,Skärrad och ångestfylld,negativt
-2026-01-09,Fredag,Fredagsfika och tidig hemgång,Avslappnad,positivt
-2026-01-10,Lördag,Bio med partner,Kärleksfull,positivt
-2026-01-11,Söndag,Söndagsmealprep inför veckan,Organiserad,positivt
-2026-01-12,Måndag,Mörkt när jag gick mörkt när jag kom hem,Deppig över vintern,negativt
-2026-01-13,Tisdag,Bra flyt i Python-koden,"I ""zonen""",positivt
-2026-01-14,Onsdag,Fick beröm av chefen,Uppskattad,positivt
-2026-01-15,Torsdag,Huvudvärk hela dagen,Smärtpåverkad och sur,negativt
-2026-01-16,Fredag,AW med brädspel,Tävlingsinriktad och glad,positivt
-2026-01-17,Lördag,Sov till 11:00,Utsövd,positivt
-2026-01-18,Söndag,Fixade Streamlit-dashboarden,Konstnärlig,positivt
-2026-01-19,Måndag,Måndagsmöten hela förmiddagen,Uttråkad,negativt
-2026-01-20,Tisdag,Projektstart för Sprint 1,Taggad och redo,positivt
-2026-01-21,Onsdag,Börjat ett nytt grupprojekt,Mycket exalterad och positiv,positivt
-2026-01-22,Torsdag,Sitter med mina två kompisar,Jättekul,positivt
-2026-01-22,Torsdag,Kompisar var dumma,Ledsen,negativt
-2026-01-22,Torsdag,Tänkte på ord och försökte förstå,Tankfull,positivt
-2026-01-22,Torsdag,Något är på gång och jag hoppas det fungerar,Glad,positivt
-2026-01-26,Måndag,Kört barnen till skolan,Avslappnad,positivt
-2026-01-26,Måndag,Lek med ungarna,Skönt,positivt
-2026-01-27,Tisdag,pluggat,"jättekul, pepp",positivt
+date,weekday,activity,feelings,mood,keywords
+2025-11-20,Torsdag,Började skissa på arkitekturen för AI-agenten,Entusiastisk och fokuserad,positivt,"AI-agent, Arkitektur, Kodning"
+2025-11-21,Fredag,Lång dag på jobbet med många möten,Trött och dränerad,negativt,"Jobb, Möten, Stress"
+2025-11-22,Lördag,Långpromenad i skogen och lyssnade på podcast,Lugn och harmonisk,positivt,"Promenad, Natur, Podcast"
+2025-11-23,Söndag,Felsökte Docker-containers hela förmiddagen,Frustrerad och irriterad,negativt,"Docker, Felsökning, Teknikstrul"
+2025-11-24,Måndag,Tog en vilodag och kollade på film,Avslappnad,positivt,"Vila, Film, Återhämtning"
+2025-11-25,Tisdag,Fick igenom en stor pull request på jobbet,Stolt och nöjd,positivt,"Jobb, Kodning, Framgång"
+2025-11-26,Onsdag,Glömde matlådan och åt dålig snabbmat,Seg och ofokuserad,negativt,"Mat, Hälsa, Rutiner"
+2025-11-27,Torsdag,Tungt pass på gymmet (ben),Fysiskt trött men mentalt pigg,positivt,"Träning, Gym, Hälsa"
+2025-11-28,Fredag,After work med kollegorna,Glad och social,positivt,"AW, Socialt, Jobb"
+2025-11-29,Lördag,Städade lägenheten och fixade hemma,Uttråkad men nöjd efteråt,positivt,"Städning, Hem, Produktivitet"
+2025-11-30,Söndag,Kodade på hobbyprojektet sent in på natten,Inspirerad men sömnig,positivt,"Kodning, Hobbyprojekt, Sömn"
+2025-12-01,Måndag,Första advent-fika hos föräldrarna,Mysigt och familjärt,positivt,"Familj, Fika, Högtid"
+2025-12-02,Tisdag,Svårt att sova pga stress inför deadline,Orolig och stressad,negativt,"Sömn, Stress, Deadline"
+2025-12-03,Onsdag,Presentation för ledningsgruppen gick bra,Lättad och glad,positivt,"Presentation, Jobb, Karriär"
+2025-12-04,Torsdag,Hemma med lätt förkylning,Hängig och låg,negativt,"Sjukdom, Hälsa"
+2025-12-05,Fredag,Fortfarande sjuk men bingade en serie,Uttråkad,negativt,"Sjukdom, TV-serie"
+2025-12-06,Lördag,Friskare igen tog en kort promenad,Piggare,positivt,"Hälsa, Promenad"
+2025-12-07,Söndag,Söndagsångest inför veckan,Lite nedstämd,negativt,"Ångest, Jobb, Söndag"
+2025-12-08,Måndag,Effektiv dag fick mycket gjort,Produktiv och stark,positivt,"Produktivitet, Jobb"
+2025-12-09,Tisdag,Konfigurerade Ollama lokalt för första gången,Nyfiken och exalterad,positivt,"Ollama, AI, Teknik"
+2025-12-10,Onsdag,Regnigt och mörkt hela dagen,Melankolisk,negativt,"Väder, Vinter"
+2025-12-11,Torsdag,Lunchträning med kompis,Energifylld,positivt,"Träning, Vänner, Socialt"
+2025-12-12,Fredag,Julbord med jobbet,Mätt och belåten,positivt,"Julbord, Jobb, Mat"
+2025-12-13,Lördag,Sovmorgon och långfrukost,Utsövd,positivt,"Sömn, Frukost, Helg"
+2025-12-14,Söndag,Julhandlade i stan (kaos),Stressad och varm,negativt,"Shopping, Stress, Jul"
+2025-12-15,Måndag,Installerade LanceDB och testade vektorer,Nördigt glad,positivt,"LanceDB, Databas, Kodning"
+2025-12-16,Tisdag,Grälade med en vän om struntsaker,Arg och ledsen,negativt,"Konflikt, Vänner, Relationer"
+2025-12-17,Onsdag,Löste problemet med vännen,Lättad,positivt,"Lösning, Vänner, Relationer"
+2025-12-18,Torsdag,Sista rycket på jobbet innan ledighet,Fokuserad stress,negativt,"Jobb, Stress, Deadline"
+2025-12-19,Fredag,Gick på semester!,Euforisk och fri,positivt,"Semester, Frihet"
+2025-12-20,Lördag,Spelade datorspel halva dagen,Avkopplad,positivt,"Spel, Gaming, Avkoppling"
+2025-12-21,Söndag,Lagas mat inför jul,Kreativ,positivt,"Matlagning, Jul, Förberedelser"
+2025-12-22,Måndag,Träffade gamla vänner från studietiden,Nostalgisk och glad,positivt,"Vänner, Nostalgi, Socialt"
+2025-12-23,Tisdag,Uppesittarkväll,Förväntansfull,positivt,"Jul, Traditioner, Mys"
+2025-12-24,Onsdag,Julafton med släkten,Glad men trött på slutet,positivt,"Jul, Släkt, Firande"
+2025-12-25,Torsdag,Åt rester och gjorde ingenting,Lat och nöjd,positivt,"Vila, Mat, Jul"
+2025-12-26,Fredag,Mellandagsrea (vände i dörren),Irriterad på folk,negativt,"Shopping, Trängsel"
+2025-12-27,Lördag,Kodade integration mot Gemini API,Fascinerad,positivt,"Gemini, API, Kodning"
+2025-12-28,Söndag,Långlöpning 10km,Utmattad men stolt,positivt,"Löpning, Träning"
+2025-12-29,Måndag,Läste en bok hela dagen,Intellektuellt stimulerad,positivt,"Läsning, Kultur, Avkoppling"
+2025-12-30,Tisdag,Planerade nyårsmiddagen,Stressad över detaljer,negativt,"Planering, Stress, Fest"
+2025-12-31,Onsdag,Nyårsfest,Festlig och hoppfull,positivt,"Fest, Nyår, Socialt"
+2026-01-01,Torsdag,Nyårsdagen (pizza),Seg och bakis,negativt,"Baksmälla, Mat"
+2026-01-02,Fredag,Tillbaka till rutiner städade ut julen,Vemodig,negativt,"Städning, Vardag"
+2026-01-03,Lördag,Testade Whisper för röstigenkänning,Imponerad,positivt,"Whisper, AI, Teknik"
+2026-01-04,Söndag,Promenad i snöstorm,Kall men uppfriskad,positivt,"Promenad, Väder"
+2026-01-05,Måndag,Klämdag jobbade lite hemifrån,Omotiverad,negativt,"Jobb, Hemmakontor"
+2026-01-06,Tisdag,Ledig dag fixade med nätverket hemma,Nöjd problemlösare,positivt,"Nätverk, Teknik, Hem"
+2026-01-07,Onsdag,Första riktiga arbetsdagen efter jul,Chockad över tempot,negativt,"Jobb, Stress, Vardag"
+2026-01-08,Torsdag,Glömde ett viktigt möte,Skärrad och ångestfylld,negativt,"Misstag, Jobb, Ångest"
+2026-01-09,Fredag,Fredagsfika och tidig hemgång,Avslappnad,positivt,"Jobb, Fika, Vila"
+2026-01-10,Lördag,Bio med partner,Kärleksfull,positivt,"Bio, Relation, Dejt"
+2026-01-11,Söndag,Söndagsmealprep inför veckan,Organiserad,positivt,"Matlagning, Rutiner, Förberedelser"
+2026-01-12,Måndag,Mörkt när jag gick mörkt när jag kom hem,Deppig över vintern,negativt,"Mörker, Vinter, Väder"
+2026-01-13,Tisdag,Bra flyt i Python-koden,"I ""zonen""",positivt,"Python, Kodning, Flow"
+2026-01-14,Onsdag,Fick beröm av chefen,Uppskattad,positivt,"Jobb, Bekräftelse, Karriär"
+2026-01-15,Torsdag,Huvudvärk hela dagen,Smärtpåverkad och sur,negativt,"Hälsa, Smärta"
+2026-01-16,Fredag,AW med brädspel,Tävlingsinriktad och glad,positivt,"AW, Spel, Socialt"
+2026-01-17,Lördag,Sov till 11:00,Utsövd,positivt,"Sömn, Helg"
+2026-01-18,Söndag,Fixade Streamlit-dashboarden,Konstnärlig,positivt,"Streamlit, Kodning, Dashboard"
+2026-01-19,Måndag,Måndagsmöten hela förmiddagen,Uttråkad,negativt,"Möten, Jobb"
+2026-01-20,Tisdag,Projektstart för Sprint 1,Taggad och redo,positivt,"Jobb, Projekt, Sprint"
+2026-01-21,Onsdag,Börjat ett nytt grupprojekt,Mycket exalterad och positiv,positivt,"Skola, Projekt, Grupparbete"
+2026-01-22,Torsdag,Sitter med mina två kompisar,Jättekul,positivt,"Vänner, Socialt"
+2026-01-22,Torsdag,Kompisar var dumma,Ledsen,negativt,"Konflikt, Vänner"
+2026-01-22,Torsdag,Tänkte på ord och försökte förstå,Tankfull,positivt,"Reflektion, Tankar"
+2026-01-22,Torsdag,Något är på gång och jag hoppas det fungerar,Glad,positivt,"Förväntan, Hopp"
+2026-01-26,Måndag,Kört barnen till skolan,Avslappnad,positivt,"Familj, Rutiner"
+2026-01-26,Måndag,Lek med ungarna,Skönt,positivt,"Familj, Lek"
+2026-01-27,Tisdag,pluggat,"jättekul, pepp",positivt,"Studier, Plugg"

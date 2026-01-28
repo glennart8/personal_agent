@@ -15,6 +15,7 @@ class Daily_mood(LanceModel):
     activity: str
     feelings: str
     mood: str
+    keywords: str
     date: datetime = Field(default_factory=datetime.now)
     weekday: str
     content: str = embedding_model.SourceField()
@@ -25,6 +26,7 @@ class DiaryExtraction(BaseModel):
     activity: str = Field(description="A short summary of what the user did the current day")
     feelings: str = Field(description="A word or short frase, describing the mood of the user")
     mood: str = Field(description="Positive or negative")
+    keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. ['Jobb', 'Sömn', 'Kodning', 'Relationer', 'Träning']")
 
 class RagResponse(BaseModel):
     answer: str = Field(description="answer based on the retrieved file")

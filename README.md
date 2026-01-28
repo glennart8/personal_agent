@@ -58,3 +58,9 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 
 ### Funderingar
 - Behövs en "vanlig" databas för strukturerad output osv?
+
+### Framtida möjligheter
+- Koppla dagbok till spotify för att se vilken musik du lyssnar på negativa dagar, samma med filmer
+- Koppla sömn-data till dagboken för att se korrelation
+- Koppla skärmtid (scrollande osv) till upplevt känsla dagen eller dagen efter
+- Koppla mot nyheter
