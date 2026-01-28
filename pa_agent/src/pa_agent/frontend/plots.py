@@ -134,6 +134,41 @@ def line_plot(df, x, y, hover_data=None):
 
     return fig
 
+def timeline_plot(df: pd.DataFrame, y: str):
+    
+    df["date"] = pd.to_datetime(df["date"])
+    df["date_end"] = df["date"] + pd.Timedelta(days=1)
+    df["mood"] = df["mood"].str.capitalize()
+    
+    fig = px.timeline(
+        df, 
+        x_start="date", 
+        x_end="date_end", 
+        y=y, 
+        color=y, 
+        hover_name="weekday", 
+        color_discrete_map={
+            "Positivt": "green",
+            "Negativt": "red"},
+        hover_data={
+                "activity": True,
+                "date_end": False,
+                "mood": False
+                },
+        labels={
+                "date": "Datum",
+                "activity": "Aktivitet",
+                "mood": "Mående",
+                }
+        )
+    
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",  
+        plot_bgcolor="rgba(0,0,0,0)",   
+        margin=dict(t=0, l=0, r=0, b=0)
+    )
+    
+    return fig
 
 def pie_plot(df, x, y):
     fig = px.sunburst(

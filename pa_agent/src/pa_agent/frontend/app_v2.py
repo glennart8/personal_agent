@@ -3,7 +3,7 @@ import streamlit as st
 import requests
 from css import get_css
 import base64
-from plots import line_plot, pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers
+from plots import line_plot, pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
 from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
@@ -164,9 +164,10 @@ def layout():
             # Pie plot som visar mood över veckodagarna
             pie_plot_mood_weekdays = pie_plot(diary_df, diary_df['weekday'], diary_df['mood'])
             st.plotly_chart(pie_plot_mood_weekdays, use_container_width=True)
-              
+        
         # Line plot som visar mood över tid
-        line_plot_mood = line_plot(diary_df, 'date', 'mood', ['activity', 'feelings'])
+        st.markdown("### Måendeöversikt över tid")
+        line_plot_mood = timeline_plot(diary_df, "mood")
         st.plotly_chart(line_plot_mood, use_container_width=True)        
         
         
