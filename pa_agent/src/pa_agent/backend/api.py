@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from rag_agent import diary_agent, science_agent, stt_agent
+from rag_agent import diary_agent, science_agent, stt_agent, route_agent
 from data_models import Prompt
 from datetime import datetime
 import locale
@@ -27,6 +27,7 @@ async def root():
 async def read_diary():
     file_path = f"{DATA_PATH}/dagbok.csv"
     df = pd.read_csv(file_path)
+    
     return df.to_dict(orient="records")
   
     
@@ -38,7 +39,7 @@ async def search_vector_db_science_table(query: Prompt):
 
 
 @app.post("/text_input")
-async def text_input(query: Prompt):
+async def text_input(query: Prompt) -> dict:
     text_input = query.prompt
     
     output_text = await route_input(text_input)
@@ -55,7 +56,7 @@ async def text_input(query: Prompt):
 
 
 @app.post("/transcribe")
-async def transcribe(file: UploadFile = File(...)):
+async def transcribe(file: UploadFile = File(...)) -> dict:
     audio_bytes = await file.read()
     transcribed_text = await transcribe_audio(audio_bytes)
     
@@ -73,20 +74,9 @@ async def transcribe(file: UploadFile = File(...)):
 
 # Borde det vara en annan agent eller ska det va samma som bara får ny prompt?    
 async def route_input(text: str) -> str:
-    prompt = f"""
-    Du är en router-agent. Din uppgift är att kategorisera användarens input.
-    Input: "{text}"
+    intent = await route_agent.run(text) 
     
-    Välj en av följande kategorier:
-    - ENTRY: Om användaren berättar om sin dag, sina känslor eller vad de har gjort (t.ex. "Idag känner jag mig glad och jag har tränat").
-    - QUERY: Om användaren ställer en fråga om sitt förflutna eller sin dagbok (t.ex. "Hur mådde jag förra veckan?").
-    
-    Svara endast med ordet ENTRY eller QUERY.
-    """
-    
-    intent = await diary_agent.run(prompt) 
-    
-    if intent.output.answer.strip() == "ENTRY":
+    if intent.output.intent.strip() == "ENTRY":
         result = await stt_agent.run(f"Analysera detta dagboksinlägg: {text}")
     
         new_entry = {
@@ -94,7 +84,8 @@ async def route_input(text: str) -> str:
             "weekday": datetime.now().strftime("%A").capitalize(),
             "activity": result.output.activity,
             "feelings": result.output.feelings,
-            "mood": result.output.mood
+            "mood": result.output.mood,
+            "keywords": result.output.keywords
         }
         add_data(new_entry)
         

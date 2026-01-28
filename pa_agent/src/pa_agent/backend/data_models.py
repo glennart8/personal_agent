@@ -4,7 +4,7 @@ from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Literal
 
 load_dotenv()
 
@@ -39,6 +39,9 @@ class Article(LanceModel):
     title: str
     content: str = embedding_model.SourceField()
     embedding: Vector(dim=3072) = embedding_model.VectorField()
+    
+class RoutingDescision(BaseModel):
+    intent: str = Literal["ENTRY", "QUERY"]
 
 # En klass så vi kan använda olika röster
 # Använder Path för att kunna köra stem() och read_text()
