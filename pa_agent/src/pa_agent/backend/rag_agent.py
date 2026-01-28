@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction
+from data_models import RagResponse, DiaryExtraction, RoutingDescision
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 
@@ -35,7 +35,7 @@ def search_vector_db(query: str, table: str) -> str:
 diary_agent = Agent(
     model="google-gla:gemini-2.5-flash", 
     #model=model,
-    retries=5,
+    retries=2,
     system_prompt=(
         "You are an expert behavioral data analyst.\n"
         "**CRITICAL INSTRUCTION:** You typically do not have the user's data in memory. "
@@ -54,7 +54,7 @@ diary_agent = Agent(
 science_agent = Agent(
     model="google-gla:gemini-2.5-flash", 
     #model=model,
-    retries=5,
+    retries=2,
     system_prompt=(
         "You are an expert in science topic of behavioral and mental health.\n"
         "You MUST ALWAYS use the `search_vector_db` tool with table='science' to retrieve science articles relevant to the user's query before answering.\n\n"
@@ -73,12 +73,30 @@ science_agent = Agent(
 stt_agent = Agent(
     model="google-gla:gemini-2.5-flash",
     #model=model,
-    retries=5,
+    retries=2,
     output_type=DiaryExtraction,
-    system_prompt="""Du är en assistent som extraherar dagboksdata ur talspråk. 
-                1. Var mycket kort och koncis.
-                2. Använd användarens egna ord för aktiviteten.
-                3. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
-                4. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
-                """
+    system_prompt="""
+        Du är en assistent som extraherar dagboksdata ur talspråk. 
+        
+        1. Var mycket kort och koncis.
+        2. Använd användarens egna ord för aktiviteten.
+        3. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+        4. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+    """
+)
+
+
+route_agent = Agent(
+    model="google-gla:gemini-2.5-flash",
+    retries=2,
+    output_type=RoutingDescision,
+    system_prompt="""
+        Du är en router-agent. Din uppgift är att kategorisera användarens input.
+        
+        Välj en av följande kategorier:
+        - ENTRY: Om användaren berättar om sin dag, sina känslor eller vad de har gjort (t.ex. "Idag känner jag mig glad och jag har tränat").
+        - QUERY: Om användaren ställer en fråga om sitt förflutna eller sin dagbok (t.ex. "Hur mådde jag förra veckan?").
+        
+        Svara endast med ordet ENTRY eller QUERY.
+    """
 )

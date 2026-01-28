@@ -298,10 +298,12 @@ name = "backend"
 version = "0.1.0"
 source = { virtual = "src/pa_agent/backend" }
 dependencies = [
+    { name = "beautifulsoup4" },
     { name = "dotenv" },
     { name = "edge-tts" },
     { name = "fastapi" },
     { name = "faster-whisper" },
+    { name = "firecrawl-py" },
     { name = "google-generativeai" },
     { name = "lancedb" },
     { name = "pandas" },
@@ -313,10 +315,12 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.14.3" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "edge-tts", specifier = ">=7.2.7" },
     { name = "fastapi", specifier = ">=0.128.0" },
     { name = "faster-whisper", specifier = ">=1.2.1" },
+    { name = "firecrawl-py", specifier = ">=4.13.4" },
     { name = "google-generativeai", specifier = ">=0.8.6" },
     { name = "lancedb", specifier = ">=0.26.1" },
     { name = "pandas", specifier = ">=2.3.3" },
