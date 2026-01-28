@@ -9,6 +9,8 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "backend",
+    "beautifulsoup4>=4.14.3",
+    "firecrawl-py>=4.13.4",
     "frontend",
     "ipykernel>=7.1.0",
 ]
