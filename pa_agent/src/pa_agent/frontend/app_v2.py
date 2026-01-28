@@ -74,55 +74,56 @@ def layout():
 
             audio = st.audio_input("Voice Input", label_visibility="collapsed")
             prompt = st.text_input("Whats on your mind?", placeholder="Just tell me dude..")
-
             st.divider()
+            if audio or prompt:
+                button = st.button("Send Message")
+                if button:
+                # audio
+                    if audio:
+                        files = {"file": ("recording.wav", audio, "audio/wav")}
+                        with st.spinner("Transcribing..."):
+                            try:
+                                response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
+                                if response.status_code == 200:
+                                    data = response.json()
+                                    
+                                    # visa användarens input
+                                    with st.chat_message("user"):
+                                        st.write(data["text_input"])
+                                    
+                                    # visa llm svar
+                                    with st.chat_message("assistant"):
+                                        st.write(data["text_output"])
+                                        # spela upp ljud
+                                        audio_bytes = base64.b64decode(data["audio"])
+                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
+                                else:
+                                    st.error(f"Backend sucks: {response.status_code}")
+                            except Exception as e:
+                                st.error(f"Connection failed: {e}")
 
-            # audio
-            if audio:
-                files = {"file": ("recording.wav", audio, "audio/wav")}
-                with st.spinner("Transcribing..."):
-                    try:
-                        response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
-                        if response.status_code == 200:
-                            data = response.json()
-                            
-                            # visa användarens input
-                            with st.chat_message("user"):
-                                st.write(data["text_input"])
-                            
-                            # visa llm svar
-                            with st.chat_message("assistant"):
-                                st.write(data["text_output"])
-                                # spela upp ljud
-                                audio_bytes = base64.b64decode(data["audio"])
-                                st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                        else:
-                            st.error(f"Backend sucks: {response.status_code}")
-                    except Exception as e:
-                        st.error(f"Connection failed: {e}")
-
-            # text
-            if prompt:
-                with st.spinner("Hmm..."):
-                    try:
-                        response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": prompt})
-                        if response.status_code == 200:
-                            data = response.json()
-                            
-                            # visa user input
-                            with st.chat_message("user"):
-                                st.write(prompt)
-                            
-                            # llm svar
-                            with st.chat_message("assistant"):
-                                st.write(data["text_output"])
-                                
-                                audio_bytes = base64.b64decode(data["audio"])
-                                st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                        else:
-                            st.error(f"Backend sucks: {response.status_code}")
-                    except Exception as e:
-                        st.error(f"Connection failed: {e}")
+                    # text
+                    if prompt:
+                        with st.spinner("Hmm..."):
+                            try:
+                                response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": prompt})
+                                if response.status_code == 200:
+                                    data = response.json()
+                                    
+                                    # visa user input
+                                    with st.chat_message("user"):
+                                        st.write(prompt)
+                                    
+                                    # llm svar
+                                    with st.chat_message("assistant"):
+                                        st.write(data["text_output"])
+                                        
+                                        audio_bytes = base64.b64decode(data["audio"])
+                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
+                                else:
+                                    st.error(f"Backend sucks: {response.status_code}")
+                            except Exception as e:
+                                st.error(f"Connection failed: {e}")
 
         with col3:
             with st.container():
