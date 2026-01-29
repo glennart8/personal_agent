@@ -6,7 +6,7 @@ def plot_negative_triggers(df):
     all_keywords = get_exploded_keywords(df)
     
     # Filtrera på negativt och räkna förekomst
-    neg_counts = all_keywords[all_keywords['mood'] == 'negativt']['keyword'].value_counts().reset_index()
+    neg_counts = all_keywords[all_keywords['mood'] == 'Negativt']['keyword'].value_counts().reset_index()
     neg_counts.columns = ['keyword', 'count']
     neg_counts = neg_counts.head(10)
     
@@ -67,15 +67,15 @@ def plot_combined_triggers(df):
     
     # räkna antal per mood och keyword
     counts = all_keywords.groupby(['mood', 'keyword']).size().reset_index(name='count')
-    top_neg = counts[counts['mood'] == 'negativt'].nlargest(10, 'count')
-    top_pos = counts[counts['mood'] == 'positivt'].nlargest(10, 'count')
+    top_neg = counts[counts['mood'] == 'Negativt'].nlargest(10, 'count')
+    top_pos = counts[counts['mood'] == 'Positivt'].nlargest(10, 'count')
     
     # slå ihop dem
     combined = pd.concat([top_neg, top_pos])
     
     # Gör negativa värden negativa matematiskt (för att de ska peka åt vänster)
     combined['plot_value'] = combined.apply(
-        lambda x: -x['count'] if x['mood'] == 'negativt' else x['count'], axis=1
+        lambda x: -x['count'] if x['mood'] == 'Negativt' else x['count'], axis=1
     )
     
     # sortera
@@ -87,7 +87,7 @@ def plot_combined_triggers(df):
         y='keyword',
         orientation='h',
         color='mood',
-        color_discrete_map={'positivt': "#12641D", 'negativt': "#9E3127"},
+        color_discrete_map={'Positivt': "#12641D", 'Negativt': "#9E3127"},
         title="Impact of different triggers",
         # Custom data för att visa korrekta siffror i tooltippen (inte minus)
         custom_data=['count']
@@ -122,7 +122,7 @@ def line_plot(df, x, y, hover_data=None):
             y=y,
             hover_data=hover_data,
             # denna lägger positivt i toppen och negativt i botten (byter plats)
-            category_orders={y: ["positivt", "negativt"]}
+            category_orders={y: ["Positivt", "Negativt"]}
             )
     
     # ta bort rutan
@@ -135,6 +135,7 @@ def line_plot(df, x, y, hover_data=None):
     return fig
 
 def timeline_plot(df: pd.DataFrame, y: str):
+    df = df.copy()
     
     df["date"] = pd.to_datetime(df["date"])
     df["date_end"] = df["date"] + pd.Timedelta(days=1)
@@ -175,7 +176,7 @@ def pie_plot(df, x, y):
         df,
         path=[x.name, y.name],
         color=y.name,
-        color_discrete_map={'positivt': 'green', 'negativt': 'red'}
+        color_discrete_map={'Positivt': 'green', 'Negativt': 'red'}
     )
     
     fig.update_layout(

@@ -3,6 +3,7 @@ from data_models import RagResponse, DiaryExtraction, RoutingDescision
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 
+
 # from pydantic_ai.models.openai import OpenAIChatModel
 # from pydantic_ai.providers.openai import OpenAIProvider
 
@@ -63,7 +64,8 @@ science_agent = Agent(
         "1. **Data-Driven Only:** Base all conclusions STRICTLY on the retrieved context from the tool.\n"
         "2. **Look for correlations between science and users behavior**\n"
         "3. **If no data found:** State clearly that no relevant entries were found in the database."
-        "4. **Always answer in Swedish.**"
+        "4. **Try to give sources to the information given**"
+        "5. **Always answer in Swedish.**"
     ),
     output_type=RagResponse,
     tools=[search_vector_db]

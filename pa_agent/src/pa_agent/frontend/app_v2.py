@@ -20,7 +20,7 @@ def layout():
         st.title("dAgent")
         page = st.radio(
             "Välj sida:",
-            ["Dashboard", "Diary", "News"],
+            ["Dashboard", "Stats", "Read Diary", "News"],
             label_visibility="collapsed"
         )
         
@@ -39,11 +39,16 @@ def layout():
                 
                 st.subheader("This made you feel shitty..")
                 
-                mood = "negativt"
+                mood = "Negativt"
                 activities = show_activities(df, mood)
-                formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
                 
-                st.write(formatted_text)
+                # Loopa igenom och skriv ut varje rad för sig
+                for activity in activities:
+                    st.markdown(f"🔴 **{activity}**")
+                
+                #formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
+                
+                #st.write(formatted_text)
                                 
                 st.divider()
                 
@@ -134,10 +139,14 @@ def layout():
                 st.divider()
                 
                 st.subheader("Stick to the good stuff!")
-                mood = "positivt"
+                mood = "Positivt"
                 activities = show_activities(df, mood)
-                formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
-                st.write(formatted_text)
+                
+                for activity in activities:
+                    st.markdown(f"🟢 **{activity}**")
+                
+                #formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
+                #st.write(formatted_text)
                 
                 st.divider()
                 
@@ -153,23 +162,23 @@ def layout():
                 
                 st.markdown('</div>', unsafe_allow_html=True)
 
-    elif page == "Diary":
+    elif page == "Stats":
         col1, col2 = st.columns(2)
-        
-        with col1:
-            st.header("Diary")
-            diary_df = df.sort_values(by="date", ascending=False)
-            st.dataframe(diary_df, use_container_width=True)
+        diary_df = df.sort_values(by="date", ascending=False)
+        # with col1:
+        #     st.header("Diary")
+        #     diary_df = df.sort_values(by="date", ascending=False)
+        #     st.dataframe(diary_df, use_container_width=True)
         
         with col2:
             # Pie plot som visar mood över veckodagarna
             pie_plot_mood_weekdays = pie_plot(diary_df, diary_df['weekday'], diary_df['mood'])
-            st.plotly_chart(pie_plot_mood_weekdays, use_container_width=True)
+            st.plotly_chart(pie_plot_mood_weekdays)
         
         # Line plot som visar mood över tid
         st.markdown("### Måendeöversikt över tid")
         line_plot_mood = timeline_plot(diary_df, "mood")
-        st.plotly_chart(line_plot_mood, use_container_width=True)        
+        st.plotly_chart(line_plot_mood)        
         
         
         # Plottar om keywords
@@ -178,19 +187,23 @@ def layout():
         with k_col1:
             st.subheader("Top Bad Triggers")
             negative_triggers = plot_negative_triggers(diary_df)
-            st.plotly_chart(negative_triggers, use_container_width=True)
+            st.plotly_chart(negative_triggers)
             
         with k_col2:
             st.subheader("Pos. vs Neg. Keywords")
             keywords_sunburst = plot_keyword_sunburst(diary_df)
-            st.plotly_chart(keywords_sunburst, use_container_width=True)
+            st.plotly_chart(keywords_sunburst)
 
         keyword_plot=plot_combined_triggers(diary_df)
-        st.plotly_chart(keyword_plot, use_container_width=True)
+        st.plotly_chart(keyword_plot)
         
+    elif page == "Read Diary":
+        st.header("Diary")
+        diary_df = df.sort_values(by="date", ascending=False)
+        st.dataframe(diary_df)
+
     elif page == "News":
         pass
-
 
 if __name__ == "__main__":
     layout()

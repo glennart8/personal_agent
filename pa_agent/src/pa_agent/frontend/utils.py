@@ -83,8 +83,8 @@ def show_kpis(df, mood):
 def show_trend(df, num_days=3):
     # Visa grönt/rött beroende på om de senaste 3 dagarna är mest pos eller neg
     last_num_days = df.tail(num_days)['mood'].value_counts()
-    pos_count = last_num_days.get('positivt', 0) # Krashar annars om pos / neg inte finns
-    neg_count = last_num_days.get('negativt', 0)
+    pos_count = last_num_days.get('Positivt', 0) # Krashar annars om pos / neg inte finns
+    neg_count = last_num_days.get('Negativt', 0)
     
     if pos_count > neg_count:
         st.success("Positive trend", icon=":material/thumb_up:")

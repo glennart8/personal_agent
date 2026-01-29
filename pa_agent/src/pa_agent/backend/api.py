@@ -8,6 +8,7 @@ from constants import DATA_PATH
 import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
 import base64
+import time
 
 # Måste ha detta för att få ut svenska ord för veckodagarna..........
 try:
@@ -75,10 +76,14 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
 # Borde det vara en annan agent eller ska det va samma som bara får ny prompt?    
 async def route_input(text: str) -> str:
     intent = await route_agent.run(text) 
-    
+
+    time.sleep(2)
+
     if intent.output.intent.strip() == "ENTRY":
         result = await stt_agent.run(f"Analysera detta dagboksinlägg: {text}")
-    
+
+        time.sleep(2)
+
         new_entry = {
             "date": datetime.now().strftime("%Y-%m-%d"),
             "weekday": datetime.now().strftime("%A").capitalize(),
@@ -88,13 +93,13 @@ async def route_input(text: str) -> str:
             "keywords": result.output.keywords
         }
         add_data(new_entry)
-        
-        output_text = f"Jag har sparat ditt inlägg i dagboken. {new_entry}"
-        
+
+        output_text = f"Sparat ditt inlägg i dagboken. {new_entry['activity']}."
+
     else:
         text = f"Dagens datum: {datetime.now().strftime("%Y-%m-%d")} - {text}"
         result = await diary_agent.run(text)
-        
+
         output_text = result.output.answer
-    
+
     return output_text
