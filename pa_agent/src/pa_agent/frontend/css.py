@@ -6,6 +6,10 @@ def get_css():
     st.markdown("""
         <style>
         
+        h1, h2, h3, h4, h5, h6, p, label, span, li, div {
+            color: #B0BEC5 !important;
+        }
+        
         section[data-testid="stSidebar"] {
             background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), 
                             url("https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
@@ -14,7 +18,7 @@ def get_css():
         }
         
         .stApp {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                             url("https://images.unsplash.com/photo-1596820286510-1783d01bdaae?q=80&w=1199&auto=format&fit=crop");
             background-attachment: fixed;
             background-size: cover;

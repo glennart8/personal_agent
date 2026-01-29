@@ -64,72 +64,88 @@ def layout():
                 
                 st.markdown('</div>', unsafe_allow_html=True)
                 
-                guidance_button = st.button("Hit for guidance?")           
+                guidance_button = st.button("Hit for guidance!", key=1)           
                 if guidance_button:
                     st.markdown(give_helpful_advices(df, mood))
 
         with col2:
-            # centrerad rubrik - måste va här tydligen.......
+            # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
             st.markdown("""
                 <h2 style='text-align: center; margin-bottom: 0; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.5);'>
                     the dAgent
                 </h2>
-                <hr style='margin: 10px 0 30px 0; opacity: 0.3;'>
-            """, unsafe_allow_html=True)
+                <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
+            """, unsafe_allow_html=True) 
 
-            audio = st.audio_input("Voice Input", label_visibility="collapsed")
-            prompt = st.text_input("Whats on your mind?", placeholder="Just tell me dude..")
+            prompt = st.text_input("Message", label_visibility="collapsed", placeholder="Just tell me dude..")
+
+            button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
+
+            with button_col:
+                send_clicked = st.button("Send", type="primary", use_container_width=True)
+
+            with mic_col:
+                audio = st.audio_input("Voice", label_visibility="collapsed")
+
             st.divider()
-            if audio or prompt:
-                button = st.button("Send Message")
-                if button:
-                # audio
-                    if audio:
-                        files = {"file": ("recording.wav", audio, "audio/wav")}
-                        with st.spinner("Transcribing..."):
-                            try:
-                                response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
-                                if response.status_code == 200:
-                                    data = response.json()
-                                    
-                                    # visa användarens input
-                                    with st.chat_message("user"):
-                                        st.write(data["text_input"])
-                                    
-                                    # visa llm svar
-                                    with st.chat_message("assistant"):
-                                        st.write(data["text_output"])
-                                        # spela upp ljud
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                else:
-                                    st.error(f"Backend sucks: {response.status_code}")
-                            except Exception as e:
-                                st.error(f"Connection failed: {e}")
 
-                    # text
-                    if prompt:
-                        with st.spinner("Hmm..."):
-                            try:
-                                response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": prompt})
-                                if response.status_code == 200:
-                                    data = response.json()
-                                    
-                                    # visa user input
-                                    with st.chat_message("user"):
-                                        st.write(prompt)
-                                    
-                                    # llm svar
-                                    with st.chat_message("assistant"):
-                                        st.write(data["text_output"])
-                                        
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                else:
-                                    st.error(f"Backend sucks: {response.status_code}")
-                            except Exception as e:
-                                st.error(f"Connection failed: {e}")
 
+            if audio:
+                files = {"file": ("recording.wav", audio, "audio/wav")}
+                with st.spinner("Transcribing..."):
+                    try:
+                        response = requests.post(f"{BACKEND_BASE_URL}/transcribe", files=files)
+                        if response.status_code == 200:
+                            data = response.json()
+                            
+                            with st.chat_message("user"):
+                                st.write(data["text_input"])
+                            
+                            with st.chat_message("assistant"):
+                                st.write(data["text_output"])
+                                if data.get("audio"):
+                                    audio_bytes = base64.b64decode(data["audio"])
+                                    st.audio(audio_bytes, format="audio/wav", autoplay=True)
+                            
+                            if "df" in st.session_state:
+                                del st.session_state["df"]
+                            st.rerun()
+                        else:
+                            st.error(f"Backend sucks: {response.status_code}")
+                    except Exception as e:
+                        st.error(f"Connection failed: {e}")
+                              
+
+            # Kolla så att både knappt och prompt finns!
+            elif send_clicked and prompt:
+                with st.spinner("Thinking..."):
+                    try:
+                        response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": prompt})
+                        if response.status_code == 200:
+                            data = response.json()
+                            
+                            with st.chat_message("user"):
+                                st.write(prompt)
+                            
+                            with st.chat_message("assistant"):
+                                st.write(data["text_output"])
+                                if data.get("audio"):
+                                    audio_bytes = base64.b64decode(data["audio"])
+                                    st.audio(audio_bytes, format="audio/wav", autoplay=True)
+                            
+                            # tömmer textinput så att den inte fortsätter anropa o bråka
+                            st.session_state.chat_input = "" 
+                            
+                            if "df" in st.session_state:
+                                del st.session_state["df"]
+                            
+                            st.rerun()
+                        else:
+                            st.error(f"Backend sucks: {response.status_code}")
+                    except Exception as e:
+                        st.error(f"Connection failed: {e}")
+                                  
+            
         with col3:
             with st.container():
                 st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
@@ -145,9 +161,6 @@ def layout():
                 for activity in activities:
                     st.markdown(f"🟢 **{activity}**")
                 
-                #formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
-                #st.write(formatted_text)
-                
                 st.divider()
                 
                 # --- KPIS ---
@@ -160,47 +173,49 @@ def layout():
                 with c3:
                     st.metric("Longest Streak", f"{streak} days")
                 
+                guidance_button_pos = st.button("Smash for cash!?", key=2)           
+                if guidance_button_pos:
+                    st.markdown(give_helpful_advices(df, mood))
+                
                 st.markdown('</div>', unsafe_allow_html=True)
 
     elif page == "Stats":
+        diary_df = df.sort_values(by="date", ascending=False)    
+        
         col1, col2 = st.columns(2)
-        diary_df = df.sort_values(by="date", ascending=False)
-        # with col1:
-        #     st.header("Diary")
-        #     diary_df = df.sort_values(by="date", ascending=False)
-        #     st.dataframe(diary_df, use_container_width=True)
-        
-        with col2:
-            # Pie plot som visar mood över veckodagarna
-            pie_plot_mood_weekdays = pie_plot(diary_df, diary_df['weekday'], diary_df['mood'])
-            st.plotly_chart(pie_plot_mood_weekdays)
-        
-        # Line plot som visar mood över tid
-        st.markdown("### Måendeöversikt över tid")
-        line_plot_mood = timeline_plot(diary_df, "mood")
-        st.plotly_chart(line_plot_mood)        
-        
-        
-        # Plottar om keywords
-        k_col1, k_col2 = st.columns(2)
-        
-        with k_col1:
+        with col1:
             st.subheader("Top Bad Triggers")
             negative_triggers = plot_negative_triggers(diary_df)
             st.plotly_chart(negative_triggers)
-            
-        with k_col2:
+        
+        with col2:
             st.subheader("Pos. vs Neg. Keywords")
             keywords_sunburst = plot_keyword_sunburst(diary_df)
             st.plotly_chart(keywords_sunburst)
-
+            
+        # Line plot som visar mood över tid
+        st.markdown("### Måendeöversikt över tid")
+        line_plot_mood = timeline_plot(diary_df, "mood")
+        st.plotly_chart(line_plot_mood)       
+        
         keyword_plot=plot_combined_triggers(diary_df)
         st.plotly_chart(keyword_plot)
         
+     
+
+        
     elif page == "Read Diary":
-        st.header("Diary")
-        diary_df = df.sort_values(by="date", ascending=False)
-        st.dataframe(diary_df)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.header("Diary")
+            diary_df = df.sort_values(by="date", ascending=False)
+            st.dataframe(diary_df)
+        
+        with col2:
+            st.markdown("<br><br>", unsafe_allow_html=True)
+            # Pie plot som visar mood över veckodagarna
+            pie_plot_mood_weekdays = pie_plot(diary_df, diary_df['weekday'], diary_df['mood'])
+            st.plotly_chart(pie_plot_mood_weekdays)
 
     elif page == "News":
         pass

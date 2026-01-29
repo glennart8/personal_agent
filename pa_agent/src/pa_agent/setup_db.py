@@ -8,7 +8,7 @@ def setup_vector_db(path=VECTOR_DATABASE_PATH):
     vector_db = lancedb.connect(uri=path)
     
     vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
-    vector_db.create_table(name="science", schema=Article, mode="overwrite")
+    #vector_db.create_table(name="science", schema=Article, mode="overwrite")
     
     return vector_db
 
@@ -67,10 +67,10 @@ if __name__ == "__main__":
     db = setup_vector_db()
     
     diary_table = db.open_table("diary")
-    science_table = db.open_table("science")
+    #science_table = db.open_table("science")
     
     ingest_csv_to_vector_db(diary_table)
-    ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
-    ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
+    #ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
+    #ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
     
     print("Db klar!")
