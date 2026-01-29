@@ -41,8 +41,8 @@ def plot_keyword_sunburst(df):
         path=['mood', 'keyword'], # Först Pos/Neg, sen Aktivitet
         color='mood',
         color_discrete_map={
-            'positivt': 'rgba(0, 128, 0, 0.6)', 
-            'negativt': 'rgba(255, 0, 0, 0.6)'
+            'Positivt': 'rgba(0, 128, 0, 0.6)', 
+            'Negativt': 'rgba(255, 0, 0, 0.6)'
         }
         
     )
