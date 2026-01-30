@@ -87,10 +87,10 @@ async def route_input(text: str) -> str:
         new_entry = {
             "date": datetime.now().strftime("%Y-%m-%d"),
             "weekday": datetime.now().strftime("%A").capitalize(),
-            "activity": result.output.activity,
-            "feelings": result.output.feelings,
-            "mood": result.output.mood,
-            "keywords": result.output.keywords
+            "activity": result.output.activity.capitalize(),
+            "feelings": result.output.feelings.capitalize(),
+            "mood": result.output.mood.capitalize(),
+            "keywords": result.output.keywords.capitalize()
         }
         add_data(new_entry)
 
