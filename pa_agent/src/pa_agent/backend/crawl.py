@@ -2,6 +2,7 @@ from firecrawl import Firecrawl
 from dotenv import load_dotenv
 import pandas as pd
 import os
+import time
 from constants import DATA_PATH
 
 load_dotenv()
@@ -12,19 +13,21 @@ def crawl(url: str, limit: int) -> list:
     e.g. if url is https://omni.se/tech, firecrawl will crawl entire site that is generated on start, click one article and crawl it, then go back to url and continue on the next one.
     Don't have the limit higher than 1000. One article ~ one credit.
     """
-
     crawl_list = []
-    firecrawl = Firecrawl(os.getenv("CRAWL_KEY")) 
+    for _ in range(10):
+        firecrawl = Firecrawl(os.getenv("CRAWL_KEY")) 
 
-    full_crawl = firecrawl.crawl(url=url, 
-                        limit=limit, # hur många sidor den ska crawla
-                        crawl_entire_domain=True, #Behövs för att varje crawl ska bli ett eget objekt
-                        max_discovery_depth=1, # ta bara en länk in från angiven url
-                        scrape_options={"formats": ["markdown"]}, #format för datan
-                        )
-    crawl_list.append(full_crawl)
-    page_name = url.replace("https://", "").split('.')[0]
-    print(f"{page_name} finished with {len(crawl_list)} raw results.")
+        full_crawl = firecrawl.crawl(url=url, 
+                            limit=limit, # hur många sidor den ska crawla
+                            crawl_entire_domain=True, #Behövs för att varje crawl ska bli ett eget objekt
+                            max_discovery_depth=1, # ta bara en länk in från angiven url
+                            scrape_options={"formats": ["markdown"]}, #format för datan
+                            )
+        crawl_list.append(full_crawl)
+        page_name = url.replace("https://", "").split('.')[0]
+        print(f"{page_name} finished with {len(crawl_list)} raw results.")
+        time.sleep(30)
+        print("sleeping 30 seconds")
     
     return crawl_list, page_name
 
@@ -40,11 +43,11 @@ def sort_crawl(crawl_list) -> list:
             metadata_dict = item.metadata.model_dump() #Hämta ut kolumen og:type från varje artikel i CrawlJob. 
             date = metadata_dict.get("published_time")
             
-            if date is not None and date > "2025-11-19":
+            if date is not None and date > "2025-11-20":
                 relevant_crawls.append(item)
                 
             json_data =[item.model_dump() for item in relevant_crawls]
-    print(f"\n{len(relevant_crawls)} was found.\n")
+    print(f"\n{len(relevant_crawls)} relevant crawls was found.\n")
 
     return json_data
 
@@ -65,17 +68,19 @@ def save_crawl_to_json(json_data: list, page_name: str):
     })
     df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.date #konvertera till datetime, ta bara date
 
-    df_cleaned.to_json(f"{DATA_PATH}/{page_name}.json", indent=4, force_ascii=False, orient="records", date_format="iso") #spara den rena df:n till json
+    json_str = df_cleaned.to_json(indent=4, force_ascii=False, orient="records", date_format="iso") #spara den rena df:n till json
+    with open(f"{DATA_PATH}/{page_name}.json", "w", encoding="utf-8") as file:
+        file.write(json_str)
+    
     print(f"{page_name} crawl with {len(df_cleaned)} results was written to json-file")
-
 
 if __name__ == "__main__":
     
     url = "https://omni.se" #Lägg till vilken länk den ska crawla
-    limit = 100 #ange hur många sidor den max ska ta
+    limit = 1000 #ange hur många sidor den max ska ta
     
     crawl_list, page_name = crawl(url, limit)
     json_data = sort_crawl(crawl_list)
     save_crawl_to_json(json_data, page_name) # din fil kommer sparas till json i /data i länknamnet, 
-    
+
 
