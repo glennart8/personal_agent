@@ -32,10 +32,10 @@ class DiaryExtraction(BaseModel):
 class News(LanceModel):
     news_section: str
     title: str = embedding_model.SourceField()
-    date : datetime.date
+    date : str
     teaser_text: str = embedding_model.SourceField()
-    image_url: str
-    image_description: str
+    image_url: Optional[str] = None
+    image_description: Optional[str] = None
     embedding: Vector(dim=3072) = embedding_model.VectorField()
 
 class RagResponse(BaseModel):
