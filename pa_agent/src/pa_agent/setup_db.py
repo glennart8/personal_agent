@@ -1,14 +1,17 @@
 import lancedb
 import pandas as pd
-from backend.data_models import Daily_mood, Article
+from backend.data_models import Daily_mood, Article, News
+from backend.crawl import crawl
 from backend.constants import VECTOR_DATABASE_PATH, DATA_PATH
 import time
+import json
 
 def setup_vector_db(path=VECTOR_DATABASE_PATH):
     vector_db = lancedb.connect(uri=path)
     
     vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
-    #vector_db.create_table(name="science", schema=Article, mode="overwrite")
+    vector_db.create_table(name="science", schema=Article, mode="overwrite")
+    vector_db.create_table(name="news", schema=News, mode="overwrite")
     
     return vector_db
 
@@ -28,6 +31,17 @@ def ingest_csv_to_vector_db(table):
     )
     
     table.add(df.to_dict(orient="records"))
+
+
+def ingest_crawl_to_vector_db(): 
+    """
+    [] Läs in alla 3 fina json filer
+    [] Skapa chunks? Varför? För att inte överbelasta lanceDB -> Gemini encoding 
+    [] Gör sedan table.add(datan) för att lägga in och embedda? 
+    """
+
+
+    pass
     
 def ingest_txt_to_vector_db(table, file_path, chunk_size=1000):
     """Läser .txt, chunkar och laddar upp batch-vis för att undvika att slå i taket."""
@@ -67,10 +81,12 @@ if __name__ == "__main__":
     db = setup_vector_db()
     
     diary_table = db.open_table("diary")
-    #science_table = db.open_table("science")
+    science_table = db.open_table("science")
+    news_table = db.open_table("news")
     
     ingest_csv_to_vector_db(diary_table)
-    #ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
-    #ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
+    ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
+    ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
+    ingest_crawl_to_vector_db(news_table, )
     
     print("Db klar!")
