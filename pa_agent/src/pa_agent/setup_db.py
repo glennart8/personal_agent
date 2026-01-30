@@ -1,14 +1,16 @@
 import lancedb
 import pandas as pd
-from backend.data_models import Daily_mood, Article
+from backend.data_models import Daily_mood, Article, News
 from backend.constants import VECTOR_DATABASE_PATH, DATA_PATH
 import time
+import json
 
 def setup_vector_db(path=VECTOR_DATABASE_PATH):
     vector_db = lancedb.connect(uri=path)
     
-    vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
-    #vector_db.create_table(name="science", schema=Article, mode="overwrite")
+    # vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
+    # vector_db.create_table(name="science", schema=Article, mode="overwrite")
+    vector_db.create_table(name="news", schema=News, mode="overwrite")
     
     return vector_db
 
@@ -28,6 +30,9 @@ def ingest_csv_to_vector_db(table):
     )
     
     table.add(df.to_dict(orient="records"))
+
+
+
     
 def ingest_txt_to_vector_db(table, file_path, chunk_size=1000):
     """Läser .txt, chunkar och laddar upp batch-vis för att undvika att slå i taket."""
@@ -62,15 +67,37 @@ def ingest_txt_to_vector_db(table, file_path, chunk_size=1000):
         # Kort paus
         time.sleep(1)
 
+
+def ingest_crawl_to_vector_db(table, file_path): 
+    """
+    Läser in json fil till vectorDB med batches
+    """
+    df_cleaned = pd.read_json(file_path)
+    batch_size = 50
+
+    df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.strftime('%Y-%m-%d')
+    print(f"data will be loaded in batches of batch size: {batch_size}")
+    for i in range(0, len(df_cleaned), batch_size):
+        print("starting to load crawl data")
+        batch_df = df_cleaned.iloc[i:i + batch_size]
+
+        #merge_insert så man inte lägger in dubletter
+        table.merge_insert("title").when_matched_update_all().when_not_matched_insert_all().execute(batch_df)
+        print(f"batch {i}/{len(df_cleaned) / batch_size} finished, sleeping for 30 seconds")
+        time.sleep(30) 
+        print("sleep finished")
+
+
 if __name__ == "__main__":
     print("Sätter upp LanceDB...")
     db = setup_vector_db()
     
-    diary_table = db.open_table("diary")
-    #science_table = db.open_table("science")
+    # diary_table = db.open_table("diary")
+    # science_table = db.open_table("science")
+    news_table = db.open_table("news")
     
-    ingest_csv_to_vector_db(diary_table)
-    #ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
-    #ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
-    
+    # ingest_csv_to_vector_db(diary_table)
+    # ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
+    # ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
+    ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned.json")
     print("Db klar!")
