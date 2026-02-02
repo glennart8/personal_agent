@@ -43,7 +43,7 @@ def sort_crawl(crawl_list) -> list:
             date = metadata_dict.get("published_time")
             # date = pd.to_datetime(date).dt.date
             
-            if date is not None and date > str(datetime.today() - timedelta(days=2)):
+            if date is not None and date > str(datetime.today() - timedelta(days=3)):
                 relevant_crawls.append(item)
                 
             json_data =[item.model_dump() for item in relevant_crawls]
@@ -56,6 +56,8 @@ def save_crawl_to_json(json_data: list, page_name: str):
     """
     Save relevant crawls to a json file for reading into vectorDB later. 
     """
+    old_df = pd.read_json(f"{DATA_PATH}/{page_name}_cleaned.json")
+    
     df = pd.DataFrame([item["metadata"] for item in json_data]) #skapa df från dictionary'n metadata, där allt roligt finns!
 
     df = df.drop_duplicates(subset="title", keep="first")
@@ -69,8 +71,8 @@ def save_crawl_to_json(json_data: list, page_name: str):
         "og:image:alt": "image_description",
         "og:image": "image_url",
     })
-    df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.date #konvertera till datetime, ta bara date
-
+    df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
+    
     for image in df_cleaned["image_description"]: 
         if type(image) == list:
             
@@ -78,8 +80,11 @@ def save_crawl_to_json(json_data: list, page_name: str):
 
     df_cleaned["image_description"] = df_cleaned["image_description"].astype(str)
 
+    df_cleaned = pd.concat([old_df, df_cleaned], ignore_index=True) #slå ihop den gamla df med den som skapades nu
+    df_cleaned = df_cleaned.drop_duplicates(subset="title", keep="first") #ta bort dubletter
+    
     json_str = df_cleaned.to_json(indent=4, force_ascii=False, orient="records", date_format="iso") #spara den rena df:n till json
-    with open(f"{DATA_PATH}/{page_name}_{str(datetime.now().strftime("%d_%m_%Y_%H-%M-%S"))}.json", "w", encoding="utf-8") as file:
+    with open(f"{DATA_PATH}/{page_name}_cleaned.json", "w", encoding="utf8") as file: #{str(datetime.now().strftime("%d_%m_%Y_%H-%M-%S"))}.json", "w", encoding="utf-8") as file:
         file.write(json_str)
     
     print(f"{page_name} crawl with {len(df_cleaned)} results was written to json-file")
@@ -87,7 +92,7 @@ def save_crawl_to_json(json_data: list, page_name: str):
 if __name__ == "__main__":
     
     url = "https://omni.se" #Lägg till vilken länk den ska crawla
-    limit = 50 #ange hur många sidor den max ska ta i 2 omgångar
+    limit = 500 #ange hur många sidor den ska ta
     
     crawl_list, page_name = crawl(url, limit)
     json_data = sort_crawl(crawl_list)
