@@ -17,7 +17,18 @@ def layout():
     init_state() # Ladda alla session-states direkt
 
     with st.sidebar:
+
+        # Switcha mellan Diary och News
+        app_mode = st.radio(
+            "Välj läge:",
+            ["Diary", "News"],
+            horizontal=True, 
+            label_visibility="collapsed"
+        )
+
+        st.divider()
         st.title("dAgent")
+
         page = st.radio(
             "Välj sida:",
             ["Dashboard", "Stats", "Read Diary", "News"],

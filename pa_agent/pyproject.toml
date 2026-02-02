@@ -13,6 +13,8 @@ dependencies = [
     "firecrawl-py>=4.13.4",
     "frontend",
     "ipykernel>=7.1.0",
+    "openai>=2.15.0",
+    "pydantic-ai[openai]>=1.46.0",
 ]
 
 [tool.uv.sources]
