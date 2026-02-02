@@ -4,7 +4,7 @@ import requests
 from css import get_css
 import base64
 from plots import line_plot, pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
-from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend
+from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
@@ -14,8 +14,8 @@ def layout():
 
     load_data()
     df = st.session_state["df"]
-    
-    # Side bar meny
+    init_state() # Ladda alla session-states direkt
+
     with st.sidebar:
         st.title("dAgent")
         page = st.radio(
@@ -26,6 +26,7 @@ def layout():
         
         show_trend(df)
       
+
     if page == "Dashboard":
         col1, col2, col3 = st.columns(3)
 
@@ -34,22 +35,16 @@ def layout():
                 st.markdown('<div class="dark-side-bg">', unsafe_allow_html=True)
                 
                 st.header("DARK SIDE")
-                
                 st.divider()
-                
                 st.subheader("This made you feel shitty..")
                 
                 mood = "Negativt"
                 activities = show_activities(df, mood)
                 
-                # Loopa igenom och skriv ut varje rad för sig
+                # skriv ut varje rad för sig
                 for activity in activities:
                     st.markdown(f"🔴 **{activity}**")
-                
-                #formatted_text = "\n".join([f"{i+1}. {activity}\n" for i, activity in enumerate(activities)])
-                
-                #st.write(formatted_text)
-                                
+                                                                
                 st.divider()
                 
                 # --- KPIS ---
@@ -64,9 +59,13 @@ def layout():
                 
                 st.markdown('</div>', unsafe_allow_html=True)
                 
-                guidance_button = st.button("Hit for guidance!", key=1)           
-                if guidance_button:
-                    st.markdown(give_helpful_advices(df, mood))
+                # knappen genererar text o sparar i session_state
+                if st.button("Hit for guidance!", key="btn_neg"):
+                    st.session_state.neg_guidance_text = give_helpful_advices(df, mood)
+                
+                # visa text OM den finns sparad
+                if st.session_state.neg_guidance_text:
+                    st.markdown(st.session_state.neg_guidance_text)
 
         with col2:
             # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
@@ -77,7 +76,13 @@ def layout():
                 <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
             """, unsafe_allow_html=True) 
 
-            prompt = st.text_input("Message", label_visibility="collapsed", placeholder="Just tell me dude..")
+            # Skriv ut gammal historik FÖRST 
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+
+            #prompt = st.text_input("Message", label_visibility="collapsed", placeholder="Just tell me dude..", key="chat_input")
+            prompt = st.chat_input("Just tell me dude..")
 
             button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
 
@@ -109,7 +114,7 @@ def layout():
                             
                             if "df" in st.session_state:
                                 del st.session_state["df"]
-                            st.rerun()
+  
                         else:
                             st.error(f"Backend sucks: {response.status_code}")
                     except Exception as e:
@@ -117,29 +122,34 @@ def layout():
                               
 
             # Kolla så att både knappt och prompt finns!
-            elif send_clicked and prompt:
+            elif prompt:
+                # spara frågan direkt
+                st.session_state.messages.append({"role": "user", "content": prompt})
+
+                # skriv ut frågan direkt - snyggare UX 
+                with st.chat_message("user"):
+                    st.write(prompt)
+
                 with st.spinner("Thinking..."):
                     try:
                         response = requests.post(f"{BACKEND_BASE_URL}/text_input", json={"prompt": prompt})
                         if response.status_code == 200:
                             data = response.json()
                             
-                            with st.chat_message("user"):
-                                st.write(prompt)
+                            answer_text = data["text_output"]
+                            
+                            # spara svaret i historiken
+                            st.session_state.messages.append({"role": "assistant", "content": answer_text})
                             
                             with st.chat_message("assistant"):
                                 st.write(data["text_output"])
                                 if data.get("audio"):
                                     audio_bytes = base64.b64decode(data["audio"])
                                     st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                            
-                            # tömmer textinput så att den inte fortsätter anropa o bråka
-                            st.session_state.chat_input = "" 
-                            
+                                        
                             if "df" in st.session_state:
                                 del st.session_state["df"]
-                            
-                            st.rerun()
+
                         else:
                             st.error(f"Backend sucks: {response.status_code}")
                     except Exception as e:
@@ -172,10 +182,14 @@ def layout():
                     st.metric("Best Day", best_day)
                 with c3:
                     st.metric("Longest Streak", f"{streak} days")
+
+                # Generera och spara
+                if st.button("Smash for cash!?", key="btn_pos"):
+                    st.session_state.pos_guidance_text = give_helpful_advices(df, mood)
                 
-                guidance_button_pos = st.button("Smash for cash!?", key=2)           
-                if guidance_button_pos:
-                    st.markdown(give_helpful_advices(df, mood))
+                # Visa
+                if st.session_state.pos_guidance_text:
+                    st.markdown(st.session_state.pos_guidance_text)
                 
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -201,8 +215,6 @@ def layout():
         keyword_plot=plot_combined_triggers(diary_df)
         st.plotly_chart(keyword_plot)
         
-     
-
         
     elif page == "Read Diary":
         col1, col2 = st.columns(2)

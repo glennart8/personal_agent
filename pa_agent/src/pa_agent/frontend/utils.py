@@ -12,6 +12,11 @@ def load_data():
         response = requests.get(f"{BACKEND_BASE_URL}/diary")
         st.session_state["df"] = pd.DataFrame(response.json())
 
+def init_state():
+    st.session_state.setdefault("messages", [])
+    st.session_state.setdefault("neg_guidance_text", None)
+    st.session_state.setdefault("pos_guidance_text", None)
+
 def show_activities(df, mood: str, count = 5):
     """
     Use either 'positivt' or 'negativt' as in parameter
