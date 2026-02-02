@@ -117,7 +117,8 @@ stt_agent = Agent(
 )
 
 news_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=NewsExtraction,
     system_prompt="""
@@ -126,7 +127,8 @@ news_agent = Agent(
         1. Var mycket kort och koncis.
         2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
         3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
-    """
+    """,
+    tools=[search_vector_db]
 )
 
 

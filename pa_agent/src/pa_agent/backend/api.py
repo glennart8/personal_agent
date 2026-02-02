@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from rag_agent import diary_agent, science_agent, stt_agent, route_agent
+from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent 
 from data_models import Prompt
 from datetime import datetime
 import locale
@@ -65,15 +65,16 @@ async def text_input(query: Prompt) -> dict:
 # @app.post("/text_input/news")
 # async def text_input(query: Prompt) -> dict:
 #     text_input = query.prompt
+#     result = await news_agent.run(text_input)
+       
+#     answer_text = result.output.articles
 
-#     # Kalla på agent
-
-#     audio_output = await transcribe_text(output_text)
+#     audio_output = await transcribe_text(answer_text)
 #     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
 
 #     return {
 #         "text_input": text_input,
-#         "text_output": output_text,
+#         "text_output": answer_text,
 #         "audio": audio_base64
 #     }
 

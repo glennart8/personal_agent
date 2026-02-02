@@ -29,6 +29,7 @@ class DiaryExtraction(BaseModel):
     mood: str = Field(description="Positive or negative")
     keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. ['Jobb', 'Sömn', 'Kodning', 'Relationer', 'Träning']")
 
+# För nyheter
 class SingleArticleAnalysis(BaseModel):
     mood: str = Field(description="Positive or Negative")
     keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. 'finance, politics, sport'")

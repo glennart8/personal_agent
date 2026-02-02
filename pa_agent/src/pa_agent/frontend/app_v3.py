@@ -3,20 +3,18 @@ import streamlit as st
 import requests
 from css import get_css
 import base64
-from plots import line_plot, pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
+from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
 from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary
-import pandas as pd
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
-
 get_css()
+
      
 def layout():
     init_state() # Ladda alla session-states direkt
 
     with st.sidebar:
-
-        # Switcha mellan Diary och News
+        # DIARY / NEWS
         app_mode = st.radio(
             "Välj läge:",
             ["Diary", "News"],
@@ -42,8 +40,9 @@ def layout():
         )
         
         show_trend(df)
-      
-    # DIARY  
+        
+#region DIARY    
+  
     if app_mode == "Diary":
 
         df = st.session_state["diary"]
@@ -51,6 +50,7 @@ def layout():
         if page == "Dashboard":
             col1, col2, col3 = st.columns(3)
 
+            # DARK SIDE
             with col1:
                 with st.container():
                     st.markdown('<div class="dark-side-bg">', unsafe_allow_html=True)
@@ -84,10 +84,10 @@ def layout():
                     if st.button("Hit for guidance!", key="btn_neg"):
                         st.session_state.neg_guidance_text = give_helpful_advices(df, mood, column="activity")
                     
-                    # visa text OM den finns sparad
                     if st.session_state.neg_guidance_text:
                         st.markdown(st.session_state.neg_guidance_text)
 
+            # PROMPT OCH AUDIO
             with col2:
                 # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
                 st.markdown("""
@@ -141,7 +141,7 @@ def layout():
                             st.error(f"Connection failed: {e}")
                                 
 
-                # Kolla så att både knappt och prompt finns!
+                # TEXT
                 elif prompt:
                     # spara frågan direkt
                     st.session_state.messages_diary.append({"role": "user", "content": prompt})
@@ -175,7 +175,7 @@ def layout():
                         except Exception as e:
                             st.error(f"Connection failed: {e}")
                                     
-                
+            # HAPPY PLACE    
             with col3:
                 with st.container():
                     st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
@@ -212,7 +212,8 @@ def layout():
                         st.markdown(st.session_state.pos_guidance_text)
                     
                     st.markdown('</div>', unsafe_allow_html=True)
-
+        
+        # STATS
         elif page == "Stats":
             df = update_diary()
             
@@ -237,7 +238,7 @@ def layout():
             keyword_plot=plot_combined_triggers(diary_df)
             st.plotly_chart(keyword_plot)
             
-            
+        # READ DIARY    
         elif page == "Read Diary":  
             df = update_diary()
                       
@@ -252,6 +253,7 @@ def layout():
                 # Pie plot som visar mood över veckodagarna
                 pie_plot_mood_weekdays = pie_plot(diary_df, diary_df['weekday'], diary_df['mood'])
                 st.plotly_chart(pie_plot_mood_weekdays)
+#region NEWS
 
     # NEWS
     elif app_mode == "News":
@@ -261,6 +263,7 @@ def layout():
         if page == "Dashboard":
             col1, col2, col3 = st.columns(3)
 
+            # DARK SIDE
             with col1:
                 with st.container():
                     st.markdown('<div class="dark-side-bg">', unsafe_allow_html=True)
@@ -291,6 +294,7 @@ def layout():
         
                     st.markdown('</div>', unsafe_allow_html=True)
 
+            # PROMPT OCH AUDIO
             with col2:
                 # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
                 st.markdown("""
@@ -347,7 +351,9 @@ def layout():
                 # TEXT
                 elif prompt:
                     st.session_state.messages_news.append({"role": "user", "content": prompt})
-
+                    
+                    #st.write(df)
+                    
                     with st.chat_message("user"):
                         st.write(prompt)
 
@@ -375,6 +381,7 @@ def layout():
                         except Exception as e:
                             st.error(f"Connection failed: {e}")
 
+            # HAPPY PLACE
             with col3:
                  with st.container():
                     st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
@@ -411,6 +418,7 @@ def layout():
         elif page == "Read news":
             # st.dataframe(news_df)
             pass
+#endregion
 
 if __name__ == "__main__":
     layout()

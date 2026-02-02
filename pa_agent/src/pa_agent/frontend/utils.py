@@ -20,7 +20,6 @@ def load_data():
 
 
 def update_diary():
-    # Uppdatera DF
     response = requests.get(f"{BACKEND_BASE_URL}/diary")
     df = st.session_state['diary'] = pd.DataFrame(response.json())
     
