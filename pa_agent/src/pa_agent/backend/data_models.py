@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field
 from datetime import datetime
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
@@ -11,6 +11,8 @@ load_dotenv()
 #embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
 embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
 
+
+#region DIARY
 # För sökning i V-db
 class Daily_mood(LanceModel):
     activity: str
@@ -29,14 +31,22 @@ class DiaryExtraction(BaseModel):
     mood: str = Field(description="Positive or negative")
     keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. ['Jobb', 'Sömn', 'Kodning', 'Relationer', 'Träning']")
 
-# För nyheter
-class SingleArticleAnalysis(BaseModel):
-    mood: str = Field(description="Positive or Negative")
-    keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. 'finance, politics, sport'")
+# class SingleArticleAnalysis(BaseModel):
+#     mood: str = Field(description="Positive or Negative")
+#     keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. 'finance, politics, sport'")
 
-class NewsExtraction(BaseModel):
-    articles: list[SingleArticleAnalysis]
+# class NewsExtraction(BaseModel):
+#     articles: list[SingleArticleAnalysis]
+    
+    
+#region NEWS
+# BARA DET VI VILL HA UT I CHATTEN
+class SlimArticle(BaseModel):
+    title: str = Field(description="Rubriken på artikeln")
+    teaser_text: str = Field(description="Kort sammanfattning eller ingress")
 
+class NewsResponse(BaseModel):
+    articles: list[SlimArticle]
 
 # För sökning av nyhetsartiklar i V-db
 class News(LanceModel):
@@ -48,20 +58,24 @@ class News(LanceModel):
     image_description: Optional[str] = None
     embedding: Vector(dim=3072) = embedding_model.VectorField()
 
-class RagResponse(BaseModel):
-    answer: str = Field(description="answer based on the retrieved file")
-    
-class Prompt(BaseModel):
-    prompt: str = Field(description="prompt from user, if empty consider it as missing")
 
-# För vetenskapliga artiklar
+#region SCIENCE
 class Article(LanceModel):
     title: str
     content: str = embedding_model.SourceField()
     embedding: Vector(dim=3072) = embedding_model.VectorField()
     
+class RagResponse(BaseModel):
+    answer: str = Field(description="answer based on the retrieved file")
+    
+class Prompt(BaseModel):
+    prompt: str = Field(description="prompt from user, if empty consider it as missing")
+    
+    
+#region MISC    
 class RoutingDescision(BaseModel):
     intent: str = Literal["ENTRY", "QUERY"]
+
 
 # En klass så vi kan använda olika röster
 # Använder Path för att kunna köra stem() och read_text()
@@ -69,6 +83,3 @@ class TTSConfig(BaseModel):
     input_file: Path = Field(..., description="Sökväg till textfilen som ska läsas")
     output_file: Optional[Path] = None
     voice: str = Field("sv-SE-SofieNeural") # "sv-SE-MattiasNeural"
-
-# En modell för news som LLM plockar ut
-

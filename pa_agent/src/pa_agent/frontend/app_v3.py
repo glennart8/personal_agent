@@ -270,7 +270,7 @@ def layout():
                     st.header("DARK SIDE")
                     
                     st.divider()    
-                    st.subheader("Bad shit!!!!")
+                    st.subheader("War and insanity!")
 
                     mood = "negativt" # LITET NNNNNN
                     activities = show_activities(df, mood, column="title")
@@ -351,9 +351,7 @@ def layout():
                 # TEXT
                 elif prompt:
                     st.session_state.messages_news.append({"role": "user", "content": prompt})
-                    
-                    #st.write(df)
-                    
+                                    
                     with st.chat_message("user"):
                         st.write(prompt)
 
@@ -389,7 +387,7 @@ def layout():
 
                     st.divider()
                     
-                    st.subheader("Stick to the good stuff!")
+                    st.subheader("Lollipops and unicorns!")
                     mood = "positivt"
                     activities = show_activities(df, mood, column="title")
                     

@@ -25,6 +25,7 @@ def update_diary():
     
     return df
 
+
 def init_state():
     st.session_state.setdefault("messages_diary", [])
     st.session_state.setdefault("messages_news", [])
