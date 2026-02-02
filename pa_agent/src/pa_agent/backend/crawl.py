@@ -2,9 +2,11 @@ from firecrawl import Firecrawl
 from dotenv import load_dotenv
 import pandas as pd
 import os
-import time
+import json
 from constants import DATA_PATH
 from datetime import datetime, timedelta
+from rag_agent import news_agent
+import asyncio
 
 load_dotenv()
 
@@ -27,7 +29,7 @@ def crawl(url: str, limit: int) -> list:
                         )
     crawl_list.append(full_crawl)
     page_name = url.replace("https://", "").split('.')[0]
-    print(f"crawl nr.{len(crawl_list)} from page: {page_name} finished")
+    print(f"crawl from page: {page_name} finished")
 
     return crawl_list, page_name
 
@@ -56,9 +58,11 @@ def save_crawl_to_json(json_data: list, page_name: str):
     """
     Save relevant crawls to a json file for reading into vectorDB later. 
     """
-    df = pd.DataFrame([item["metadata"] for item in json_data]) #skapa df från dictionary'n metadata, där allt roligt finns!
+    old_df = pd.read_json(f"{DATA_PATH}/{page_name}_cleaned.json")
+    
+    json_data_df = pd.DataFrame([item["metadata"] for item in json_data]) #skapa df från dictionary'n metadata, där allt roligt finns!
 
-    df = df.drop_duplicates(subset="title", keep="first")
+    df = json_data_df.drop_duplicates(subset="title", keep="first")
 
     df_cleaned = df[["title", "description","article:section","published_time", "og:image:alt", "og:image"]] #hämta ut de relevanta kolumnerna
 
@@ -69,8 +73,8 @@ def save_crawl_to_json(json_data: list, page_name: str):
         "og:image:alt": "image_description",
         "og:image": "image_url",
     })
-    df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.date #konvertera till datetime, ta bara date
-
+    df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
+    
     for image in df_cleaned["image_description"]: 
         if type(image) == list:
             
@@ -78,18 +82,84 @@ def save_crawl_to_json(json_data: list, page_name: str):
 
     df_cleaned["image_description"] = df_cleaned["image_description"].astype(str)
 
+    df_cleaned = pd.concat([old_df, df_cleaned], ignore_index=True) #slå ihop den gamla df med den som skapades nu
+    df_cleaned = df_cleaned.drop_duplicates(subset="title", keep="first") #ta bort dubletter
+    
     json_str = df_cleaned.to_json(indent=4, force_ascii=False, orient="records", date_format="iso") #spara den rena df:n till json
-    with open(f"{DATA_PATH}/{page_name}_{str(datetime.now().strftime("%d_%m_%Y_%H-%M-%S"))}.json", "w", encoding="utf-8") as file:
+    with open(f"{DATA_PATH}/{page_name}_cleaned.json", "w", encoding="utf8") as file: #{str(datetime.now().strftime("%d_%m_%Y_%H-%M-%S"))}.json", "w", encoding="utf-8") as file:
         file.write(json_str)
     
     print(f"{page_name} crawl with {len(df_cleaned)} results was written to json-file")
+    
+    return json_data_df
+
+async def add_keywords_with_agent(new_data): 
+    """
+    Adds mood and keywords for new data that hasn't been processed.
+    """
+    output_list = []
+
+    old_df = pd.read_json(DATA_PATH / "omni_cleaned_with_keywords.json")
+    old_df["date"] = pd.to_datetime(old_df["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
+
+    with open(DATA_PATH / "omni_cleaned_with_keywords.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+    titles_already_processed = {row["title"] for row in data}
+    df_to_process = new_data.copy()
+    df_to_process =  new_data[~new_data["title"].isin(titles_already_processed)] #om den nya data inte innehåller de gamla titlarna, skicka in det till agenten
+
+    df_for_agent = pd.DataFrame(df_to_process)[["title", "description"]]
+    print("Agent is analyzing..")
+    result = await news_agent.run(f"Analysera dessa artiklar: {df_for_agent.to_json(orient="records")}")
+    output_list.append(result.output) # dessa är nya rader med keyword och mode. dom ska fyllas på i den json_fil som inte har det. 
+        
+    keywords = []
+    moods = []
+
+    for batch in output_list: 
+        for article in batch.articles:
+            moods.append(article.mood)
+            keywords.append(article.keywords)
+
+    df_to_process["mood"] = moods
+    df_to_process["keywords"] = keywords
+
+    df_to_process = df_to_process[["title", "description","article:section","published_time", "og:image:alt", "og:image", "mood", "keywords"]] #hämta ut de relevanta kolumnerna
+
+    df_to_process = df_to_process.rename(columns={ #renama till snyggare
+        "description": "teaser_text",
+        "published_time": "date",
+        "article:section": "news_section",
+        "og:image:alt": "image_description",
+        "og:image": "image_url",
+    })
+    
+    df_to_process["date"] = pd.to_datetime(df_to_process["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
+    
+    merged_df = pd.concat([old_df, df_to_process], ignore_index=True)
+    
+    merged_df["mood"] = merged_df["mood"].str.capitalize()
+    
+    for image in merged_df["image_description"]: 
+        if type(image) == list:
+            
+            image = str(image[0])
+
+    merged_df["image_description"] = merged_df["image_description"].astype(str)
+    
+    merged_df.to_json(DATA_PATH / "omni_cleaned_with_keywords.json", indent=4, orient="records", force_ascii=False, date_format="iso")
+
+    print(f"\n\n{len(df_to_process)} articles was processed")
 
 if __name__ == "__main__":
     
     url = "https://omni.se" #Lägg till vilken länk den ska crawla
-    limit = 50 #ange hur många sidor den max ska ta i 2 omgångar
+    limit = 100 #ange hur många sidor den ska ta
     
     crawl_list, page_name = crawl(url, limit)
     json_data = sort_crawl(crawl_list)
-    save_crawl_to_json(json_data, page_name) # din fil kommer sparas till json i /data i länknamnet, 
+    json_data_df = save_crawl_to_json(json_data, page_name) # din fil kommer sparas till json i /data i länknamnet
+    
+    asyncio.run(add_keywords_with_agent(json_data_df))
+    
 
