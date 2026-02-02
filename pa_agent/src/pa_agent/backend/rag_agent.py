@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction, RoutingDescision
+from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsExtraction
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 
@@ -113,6 +113,19 @@ stt_agent = Agent(
         2. Använd användarens egna ord för aktiviteten.
         3. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
         4. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+    """
+)
+
+news_agent = Agent(
+    model="google-gla:gemini-2.5-flash",
+    retries=2,
+    output_type=NewsExtraction,
+    system_prompt="""
+        Du är en assistent som extraherar nyheter. 
+        
+        1. Var mycket kort och koncis.
+        2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+        3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
     """
 )
 

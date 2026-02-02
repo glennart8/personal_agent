@@ -29,6 +29,14 @@ class DiaryExtraction(BaseModel):
     mood: str = Field(description="Positive or negative")
     keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. ['Jobb', 'Sömn', 'Kodning', 'Relationer', 'Träning']")
 
+class SingleArticleAnalysis(BaseModel):
+    mood: str = Field(description="Positive or Negative")
+    keywords: str = Field(description="Extract 1-3 tags/keywords that categorize the entry, e.g. 'finance, politics, sport'")
+
+class NewsExtraction(BaseModel):
+    articles: list[SingleArticleAnalysis]
+
+
 # För sökning av nyhetsartiklar i V-db
 class News(LanceModel):
     news_section: str
