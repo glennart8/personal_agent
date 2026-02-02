@@ -9,13 +9,12 @@ import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
 import base64
 import time
+from pydantic_ai import UsageLimits, UsageLimitExceeded
 
-# Måste ha detta för att få ut svenska ord för veckodagarna..........
 try:
     locale.setlocale(locale.LC_TIME, "sv_SE.UTF-8")
 except:
-    pass # Blir engelska ord i stället
-
+    pass 
 
 app = FastAPI()
 
@@ -24,19 +23,15 @@ app = FastAPI()
 async def root():
     return {"message": "Health check"}
 
+
+#region DIARY
 @app.get("/diary")
 async def read_diary():
     file_path = f"{DATA_PATH}/dagbok.csv"
     df = pd.read_csv(file_path)
     
-    return df.to_dict(orient="records")
-
-@app.get("/news")
-async def read_news():
-    file_path = f"{DATA_PATH}/omni_cleaned_with_keywords.json"
-    df = pd.read_json(file_path).sort_values(by="date", ascending=True).reset_index()
+    return df.to_dict(orient="records") 
     
-    return df.to_dict(orient="records")    
     
 @app.post("/science_query")
 async def search_vector_db_science_table(query: Prompt):
@@ -61,23 +56,6 @@ async def text_input(query: Prompt) -> dict:
         "audio": audio_base64
     }
     
-    
-# @app.post("/text_input/news")
-# async def text_input(query: Prompt) -> dict:
-#     text_input = query.prompt
-#     result = await news_agent.run(text_input)
-       
-#     answer_text = result.output.articles
-
-#     audio_output = await transcribe_text(answer_text)
-#     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
-
-#     return {
-#         "text_input": text_input,
-#         "text_output": answer_text,
-#         "audio": audio_base64
-#     }
-
 
 @app.post("/transcribe/diary")
 async def transcribe(file: UploadFile = File(...)) -> dict:
@@ -94,8 +72,55 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
         "text_input": transcribed_text,
         "text_output": output_text,
         "audio": audio_base64
-    }
+    }    
     
+    
+#region NEWS   
+@app.get("/news")
+async def read_news():
+    file_path = f"{DATA_PATH}/omni_cleaned_with_keywords.json"
+    df = pd.read_json(file_path).sort_values(by="date", ascending=True).reset_index()
+    
+    return df.to_dict(orient="records")       
+    
+    
+@app.post("/text_input/news")
+async def text_input(query: Prompt) -> dict:
+    
+    # Sätter gräns för att undvika oändliga loopar som kostar fan
+    limits = UsageLimits(request_limit=5)
+    
+    try:
+        result = await news_agent.run(query.prompt, usage_limits=limits)
+        news_obj = result.output
+        
+        # bygger texten manuellt med BARA title och teaser_text
+        script = ""
+        
+        for article in news_obj.articles:
+            script += f"{article.title}. {article.teaser_text}. "
+        
+        # tar bort markdown-shit
+        answer_text = script.replace("*", "").replace("#", "")
+
+        audio_output = await transcribe_text(answer_text)
+        audio_base64 = base64.b64encode(audio_output).decode('utf-8')
+
+        return {
+            "text_input": query.prompt,
+            "text_output": answer_text,
+            "audio": audio_base64
+        }
+        
+    except UsageLimitExceeded:
+        fallback_text = "Jag fastnade i en sök-loop och avbröt för att spara pengar. Försök vara mer specifik."
+        
+        return {
+            "text_input": query.prompt,
+            "text_output": fallback_text,
+            "audio": None 
+        }
+            
     
 # @app.post("/transcribe/news")
 # async def transcribe(file: UploadFile = File(...)) -> dict:
@@ -117,7 +142,7 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
 #         "audio": audio_base64
 #     }
 
-# Borde det vara en annan agent eller ska det va samma som bara får ny prompt?    
+# region ROUTE
 async def route_input(text: str) -> str:
     intent = await route_agent.run(text) 
 

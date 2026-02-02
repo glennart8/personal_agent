@@ -16,8 +16,8 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 | **Databas / RAG** | **LanceDB** | Vektordatabas för dokument och minne |
 | **Audio Input** | `faster-whisper` | Använder WhisperModel för lokal Speech-to-Text (STT) |
 | **Audio Output** | `edge-tts` | Text-to-Speech (TTS) |
-| **Web / Scraping** | BeautifulSoup4, `googlesearch-python` | Hämta nyheter och events |
-| **Docker** | Containarize | Containarize every fucking thing - easy peasy för alla |
+| **Scraping** | BeautifulSoup4, FireCrawl | Hämta nyheter |
+| **Docker** | Containarize | Easy peasy för alla |
 | **FastAPI** | Api-lager | Mellanlager mellan backend och frontend |
 | **Streamlit** | Frontend | Dashboard |
 
@@ -41,7 +41,8 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 
 ### Sprint 2 - TOOLS/MCP
 - [x] Ingesta V-db med WorldHealthReport25 och hämta ut grejer
-- [ ] Scrapa nyhetssite och - sammanfatta - läs upp
+- [x] Scrapa nyhetssite och - sammanfatta - läs upp
+- [x] Visa KPI:er för nyheter
 - [ ] Läs upp mail, schema för dagen/veckan
 - [ ] Plotta fördelningen mellan nyhetskategorier
 - [ ] Plotta korrelationen mellan mående och dag/aktivitet

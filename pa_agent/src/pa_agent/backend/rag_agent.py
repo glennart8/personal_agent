@@ -1,32 +1,14 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsExtraction
+from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsResponse
 from constants import VECTOR_DATABASE_PATH
 import lancedb
+from pydantic_ai.models.openai import OpenAIChatModel
 
-from pydantic_ai.models.openai import OpenAIModel
 from dotenv import load_dotenv
-import os
-
-# from pydantic_ai.models.openai import OpenAIChatModel
-# from pydantic_ai.providers.openai import OpenAIProvider
-
-# ollama_provider = OpenAIProvider(
-#     base_url='http://localhost:11434/v1',
-#     api_key='ollama',  # Krävs ofta av klienten men ignoreras av Ollama
-# )
-
-# model = OpenAIChatModel(
-#     model_name="llama3.2",
-#     provider=ollama_provider
-# )
 
 load_dotenv()
 
-model = OpenAIModel(
-    model_name="gpt-4o-mini",
-)
-
-
+model = OpenAIChatModel('gpt-4o-mini')
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 
 # def search_vector_db(query: str, table: str) -> str:
@@ -48,7 +30,7 @@ def search_vector_db(query: str, table: str) -> str:
     db_table = vector_db.open_table(table)
     
     # begränsa till 5 träffar
-    results = db_table.search(query).limit(5).to_list()
+    results = db_table.search(query).limit(2).to_list()
     
     # rensa bort vektordata för att spara tokens - från 280 000 till ca 1 000 :S
     # behöver inte returnera vektorerna då vi inte ska göra något med dem
@@ -116,21 +98,40 @@ stt_agent = Agent(
     """
 )
 
+# news_agent = Agent(
+#     #model="google-gla:gemini-2.5-flash",
+#     model=model,
+#     retries=2,
+#     output_type=NewsExtraction,
+#     system_prompt="""
+#         Du är en assistent som extraherar nyheter. 
+        
+#         1. Var mycket kort och koncis.
+#         2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+#         3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+#     """,
+#     tools=[search_vector_db]
+# )
+
 news_agent = Agent(
     #model="google-gla:gemini-2.5-flash",
     model=model,
     retries=2,
-    output_type=NewsExtraction,
+    output_type=NewsResponse,
     system_prompt="""
         Du är en assistent som extraherar nyheter. 
+    
+        VIKTIGT OM VERKTYG:
+        1. Gör EN sökning i 'news'. 
+        2. Om du hittar relevant info -> Svara direkt.
+        3. Om du INTE hittar info -> Svara "Inga nyheter hittades" direkt. Sök INTE igen.
         
-        1. Var mycket kort och koncis.
-        2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
-        3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+        Övriga regler:
+        - Var kort och koncis.
+        - Inga bilder.
     """,
     tools=[search_vector_db]
 )
-
 
 route_agent = Agent(
     #model="google-gla:gemini-2.5-flash",
