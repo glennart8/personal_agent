@@ -3,6 +3,9 @@ from data_models import RagResponse, DiaryExtraction, RoutingDescision
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 
+from pydantic_ai.models.openai import OpenAIModel
+from dotenv import load_dotenv
+import os
 
 # from pydantic_ai.models.openai import OpenAIChatModel
 # from pydantic_ai.providers.openai import OpenAIProvider
@@ -17,25 +20,51 @@ import lancedb
 #     provider=ollama_provider
 # )
 
+load_dotenv()
+
+model = OpenAIModel(
+    model_name="gpt-4o-mini",
+)
+
 
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
+
+# def search_vector_db(query: str, table: str) -> str:
+#     """
+#     Search the vector database for entries from the specified table.
+    
+#     Args:
+#         query: The search query
+#         table: The table name ('diary' or 'science')
+#     """
+#     db_table = vector_db.open_table(table)
+#     response = db_table.search(query).to_list()
+#     return response
 
 def search_vector_db(query: str, table: str) -> str:
     """
     Search the vector database for entries from the specified table.
-    
-    Args:
-        query: The search query
-        table: The table name ('diary' or 'science')
     """
     db_table = vector_db.open_table(table)
-    response = db_table.search(query).to_list()
-    return response
+    
+    # begränsa till 5 träffar
+    results = db_table.search(query).limit(5).to_list()
+    
+    # rensa bort vektordata för att spara tokens - från 280 000 till ca 1 000 :S
+    # behöver inte returnera vektorerna då vi inte ska göra något med dem
+    clean_results = []
+    for item in results:
+        # Ta bort fältet som innehåller vektorn
+        item.pop('embedding', None) 
+                
+        clean_results.append(item)
 
+    # returnera som sträng
+    return str(clean_results)
 
 diary_agent = Agent(
-    model="google-gla:gemini-2.5-flash", 
-    #model=model,
+    #model="google-gla:gemini-2.5-flash", 
+    model=model,
     retries=2,
     system_prompt=(
         "You are an expert behavioral data analyst.\n"
@@ -53,8 +82,8 @@ diary_agent = Agent(
 )
 
 science_agent = Agent(
-    model="google-gla:gemini-2.5-flash", 
-    #model=model,
+    #model="google-gla:gemini-2.5-flash", 
+    model=model,
     retries=2,
     system_prompt=(
         "You are an expert in science topic of behavioral and mental health.\n"
@@ -73,8 +102,8 @@ science_agent = Agent(
 
 # Agent för extraktion (STT), borde testa att köra med OLLAMA
 stt_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
-    #model=model,
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=DiaryExtraction,
     system_prompt="""
@@ -89,7 +118,8 @@ stt_agent = Agent(
 
 
 route_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=RoutingDescision,
     system_prompt="""
@@ -102,3 +132,6 @@ route_agent = Agent(
         Svara endast med ordet ENTRY eller QUERY.
     """
 )
+
+
+# EN NEWS_AGENT

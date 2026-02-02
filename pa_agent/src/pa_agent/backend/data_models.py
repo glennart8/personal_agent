@@ -8,7 +8,8 @@ from typing import Optional, Literal
 
 load_dotenv()
 
-embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
+#embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
+embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
 
 # För sökning i V-db
 class Daily_mood(LanceModel):
@@ -59,4 +60,6 @@ class TTSConfig(BaseModel):
     input_file: Path = Field(..., description="Sökväg till textfilen som ska läsas")
     output_file: Optional[Path] = None
     voice: str = Field("sv-SE-SofieNeural") # "sv-SE-MattiasNeural"
+
+# En modell för news som LLM plockar ut
 

@@ -8,16 +8,32 @@ BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 def load_data():
     # Hämta bara om data frame inte finns i minnet
+    if "diary" not in st.session_state:
+        update_diary()
+
+    if "news" not in st.session_state:
+            response = requests.get(f"{BACKEND_BASE_URL}/news")
+            st.session_state["news"] = pd.DataFrame(response.json())
+
     if "df" not in st.session_state:
-        response = requests.get(f"{BACKEND_BASE_URL}/diary")
-        st.session_state["df"] = pd.DataFrame(response.json())
+        st.session_state["df"] = st.session_state["diary"]
+
+
+def update_diary():
+    # Uppdatera DF
+    response = requests.get(f"{BACKEND_BASE_URL}/diary")
+    df = st.session_state['diary'] = pd.DataFrame(response.json())
+    
+    return df
 
 def init_state():
-    st.session_state.setdefault("messages", [])
+    st.session_state.setdefault("messages_diary", [])
+    st.session_state.setdefault("messages_news", [])
     st.session_state.setdefault("neg_guidance_text", None)
     st.session_state.setdefault("pos_guidance_text", None)
 
-def show_activities(df, mood: str, count = 5):
+
+def show_activities(df, mood: str, column=None, count = 5):
     """
     Use either 'positivt' or 'negativt' as in parameter
     Returns a list of activities which could be linked to negative feelings 
@@ -26,15 +42,15 @@ def show_activities(df, mood: str, count = 5):
     df = df[df['mood'] == mood]
     
     # Få de mest förekommande aktiviteterna
-    activities = df['activity'].value_counts().head(count).index.tolist()   
+    activities = df[column].value_counts().head(count).index.tolist()   
     
     return activities
     
 # SKAPA EN METOD SOM TAR IN AKTIVITETERNA FRÅN SHOW_ACTIVITIES OCH HÄMTA HJÄLPSAM TEXT FRÅN SCIENCE     
 # Borde man kasta in en knapp som aktiverar denna?
     
-def give_helpful_advices(df, mood: str):
-    activities = show_activities(df, mood)
+def give_helpful_advices(df, mood: str, column = None):
+    activities = show_activities(df, mood, column)
     
     if not activities:
         return "Inga aktiviteter att analysera."
@@ -80,14 +96,14 @@ def calculate_streak(df, mood):
     return max_streak
 
 
-def show_kpis(df, mood):
+def show_kpis(df, mood, column):
     # Procentsats över positivt/negativt
     total = len(df)
     df_mood = df[df['mood'] == mood] 
     percentage = f"{round(len(df_mood) / total * 100)}%"
     
     # Sämsta/bästa veckodagen
-    worst_or_best_day = df[df['mood'] == mood]['weekday'].value_counts().idxmax()
+    worst_or_best_day = df[df['mood'] == mood][column].value_counts().idxmax()
     
     # Längsta streak
     streak = calculate_streak(df, mood)
@@ -95,6 +111,10 @@ def show_kpis(df, mood):
     return percentage, worst_or_best_day, streak
 
 def show_trend(df, num_days=3):
+    
+    if df is None:
+        return
+    
     # Visa grönt/rött beroende på om de senaste 3 dagarna är mest pos eller neg
     last_num_days = df.tail(num_days)['mood'].value_counts()
     pos_count = last_num_days.get('Positivt', 0) # Krashar annars om pos / neg inte finns
