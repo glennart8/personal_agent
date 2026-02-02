@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction, RoutingDescision
+from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsExtraction
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 
@@ -23,15 +23,23 @@ vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 def search_vector_db(query: str, table: str) -> str:
     """
     Search the vector database for entries from the specified table.
-    
-    Args:
-        query: The search query
-        table: The table name ('diary' or 'science')
     """
     db_table = vector_db.open_table(table)
-    response = db_table.search(query).to_list()
-    return response
+    
+    # begränsa till 5 träffar
+    results = db_table.search(query).limit(5).to_list()
+    
+    # rensa bort vektordata för att spara tokens - från 280 000 till ca 1 000 :S
+    # behöver inte returnera vektorerna då vi inte ska göra något med dem
+    clean_results = []
+    for item in results:
+        # Ta bort fältet som innehåller vektorn
+        item.pop('embedding', None) 
+                
+        clean_results.append(item)
 
+    # returnera som sträng
+    return str(clean_results)
 
 diary_agent = Agent(
     model="google-gla:gemini-2.5-flash", 
@@ -84,6 +92,19 @@ stt_agent = Agent(
         2. Använd användarens egna ord för aktiviteten.
         3. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
         4. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+    """
+)
+
+news_agent = Agent(
+    model="google-gla:gemini-2.5-flash",
+    retries=2,
+    output_type=NewsExtraction,
+    system_prompt="""
+        Du är en assistent som extraherar nyheter. 
+        
+        1. Var mycket kort och koncis.
+        2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+        3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
     """
 )
 
