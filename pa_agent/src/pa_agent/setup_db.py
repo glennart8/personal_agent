@@ -5,14 +5,25 @@ from backend.constants import VECTOR_DATABASE_PATH, DATA_PATH
 import time
 import json
 
-def setup_vector_db(path=VECTOR_DATABASE_PATH):
+def setup_vector_db(table: str, path=VECTOR_DATABASE_PATH):
     vector_db = lancedb.connect(uri=path)
     
-    # vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
-    # vector_db.create_table(name="science", schema=Article, mode="overwrite")
-    vector_db.create_table(name="news", schema=News, mode="overwrite")
+    if table == "diary":
+        vector_db.create_table(name="diary", schema=Daily_mood, mode="overwrite")
+        diary_table = vector_db.open_table("diary")
+        ingest_csv_to_vector_db(diary_table)
+        
+    if table == "science":
+        vector_db.create_table(name="science", schema=Article, mode="overwrite")
+        science_table = vector_db.open_table("science")
+        ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
+        ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
+        
+    if table == "news":
+        vector_db.create_table(name="news", schema=News, mode="overwrite")
+        news_table = vector_db.open_table("news")
+        ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned.json")
     
-    return vector_db
 
 def ingest_csv_to_vector_db(table):
     file_path = DATA_PATH / "dagbok.csv"
@@ -21,15 +32,14 @@ def ingest_csv_to_vector_db(table):
     # Lägger in activity, mood och veckodag i content för vektorsökning
     # första bokstaven stor på mood och feelings
     df['content'] = (
-        "Veckodag: " + df['weekday'] + 
+        "Veckodag: " + df['weekday'].str.capitalize() + 
         ". Aktivitet: " + df['activity'].str.capitalize() + 
         ". Mående: " + df['feelings'].str.capitalize() + 
         ". Humör: " + df['mood'].str.capitalize() +
         ". Nyckelord: " + df['keywords'].str.capitalize()
 
     )
-    
-    table.add(df.to_dict(orient="records"))
+    table.merge_insert("content").when_matched_update_all().when_not_matched_insert_all().execute(df)
 
 
 
@@ -58,7 +68,7 @@ def ingest_txt_to_vector_db(table, file_path, chunk_size=1000):
         batch = data_to_ingest[i:i+BATCH_SIZE]
         
         try:
-            table.add(batch)
+            table.merge_insert("content").when_matched_update_all().when_not_matched_insert_all().execute(batch)
             print(f"Sparade batch {i} till {i + len(batch)} av {len(data_to_ingest)}")
         except Exception as e:
             print(f"Fel vid batch {i}: {e}")
@@ -76,28 +86,38 @@ def ingest_crawl_to_vector_db(table, file_path):
     batch_size = 50
 
     df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.strftime('%Y-%m-%d')
-    print(f"data will be loaded in batches of batch size: {batch_size}")
+    print(f"Data will be loaded in batches of batch size: {batch_size}")
     for i in range(0, len(df_cleaned), batch_size):
-        print("starting to load crawl data")
+        print("Starting to load data...")
         batch_df = df_cleaned.iloc[i:i + batch_size]
 
         #merge_insert så man inte lägger in dubletter
         table.merge_insert("title").when_matched_update_all().when_not_matched_insert_all().execute(batch_df)
-        print(f"batch {i}/{len(df_cleaned) / batch_size} finished, sleeping for 30 seconds")
+        print(f"Finished loading batch {i}-{i+batch_size if i+batch_size < len(df_cleaned) else len(df_cleaned)} of {len(df_cleaned)}\nSleeping for 30 seconds")
         time.sleep(30) 
-        print("sleep finished")
-
+        
+    print("Load finished")
 
 if __name__ == "__main__":
     print("Sätter upp LanceDB...")
-    db = setup_vector_db()
+    
+    # Kommentera ut table som du inte vill overwrita, tex 'science'
+    setup_vector_db("diary")
+    # setup_vector_db("science")
+    # setup_vector_db("news")
+    
+    
+    # ----- Lägg till ny data utan att overwrita table -----
+    
+    # db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
     
     # diary_table = db.open_table("diary")
     # science_table = db.open_table("science")
-    news_table = db.open_table("news")
+    # news_table = db.open_table("news")
     
     # ingest_csv_to_vector_db(diary_table)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
-    ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned.json")
+    # ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned.json")
+    
     print("Db klar!")
