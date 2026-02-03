@@ -8,8 +8,8 @@ from typing import Optional, Literal
 
 load_dotenv()
 
-#embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
-embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
+embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
+# embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
 
 
 #region DIARY

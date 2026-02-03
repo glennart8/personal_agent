@@ -2,19 +2,14 @@ from fastapi import FastAPI, UploadFile, File
 from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report
 from data_models import Prompt
 from datetime import datetime
-import locale
 from data_ingestion import add_data
-from constants import DATA_PATH
+from constants import DATA_PATH, WEEKDAYS_SV
 import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
 import base64
 import time
 from pydantic_ai import UsageLimits, UsageLimitExceeded
 
-try:
-    locale.setlocale(locale.LC_TIME, "sv_SE.UTF-8")
-except:
-    pass 
 
 app = FastAPI()
 
@@ -82,6 +77,8 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
 async def read_news():
     file_path = f"{DATA_PATH}/omni_cleaned_with_keywords.json"
     df = pd.read_json(file_path).sort_values(by="date", ascending=True).reset_index()
+    
+    df = df.fillna(0)
     
     return df.to_dict(orient="records")       
     
@@ -160,10 +157,12 @@ async def route_input(text: str) -> str:
         result = await stt_agent.run(f"Analysera detta dagboksinlägg: {text}")
 
         time.sleep(2)
+        eng_weekday = datetime.now().strftime("%A")
+        swe_weekday = WEEKDAYS_SV.get(eng_weekday.capitalize(), eng_weekday.capitalize())
 
         new_entry = {
             "date": datetime.now().strftime("%Y-%m-%d"),
-            "weekday": datetime.now().strftime("%A").capitalize(),
+            "weekday": swe_weekday,
             "activity": result.output.activity.capitalize(),
             "feelings": result.output.feelings.capitalize(),
             "mood": result.output.mood.capitalize(),

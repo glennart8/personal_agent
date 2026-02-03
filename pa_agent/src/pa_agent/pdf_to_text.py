@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from constants import DATA_PATH
+from backend.constants import DATA_PATH
 
 def convert_pdf_to_txt(pdf_path, txt_export_path) -> str:
     """Extraherar text från PDF och sparar det direkt till en textfil."""

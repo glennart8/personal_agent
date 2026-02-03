@@ -2,8 +2,11 @@ import os
 import streamlit as st
 import requests
 import pandas as pd
+from dotenv import load_dotenv
 
-BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+load_dotenv()
+
+BACKEND_BASE_URL = os.getenv("BACKEND_URL")
 
 # För pills i chat-botten
 SUGGESTIONS_NEWS = {
@@ -69,20 +72,13 @@ def give_helpful_advices(df, mood: str, column = None):
     if not activities:
         return "Inga aktiviteter att analysera."
     
-    # if mood == 'Negativt':
+
     #     # Be LLM läsa listan och knyta an till forskning
     prompt = f""" 
         Read the list of activities {activities} and find relevent science articles, 
         use them as guidance, advice and motivation for the user.
         Keep it short and to the point.
     """ 
-    # else:
-    #     prompt = f"""
-    #         Read the list of activities {activities} and find relevent science articles, 
-    #         use them as guidance and advice the user to take them into consideration.
-    #         Keep it short and to the point.
-    #         Always respond in swedish!
-    #     """
         
     try:                
         response = requests.post(f"{BACKEND_BASE_URL}/science_query", json={"prompt": prompt})
