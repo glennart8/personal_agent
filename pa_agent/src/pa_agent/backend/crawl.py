@@ -147,6 +147,10 @@ async def add_keywords_with_agent(new_data):
 
     merged_df["image_description"] = merged_df["image_description"].astype(str)
     
+    merged_df["mood"] = merged_df["mood"].str.capitalize()
+    merged_df["date"] = pd.to_datetime(merged_df["date"]).dt.strftime('%Y-%m-%d')
+    merged_df['keywords'] = merged_df['keywords'].apply(lambda x: ", ".join([w[0].upper() + w[1:] for w in x.split(", ")]))
+    
     merged_df.to_json(DATA_PATH / "omni_cleaned_with_keywords.json", indent=4, orient="records", force_ascii=False, date_format="iso")
 
     print(f"\n\n{len(df_to_process)} articles was processed")
