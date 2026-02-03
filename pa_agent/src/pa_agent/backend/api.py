@@ -46,7 +46,9 @@ async def text_input(query: Prompt) -> dict:
     
     output_text = await route_input(text_input)
 
-    audio_output = await transcribe_text(output_text)
+    output_text_cleaned = output_text.replace("*", "").replace("#", "")
+
+    audio_output = await transcribe_text(output_text_cleaned)
     
     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
 
@@ -90,8 +92,11 @@ async def text_input(query: Prompt) -> dict:
     # Sätter gräns för att undvika oändliga loopar som kostar fan
     limits = UsageLimits(request_limit=5)
     
+    # lägg till dagens datum
+    dated_prompt = add_date_context(query.prompt)
+    
     try:
-        result = await news_agent.run(query.prompt, usage_limits=limits)
+        result = await news_agent.run(dated_prompt, usage_limits=limits)
         news_obj = result.output
         
         # bygger texten manuellt med BARA title och teaser_text
@@ -144,7 +149,10 @@ async def text_input(query: Prompt) -> dict:
 
 # region ROUTE
 async def route_input(text: str) -> str:
-    intent = await route_agent.run(text) 
+    # lägger datum här så har alla agenter tillgång till det direkt
+    text_with_date = add_date_context(text)
+
+    intent = await route_agent.run(text_with_date)
 
     time.sleep(2)
 
@@ -172,3 +180,9 @@ async def route_input(text: str) -> str:
         output_text = result.output.answer
 
     return output_text
+
+
+def add_date_context(text: str) -> str:
+    """Lägger till dagens datum i början av texten."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    return f"Idag är det {today}. {text}"

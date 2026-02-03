@@ -5,6 +5,20 @@ import pandas as pd
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
+# För pills i chat-botten
+SUGGESTIONS_NEWS = {
+    "⚽ Sport": "Ge mig de senaste sport-nyheterna",
+    "🚗 Bilar": "Nyheter inom bilindustrin",
+    "💰 Krypto": "Senaste inom krypto",
+    "🤖 AI": "Senaste inom AI"
+}
+
+SUGGESTIONS_DIARY = {
+    "🌿 Vad ger mig ro?": "Vad har jag skrivit att jag blir lugn och avslappnad av?",
+    "📉 När blir jag nedstämd?": "Analysera när och varför jag känner mig nedstämd.",
+    "😄 Vad gör mig glad?": "Vilka aktiviteter verkar göra mig på bäst humör?",
+    "📅 Sammanfatta veckan": "Ge mig en kort sammanfattning av hur jag mått den senaste veckan."
+}
 
 def load_data():
     # Hämta bara om data frame inte finns i minnet

@@ -4,7 +4,8 @@ import requests
 from css import get_css
 import base64
 from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
-from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary
+from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, SUGGESTIONS_NEWS, SUGGESTIONS_DIARY
+
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 get_css()
@@ -102,8 +103,26 @@ def layout():
                     with st.chat_message(message["role"]):
                         st.write(message["content"])
 
-                prompt = st.chat_input("Just tell me dude..")
-
+                chat_input_choice = st.chat_input("Just tell me dude..")
+                
+                # Visa pills
+                selected_pill = st.pills(
+                    "Förslag",
+                    options=SUGGESTIONS_DIARY.keys(), # sport, bilar osv
+                    label_visibility="collapsed",
+                    selection_mode="single",
+                    key="news_pills"
+                )
+                
+                # Om man skrivit i rutan gäller det, annars kollar vi om man klickat på en pill
+                prompt = None
+                
+                if chat_input_choice:
+                    prompt = chat_input_choice
+                elif selected_pill:
+                    # hämta value från suggestions
+                    prompt = SUGGESTIONS_DIARY[selected_pill]
+                
                 button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
 
                 with button_col:
@@ -309,7 +328,25 @@ def layout():
                     with st.chat_message(message["role"]):
                         st.write(message["content"])
 
-                prompt = st.chat_input("Just tell me dude..")
+                chat_input_choice = st.chat_input("Just tell me dude..")
+                                             
+                # Visa "Pills" (Knapparna)
+                selected_pill = st.pills(
+                    "Förslag",
+                    options=SUGGESTIONS_NEWS.keys(), # sport, bilar osv
+                    label_visibility="collapsed",
+                    selection_mode="single",
+                    key="news_pills"
+                )
+                
+                # Om man skrivit i rutan gäller det, annars kollar vi om man klickat på en pill
+                prompt = None
+                
+                if chat_input_choice:
+                    prompt = chat_input_choice
+                elif selected_pill:
+                    # hämta value - den långa frågan baserat på key
+                    prompt = SUGGESTIONS_NEWS[selected_pill]
 
                 button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
 

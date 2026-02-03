@@ -70,6 +70,5 @@ def get_css():
             caret-color: red;            
         }
         
-        
         </style>
     """, unsafe_allow_html=True)
