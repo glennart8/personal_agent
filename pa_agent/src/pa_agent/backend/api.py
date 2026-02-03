@@ -46,7 +46,9 @@ async def text_input(query: Prompt) -> dict:
     
     output_text = await route_input(text_input)
 
-    audio_output = await transcribe_text(output_text)
+    output_text_cleaned = output_text.replace("*", "").replace("#", "")
+
+    audio_output = await transcribe_text(output_text_cleaned)
     
     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
 
