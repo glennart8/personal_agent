@@ -8,8 +8,8 @@ from typing import Optional, Literal
 
 load_dotenv()
 
-embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
-# embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
+#embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
+embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
 
 
 #region DIARY
@@ -44,6 +44,7 @@ class NewsExtraction(BaseModel):
 class SlimArticle(BaseModel):
     title: str = Field(description="Rubriken på artikeln")
     teaser_text: str = Field(description="Kort sammanfattning eller ingress")
+    image_url: str = Field(description="En bild från artikeln")
 
 class NewsResponse(BaseModel):
     articles: list[SlimArticle]
