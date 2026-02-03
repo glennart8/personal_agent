@@ -120,7 +120,7 @@ def layout():
                 if chat_input_choice:
                     prompt = chat_input_choice
                 elif selected_pill:
-                    # hämta value - den långa frågan baserat på key
+                    # hämta value från suggestions
                     prompt = SUGGESTIONS_DIARY[selected_pill]
                 
                 button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
