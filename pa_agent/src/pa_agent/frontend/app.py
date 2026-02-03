@@ -4,10 +4,9 @@ import requests
 from css import get_css
 import base64
 from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
-from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, SUGGESTIONS_NEWS, SUGGESTIONS_DIARY
+from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, SUGGESTIONS_NEWS, SUGGESTIONS_DIARY, BACKEND_BASE_URL
 
 
-BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 get_css()
 
      

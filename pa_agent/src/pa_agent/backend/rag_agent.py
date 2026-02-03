@@ -8,20 +8,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-model = OpenAIChatModel('gpt-4o-mini')
+# model = OpenAIChatModel('gpt-4o-mini')
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 
-# def search_vector_db(query: str, table: str) -> str:
-#     """
-#     Search the vector database for entries from the specified table.
-    
-#     Args:
-#         query: The search query
-#         table: The table name ('diary' or 'science')
-#     """
-#     db_table = vector_db.open_table(table)
-#     response = db_table.search(query).to_list()
-#     return response
+
 
 def search_vector_db(query: str, table: str) -> str:
     """
@@ -45,8 +35,8 @@ def search_vector_db(query: str, table: str) -> str:
     return str(clean_results)
 
 diary_agent = Agent(
-    #model="google-gla:gemini-2.5-flash", 
-    model=model,
+    model="google-gla:gemini-2.5-flash", 
+    # model=model,
     retries=2,
     system_prompt=(
         "You are an expert behavioral data analyst.\n"
@@ -64,8 +54,8 @@ diary_agent = Agent(
 )
 
 science_agent = Agent(
-    #model="google-gla:gemini-2.5-flash", 
-    model=model,
+    model="google-gla:gemini-2.5-flash", 
+    # model=model,
     retries=2,
     system_prompt=(
         "You are an expert in science topic of behavioral and mental health.\n"
@@ -84,8 +74,8 @@ science_agent = Agent(
 
 # Agent för extraktion (STT), borde testa att köra med OLLAMA
 stt_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
-    model=model,
+    model="google-gla:gemini-2.5-flash",
+    # model=model,
     retries=2,
     output_type=DiaryExtraction,
     system_prompt="""
@@ -99,8 +89,8 @@ stt_agent = Agent(
 )
 
 news_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
-    model=model,
+    model="google-gla:gemini-2.5-flash",
+    # model=model,
     retries=2,
     output_type=NewsExtraction,
     system_prompt="""
@@ -114,8 +104,8 @@ news_agent = Agent(
 )
 
 news_agent_report = Agent(
-    #model="google-gla:gemini-2.5-flash",
-    model=model,
+    model="google-gla:gemini-2.5-flash",
+    # model=model,
     retries=2,
     output_type=NewsResponse,
     system_prompt="""
@@ -135,8 +125,8 @@ news_agent_report = Agent(
 )
 
 route_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
-    model=model,
+    model="google-gla:gemini-2.5-flash",
+    # model=model,
     retries=2,
     output_type=RoutingDescision,
     system_prompt="""
@@ -151,4 +141,3 @@ route_agent = Agent(
 )
 
 
-# EN NEWS_AGENT
