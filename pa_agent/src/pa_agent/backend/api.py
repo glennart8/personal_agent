@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent 
+from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report
 from data_models import Prompt
 from datetime import datetime
 import locale
@@ -96,14 +96,14 @@ async def text_input(query: Prompt) -> dict:
     dated_prompt = add_date_context(query.prompt)
     
     try:
-        result = await news_agent.run(dated_prompt, usage_limits=limits)
+        result = await news_agent_report.run(dated_prompt, usage_limits=limits)
         news_obj = result.output
         
         # bygger texten manuellt med BARA title och teaser_text
         script = ""
         
         for article in news_obj.articles:
-            script += f"{article.title}. {article.teaser_text}. "
+            script += f"{article.title}. {article.image_url} {article.teaser_text}.  "
         
         # tar bort markdown-shit
         answer_text = script.replace("*", "").replace("#", "")
@@ -113,7 +113,7 @@ async def text_input(query: Prompt) -> dict:
 
         return {
             "text_input": query.prompt,
-            "text_output": answer_text,
+            "text_output": script,
             "audio": audio_base64
         }
         

@@ -291,7 +291,7 @@ def layout():
                     st.divider()    
                     st.subheader("War and insanity!")
 
-                    mood = "negativt" # LITET NNNNNN
+                    mood = "Negativt" # LITET NNNNNN
                     activities = show_activities(df, mood, column="title")
                     
                     # skriv ut varje rad för sig
@@ -425,7 +425,7 @@ def layout():
                     st.divider()
                     
                     st.subheader("Lollipops and unicorns!")
-                    mood = "positivt"
+                    mood = "Positivt"
                     activities = show_activities(df, mood, column="title")
                     
                     for activity in activities:

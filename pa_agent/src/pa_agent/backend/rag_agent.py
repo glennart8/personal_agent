@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsResponse
+from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsResponse, NewsExtraction
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 from pydantic_ai.models.openai import OpenAIChatModel
@@ -45,8 +45,8 @@ def search_vector_db(query: str, table: str) -> str:
     return str(clean_results)
 
 diary_agent = Agent(
-    model="google-gla:gemini-2.5-flash", 
-    # model=model,
+    #model="google-gla:gemini-2.5-flash", 
+    model=model,
     retries=2,
     system_prompt=(
         "You are an expert behavioral data analyst.\n"
@@ -64,8 +64,8 @@ diary_agent = Agent(
 )
 
 science_agent = Agent(
-    model="google-gla:gemini-2.5-flash", 
-    # model=model,
+    #model="google-gla:gemini-2.5-flash", 
+    model=model,
     retries=2,
     system_prompt=(
         "You are an expert in science topic of behavioral and mental health.\n"
@@ -84,8 +84,8 @@ science_agent = Agent(
 
 # Agent för extraktion (STT), borde testa att köra med OLLAMA
 stt_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
-    # model=model,
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=DiaryExtraction,
     system_prompt="""
@@ -98,24 +98,24 @@ stt_agent = Agent(
     """
 )
 
-# news_agent = Agent(
-#     #model="google-gla:gemini-2.5-flash",
-#     model=model,
-#     retries=2,
-#     output_type=NewsExtraction,
-#     system_prompt="""
-#         Du är en assistent som extraherar nyheter. 
-        
-#         1. Var mycket kort och koncis.
-#         2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
-#         3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
-#     """,
-#     tools=[search_vector_db]
-# )
-
 news_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
-    # model=model,
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
+    retries=2,
+    output_type=NewsExtraction,
+    system_prompt="""
+        Du är en assistent som extraherar nyheter. 
+        
+        1. Var mycket kort och koncis.
+        2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+        3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+    """,
+    #tools=[search_vector_db]
+)
+
+news_agent_report = Agent(
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=NewsResponse,
     system_prompt="""
@@ -125,17 +125,18 @@ news_agent = Agent(
         1. Gör EN sökning i 'news'. 
         2. Om du hittar relevant info -> Svara direkt.
         3. Om du INTE hittar info -> Svara "Inga nyheter hittades" direkt. Sök INTE igen.
+        4. Svara alltid på svenska.
         
         Övriga regler:
         - Var kort och koncis.
         - Inga bilder.
     """,
-    # tools=[search_vector_db]
+    tools=[search_vector_db]
 )
 
 route_agent = Agent(
-    model="google-gla:gemini-2.5-flash",
-    # model=model,
+    #model="google-gla:gemini-2.5-flash",
+    model=model,
     retries=2,
     output_type=RoutingDescision,
     system_prompt="""
