@@ -7,8 +7,12 @@ from constants import DATA_PATH
 from datetime import datetime, timedelta
 from rag_agent import news_agent
 import asyncio
+import requests
 
 load_dotenv()
+
+BACKEND_BASE_URL = os.getenv("BACKEND_URL")
+
 
 def crawl(url: str, limit: int) -> list: 
     """
@@ -29,7 +33,7 @@ def crawl(url: str, limit: int) -> list:
                         )
     crawl_list.append(full_crawl)
     page_name = url.replace("https://", "").split('.')[0]
-    print(f"crawl from page: {page_name} finished")
+    print(f"crawl from page {page_name} finished")
 
     return crawl_list, page_name
 
@@ -39,6 +43,8 @@ def sort_crawl(crawl_list) -> list:
     Sort the crawls to only take actual articles with specified date. 
     """
     relevant_crawls = []
+    
+    
     for full_crawl in crawl_list: # för varje artikel från crawlingen
         for item in full_crawl.data: 
             metadata_dict = item.metadata.model_dump() #Hämta ut kolumen og:type från varje artikel i CrawlJob. 
@@ -58,7 +64,10 @@ def save_crawl_to_json(json_data: list, page_name: str):
     """
     Save relevant crawls to a json file for reading into vectorDB later. 
     """
-    old_df = pd.read_json(f"{DATA_PATH}/{page_name}_cleaned.json")
+    # old_df = pd.read_json(f"{DATA_PATH}/{page_name}_cleaned.json")
+    data = requests.get(f"{BACKEND_BASE_URL}/news/cleaned")
+    
+    old_df = pd.DataFrame(data.json())
     
     json_data_df = pd.DataFrame([item["metadata"] for item in json_data]) #skapa df från dictionary'n metadata, där allt roligt finns!
 
@@ -86,9 +95,12 @@ def save_crawl_to_json(json_data: list, page_name: str):
     df_cleaned = df_cleaned.drop_duplicates(subset="title", keep="first") #ta bort dubletter
     
     json_str = df_cleaned.to_json(indent=4, force_ascii=False, orient="records", date_format="iso") #spara den rena df:n till json
-    with open(f"{DATA_PATH}/{page_name}_cleaned.json", "w", encoding="utf8") as file: #{str(datetime.now().strftime("%d_%m_%Y_%H-%M-%S"))}.json", "w", encoding="utf-8") as file:
-        file.write(json_str)
-    
+
+    data_to_send = {
+        "page_name": f"{page_name}_cleaned.json",
+        "data": json_str
+    }
+    requests.post(f"{BACKEND_BASE_URL}/news/post_news", json=data_to_send)
     print(f"{page_name} crawl with {len(df_cleaned)} results was written to json-file")
     
     return json_data_df
@@ -99,12 +111,12 @@ async def add_keywords_with_agent(new_data):
     """
     output_list = []
 
-    old_df = pd.read_json(DATA_PATH / "omni_cleaned_with_keywords.json")
+    data = requests.get(f"{BACKEND_BASE_URL}/news")
+    titles_already_processed = {row["title"] for row in data.json()}
+    
+    old_df = pd.DataFrame(data.json())
     old_df["date"] = pd.to_datetime(old_df["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
-
-    with open(DATA_PATH / "omni_cleaned_with_keywords.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-    titles_already_processed = {row["title"] for row in data}
+    
     df_to_process = new_data.copy()
     df_to_process =  new_data[~new_data["title"].isin(titles_already_processed)] #om den nya data inte innehåller de gamla titlarna, skicka in det till agenten
 
@@ -151,19 +163,26 @@ async def add_keywords_with_agent(new_data):
     merged_df["date"] = pd.to_datetime(merged_df["date"]).dt.strftime('%Y-%m-%d')
     merged_df['keywords'] = merged_df['keywords'].apply(lambda x: ", ".join([w[0].upper() + w[1:] for w in x.split(", ")]))
     
-    merged_df.to_json(DATA_PATH / "omni_cleaned_with_keywords.json", indent=4, orient="records", force_ascii=False, date_format="iso")
+    merged_df_json = merged_df.to_json(indent=4, orient="records", force_ascii=False, date_format="iso")
+    data_to_send = {
+        "page_name": f"{page_name}_cleaned_with_keywords.json",
+        "data": merged_df_json
+    }
+    requests.post(f"{BACKEND_BASE_URL}/news/post_news", json=data_to_send)
 
     print(f"\n\n{len(df_to_process)} articles was processed")
 
 if __name__ == "__main__":
     
     url = "https://omni.se" #Lägg till vilken länk den ska crawla
-    limit = 100 #ange hur många sidor den ska ta
-    
+    limit = 500 #ange hur många sidor den ska ta
+    print("Your limit is: ", limit)
     crawl_list, page_name = crawl(url, limit)
     json_data = sort_crawl(crawl_list)
     json_data_df = save_crawl_to_json(json_data, page_name) # din fil kommer sparas till json i /data i länknamnet
     
     asyncio.run(add_keywords_with_agent(json_data_df))
+    
+    
     
 

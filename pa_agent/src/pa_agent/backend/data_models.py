@@ -49,6 +49,10 @@ class SlimArticle(BaseModel):
 class NewsResponse(BaseModel):
     articles: list[SlimArticle]
 
+class PostNews(BaseModel):
+    page_name: str
+    data: str
+
 # För sökning av nyhetsartiklar i V-db
 class News(LanceModel):
     news_section: str
@@ -73,7 +77,7 @@ class RagResponse(BaseModel):
     
 class Prompt(BaseModel):
     prompt: str = Field(description="prompt from user, if empty consider it as missing")
-    
+
     
 #region MISC    
 class RoutingDescision(BaseModel):
