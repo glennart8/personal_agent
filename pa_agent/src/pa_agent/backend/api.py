@@ -1,9 +1,10 @@
+import lancedb
 from fastapi import FastAPI, UploadFile, File
 from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report
 from data_models import Prompt, PostNews
 from datetime import datetime
 from data_ingestion import add_data, ingest_crawl_to_vector_db
-from constants import DATA_PATH, WEEKDAYS_SV
+from constants import DATA_PATH, WEEKDAYS_SV, VECTOR_DATABASE_PATH
 import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
 import base64
@@ -22,8 +23,19 @@ async def root():
 #region DIARY
 @app.get("/diary")
 async def read_diary():
-    file_path = f"{DATA_PATH}/dagbok.csv"
-    df = pd.read_csv(file_path)
+    # file_path = f"{DATA_PATH}/dagbok.csv"
+    # df = pd.read_csv(file_path)
+    
+    # koppla upp mot db och hämta tabellen istälelt
+    db = lancedb.connect(VECTOR_DATABASE_PATH)
+    table = db.open_table("diary")
+    
+    # konvertera till pandas df
+    df = table.to_pandas()
+    
+    # skipapr embedding-kolumnen då den inte behöver visas i frontend
+    if "embedding" in df.columns:
+        df = df.drop(columns=["embedding"])
     
     return df.to_dict(orient="records") 
     
