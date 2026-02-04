@@ -171,6 +171,40 @@ def timeline_plot(df: pd.DataFrame, y: str):
     
     return fig
 
+def scatter_plot(df: pd.DataFrame, x: str, y: str):
+
+    df = df[df["mood"] != "Neutralt"]
+    df = df[df["news_section"] != "Annonsmaterial"]
+    df = df.groupby(["news_section", "mood"]).size().reset_index(name="count")
+    
+    fig = px.scatter(
+        df, 
+        x=x, 
+        y=y, 
+        size=x,           # Gör prickarna till bubblor baserat på antal
+        color="mood", 
+        hover_name="news_section", 
+        size_max=40,            # Justera för att pricken inte ska bli för stor
+        labels={"count": "Antal artiklar", "news_section": "Kategori", "mood": "Mood"},
+        color_discrete_map={"Positivt": "green", "Negativt": "red"}
+    )
+
+    # Snygga till layouten ytterligare
+    fig.update_layout(
+        xaxis_title="Antal artiklar",
+        yaxis_title="",
+        font=dict(family="Arial", size=12)
+    )
+        # ta bort rutan
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",  # Gör bakgrunden helt genomskinlig
+        plot_bgcolor="rgba(0,0,0,0)",   # Gör själva plot-ytan genomskinlig
+        margin=dict(t=0, l=0, r=0, b=0) # Tar bort all whitespace runt cirkeln
+    )
+    
+    return fig
+    
+
 def pie_plot(df, x, y):
     fig = px.sunburst(
         df,
