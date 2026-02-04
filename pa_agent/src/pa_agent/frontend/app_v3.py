@@ -3,7 +3,7 @@ import streamlit as st
 import requests
 from css import get_css
 import base64
-from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot
+from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot, scatter_plot
 from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, SUGGESTIONS_NEWS, SUGGESTIONS_DIARY
 
 
@@ -291,7 +291,7 @@ def layout():
                     st.divider()    
                     st.subheader("War and insanity!")
 
-                    mood = "negativt" # LITET NNNNNN
+                    mood = "Negativt" # LITET NNNNNN
                     activities = show_activities(df, mood, column="title")
                     
                     # skriv ut varje rad för sig
@@ -425,7 +425,7 @@ def layout():
                     st.divider()
                     
                     st.subheader("Lollipops and unicorns!")
-                    mood = "positivt"
+                    mood = "Positivt"
                     activities = show_activities(df, mood, column="title")
                     
                     for activity in activities:
@@ -448,11 +448,48 @@ def layout():
 
         elif page == "Stats":
             # Visa plots för nyheter
+            news_df = df.sort_values(by="date", ascending=False)  
+            # raw_url = "https:\/\/gfx.omni.se\/images\/9eea82fc-83c2-4c09-b877-b44728567cda?h=708&tight=false&w=1372"  
+            # clean_url = raw_url.replace(r"\/", "/")
+            # st.image(clean_url)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Top Bad Triggers")
+                negative_triggers = plot_negative_triggers(news_df)
+                st.plotly_chart(negative_triggers)
+            
+            with col2:
+                st.subheader("Pos. vs Neg. Keywords")
+                keywords_sunburst = plot_keyword_sunburst(news_df)
+                st.plotly_chart(keywords_sunburst)
+                
+            # Line plot som visar mood över tid
+            st.markdown("### Scatter of news sections")
+            line_plot_mood = scatter_plot(news_df, "count", "news_section") 
+            st.plotly_chart(line_plot_mood)       
+            
+            keyword_plot=plot_combined_triggers(news_df)
+            st.plotly_chart(keyword_plot)
             pass
 
-        elif page == "Read news":
-            # st.dataframe(news_df)
-            pass
+        elif page == "News":
+            news_df = df.sort_values(by="date", ascending=False)  
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.header("Diary")
+                diary_df = df.sort_values(by="date", ascending=False)
+                st.dataframe(diary_df)
+            
+            with col2:
+                st.markdown("<br><br>", unsafe_allow_html=True)
+                # Pie plot som visar mood över veckodagarna
+                import pandas as pd
+                df_date = news_df.copy()
+                df_date["date"] = pd.to_datetime(df_date["date"])
+                df_date["weekday"] = df_date["date"].dt.day_name()
+                pie_plot_mood_weekdays = pie_plot(df_date, df_date['weekday'], df_date['mood'])
+                st.plotly_chart(pie_plot_mood_weekdays)
 #endregion
 
 if __name__ == "__main__":
