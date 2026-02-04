@@ -1,5 +1,5 @@
 from pydantic_ai import Agent
-from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsResponse
+from data_models import RagResponse, DiaryExtraction, RoutingDescision, NewsResponse, NewsExtraction
 from constants import VECTOR_DATABASE_PATH
 import lancedb
 from pydantic_ai.models.openai import OpenAIChatModel
@@ -8,20 +8,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-model = OpenAIChatModel('gpt-4o-mini')
+# model = OpenAIChatModel('gpt-4o-mini')
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 
-# def search_vector_db(query: str, table: str) -> str:
-#     """
-#     Search the vector database for entries from the specified table.
-    
-#     Args:
-#         query: The search query
-#         table: The table name ('diary' or 'science')
-#     """
-#     db_table = vector_db.open_table(table)
-#     response = db_table.search(query).to_list()
-#     return response
+
 
 def search_vector_db(query: str, table: str) -> str:
     """
@@ -98,22 +88,22 @@ stt_agent = Agent(
     """
 )
 
-# news_agent = Agent(
-#     #model="google-gla:gemini-2.5-flash",
-#     model=model,
-#     retries=2,
-#     output_type=NewsExtraction,
-#     system_prompt="""
-#         Du är en assistent som extraherar nyheter. 
-        
-#         1. Var mycket kort och koncis.
-#         2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
-#         3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
-#     """,
-#     tools=[search_vector_db]
-# )
-
 news_agent = Agent(
+    model="google-gla:gemini-2.5-flash",
+    # model=model,
+    retries=2,
+    output_type=NewsExtraction,
+    system_prompt="""
+        Du är en assistent som extraherar nyheter. 
+        
+        1. Var mycket kort och koncis.
+        2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
+        3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
+    """,
+    #tools=[search_vector_db]
+)
+
+news_agent_report = Agent(
     model="google-gla:gemini-2.5-flash",
     # model=model,
     retries=2,
@@ -125,12 +115,13 @@ news_agent = Agent(
         1. Gör EN sökning i 'news'. 
         2. Om du hittar relevant info -> Svara direkt.
         3. Om du INTE hittar info -> Svara "Inga nyheter hittades" direkt. Sök INTE igen.
+        4. Svara alltid på svenska.
         
         Övriga regler:
         - Var kort och koncis.
         - Inga bilder.
     """,
-    # tools=[search_vector_db]
+    tools=[search_vector_db]
 )
 
 route_agent = Agent(
@@ -150,4 +141,3 @@ route_agent = Agent(
 )
 
 
-# EN NEWS_AGENT

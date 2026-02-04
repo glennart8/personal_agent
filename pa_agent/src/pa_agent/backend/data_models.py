@@ -44,6 +44,7 @@ class NewsExtraction(BaseModel):
 class SlimArticle(BaseModel):
     title: str = Field(description="Rubriken på artikeln")
     teaser_text: str = Field(description="Kort sammanfattning eller ingress")
+    image_url: str = Field(description="En bild från artikeln")
 
 class NewsResponse(BaseModel):
     articles: list[SlimArticle]

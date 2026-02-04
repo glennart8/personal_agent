@@ -3,7 +3,7 @@ import pandas as pd
 from backend.data_models import Daily_mood, Article, News
 from backend.constants import VECTOR_DATABASE_PATH, DATA_PATH
 import time
-# import json
+
 
 def setup_vector_db(table: str, path=VECTOR_DATABASE_PATH):
     vector_db = lancedb.connect(uri=path)
@@ -93,9 +93,9 @@ def ingest_crawl_to_vector_db(table, file_path):
     df_cleaned["date"] = pd.to_datetime(df_cleaned["date"]).dt.strftime('%Y-%m-%d')
     df_cleaned["mood"] = df_cleaned["mood"].str.capitalize()
     
-    print(f"Data will be loaded in batches of batch size: {batch_size}")
+    print(f"\n\nData will be loaded in batches of batch size: {batch_size}\n\n")
     for i in range(0, len(df_cleaned), batch_size):
-        print("Starting to load data...")
+        print("\nStarting to load data...\n")
         batch_df = df_cleaned.iloc[i:i + batch_size]
 
         #merge_insert så man inte lägger in dubletter
@@ -109,22 +109,22 @@ if __name__ == "__main__":
     print("Sätter upp LanceDB...")
     
     # Kommentera ut table som du inte vill overwrita, tex 'science'
-    # setup_vector_db("diary")
+    setup_vector_db("diary")
     # setup_vector_db("science")
     # setup_vector_db("news")
     
     
     # ----- Lägg till ny data utan att overwrita table -----
     
-    db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
+    # db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
     
     # diary_table = db.open_table("diary")
     # science_table = db.open_table("science")
-    news_table = db.open_table("news")
+    # news_table = db.open_table("news")
     
     # ingest_csv_to_vector_db(diary_table)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
-    ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned_with_keywords.json")
+    # ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned_with_keywords.json")
     
     print("Db klar!")
