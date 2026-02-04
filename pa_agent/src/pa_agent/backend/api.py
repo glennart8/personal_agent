@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report
-from data_models import Prompt
+from data_models import Prompt, PostNews
 from datetime import datetime
-from data_ingestion import add_data
+from data_ingestion import add_data, ingest_crawl_to_vector_db
 from constants import DATA_PATH, WEEKDAYS_SV
 import pandas as pd
 from voice_transcription import transcribe_audio, transcribe_text
@@ -76,12 +76,20 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
 @app.get("/news")
 async def read_news():
     file_path = f"{DATA_PATH}/omni_cleaned_with_keywords.json"
-    df = pd.read_json(file_path).sort_values(by="date", ascending=True).reset_index()
+    df = pd.read_json(file_path) #.sort_values(by="date", ascending=True).reset_index()
     
-    df = df.fillna(0)
+    df = df.fillna("")
     
     return df.to_dict(orient="records")       
+
+@app.get("/news/cleaned")
+async def read_news():
+    file_path = f"{DATA_PATH}/omni_cleaned.json"
+    df = pd.read_json(file_path) #.sort_values(by="date", ascending=True).reset_index()
     
+    df = df.fillna("")
+    
+    return df.to_dict(orient="records")   
     
 @app.post("/text_input/news")
 async def text_input(query: Prompt) -> dict:
@@ -122,7 +130,21 @@ async def text_input(query: Prompt) -> dict:
             "text_output": fallback_text,
             "audio": None 
         }
-            
+        
+
+    
+@app.post("/news/post_news")
+async def post_news(payload: PostNews) -> str:
+
+    file_path = f"{DATA_PATH}/{payload.page_name}"
+    with open(file_path, "w", encoding="utf8") as file: 
+        file.write(payload.data)
+    
+    if payload.page_name == "omni_cleaned_with_keywords.json":
+        await ingest_crawl_to_vector_db(file_path)
+    
+    return "data was crawled and ingested with success"
+
     
 # @app.post("/transcribe/news")
 # async def transcribe(file: UploadFile = File(...)) -> dict:
