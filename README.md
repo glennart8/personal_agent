@@ -10,6 +10,11 @@ Här får du svart på vitt se vad som påverkar just ditt välmående – både
 
 ---
 
+### Testa här: 
+https://pa-frontend-cffkhcaueqhgc8cw.swedencentral-01.azurewebsites.net/
+
+---
+
 ## Huvudfunktioner
 
 * **Röststyrd Dagbok & Måendeanalys:** Prata in dina tankar. Ställ frågor om ditt liv. Agenten transkriberar (STT), sparar och analyserar sentiment. Visualisera hur ditt mående korrelerar med aktiviteter.
@@ -28,25 +33,19 @@ Här får du svart på vitt se vad som påverkar just ditt välmående – både
 | **Databas / RAG** | **LanceDB** | Vektordatabas för dokument och minne |
 | **Audio Input** | `faster-whisper` | Använder WhisperModel för lokal Speech-to-Text (STT) |
 | **Audio Output** | `edge-tts` | Text-to-Speech (TTS) |
-| **Scraping** | BeautifulSoup4, FireCrawl | Informationshämtning från webbsidor |
+| **Scraping** | FireCrawl | Informationshämtning från webbsidor |
 | **Docker** | Containarize | Easy peasy för alla |
 | **FastAPI** | Api-lager | Mellanlager mellan backend och frontend |
 | **Streamlit** | Frontend | Dashboard |
 
 ## Kom igång GUIDE
 
-- 1. Klona repot
-- 2. Skapa en `.env`-fil i roten med nödvändiga nycklar (t.ex. `BACKEND_URL`, `OPENAI_API_KEY`). Annan nyckel - byt modell
-
-- 3. if docker: 
-- Vad ändra i docker-compose???
-- docker-compose up --build, sedan http://localhost:8501 i webbläsaren
-
-- 3. elif Lokal utveckling:
-- Kör uv sync för att hämta dependencies
-- Terminal 1: uv run uvicorn api:app --reload, 
-- Terminal 2: uv run streamlit run app.py
-
+1. Klona repot
+2. Skapa en `.env`-fil i roten. Kolla .env-example 
+3. Kör uv sync för att hämta dependencies
+4. Terminal 1: uv run uvicorn api:app --reload
+5. Terminal 2: uv run streamlit run app.py
+6. För testdata: kör setup_db.py först.
 ---
 
 ## Sprints (Kanban)
@@ -73,7 +72,7 @@ Här får du svart på vitt se vad som påverkar just ditt välmående – både
 - [x] Plotta fördelningen mellan nyhetskategorier
 
 
-### Möjligheter
+### Features for future
 - Koppla dagbok till spotify för att se vilken musik du lyssnar på negativa dagar, samma med filmer
 - Koppla sömn-data till dagboken för att se korrelation
 - Koppla skärmtid (scrollande osv) till upplevt känsla dagen eller dagen efter

@@ -101,16 +101,16 @@ def layout():
                 for message in st.session_state.messages_diary:
                     with st.chat_message(message["role"]):
                         st.write(message["content"])
-
+               
                 chat_input_choice = st.chat_input("Just tell me dude..")
                 
                 # Visa pills
                 selected_pill = st.pills(
                     "Förslag",
-                    options=SUGGESTIONS_DIARY.keys(), # sport, bilar osv
+                    options=SUGGESTIONS_DIARY.keys(),
                     label_visibility="collapsed",
                     selection_mode="single",
-                    key="news_pills"
+                    key="diary_pills"
                 )
                 
                 # Om man skrivit i rutan gäller det, annars kollar vi om man klickat på en pill
@@ -121,11 +121,11 @@ def layout():
                 elif selected_pill:
                     # hämta value från suggestions
                     prompt = SUGGESTIONS_DIARY[selected_pill]
-                
+                    
                 button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
 
                 with button_col:
-                    send_clicked = st.button("Send", type="primary", use_container_width=True)
+                    send_clicked = st.button("Send", type="primary", use_container_width=True, key="btn_send")
 
                 with mic_col:
                     audio = st.audio_input("Voice", label_visibility="collapsed")
@@ -149,16 +149,15 @@ def layout():
                                     if data.get("audio"):
                                         audio_bytes = base64.b64decode(data["audio"])
                                         st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                
+                                                                                                                 
                                 if "df" in st.session_state:
                                     del st.session_state["df"]
-    
+
                             else:
                                 st.error(f"Backend sucks: {response.status_code}")
                         except Exception as e:
                             st.error(f"Connection failed: {e}")
                                 
-
                 # TEXT
                 elif prompt:
                     # spara frågan direkt
@@ -187,7 +186,7 @@ def layout():
                                             
                                 if "df" in st.session_state:
                                     del st.session_state["df"]
-
+                                                                                                 
                             else:
                                 st.error(f"Backend sucks: {response.status_code}")
                         except Exception as e:
@@ -357,7 +356,6 @@ def layout():
 
                 st.divider()
 
-
                 if audio and send_clicked:
                     files = {"file": ("recording.wav", audio, "audio/wav")}
                     with st.spinner("Transcribing..."):
@@ -409,7 +407,7 @@ def layout():
                                             
                                 if "df" in st.session_state:
                                     del st.session_state["df"]
-
+                                    
                             else:
                                 st.error(f"Backend sucks: {response.status_code}")
                         except Exception as e:
