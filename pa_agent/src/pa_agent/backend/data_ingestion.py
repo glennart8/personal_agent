@@ -18,10 +18,10 @@ def add_data(data: dict, table: str = "diary"):
     print(df)
     
     new_df['content'] = (
-        "Veckodag: " + df['weekday'] + 
-        ". Aktivitet: " + df['activity'].str.capitalize() + 
-        ". Mående: " + df['feelings'].str.capitalize() + 
-        ". Humör: " + df['mood'].str.capitalize() 
+        "Veckodag: " + new_df['weekday'] + 
+        ". Aktivitet: " + new_df['activity'].str.capitalize() + 
+        ". Mående: " + new_df['feelings'].str.capitalize() + 
+        ". Humör: " + new_df['mood'].str.capitalize() 
     )
     
     db[table].add(new_df)
