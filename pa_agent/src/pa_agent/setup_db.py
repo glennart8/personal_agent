@@ -109,22 +109,22 @@ if __name__ == "__main__":
     print("Sätter upp LanceDB...")
     
     # Kommentera ut table som du inte vill overwrita, tex 'science'
-    setup_vector_db("diary")
-    setup_vector_db("science")
-    setup_vector_db("news")
+    # setup_vector_db("diary")
+    # setup_vector_db("science")
+    # setup_vector_db("news")
     
     
     # ----- Lägg till ny data utan att overwrita table -----
     
-    # db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
+    db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
     
-    # diary_table = db.open_table("diary")
+    diary_table = db.open_table("diary")
     # science_table = db.open_table("science")
-    # news_table = db.open_table("news")
+    news_table = db.open_table("news")
     
     # ingest_csv_to_vector_db(diary_table)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "whr25.txt", chunk_size=1000)
     # ingest_txt_to_vector_db(science_table, DATA_PATH / "the-perma-model.txt", chunk_size=1000)
-    # ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned_with_keywords.json")
+    ingest_crawl_to_vector_db(news_table, DATA_PATH / "omni_cleaned_with_keywords.json")
     
     print("Db klar!")

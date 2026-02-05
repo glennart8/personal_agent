@@ -6235,7 +6235,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-31",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"Brand, Räddningstjänst, Halmstad"
     },
@@ -6575,7 +6575,7 @@
         "news_section":"Inrikes",
         "date":"2026-02-02",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Brott, Polis, Samhälle"
     },
@@ -7058,5 +7058,15 @@
         "image_url":"https:\/\/gfx.omni.se\/images\/c105cda6-7716-4efe-a48c-290c24461908?h=708&tight=false&w=1372",
         "mood":"Negativt",
         "keywords":"Brott, Skandal, Personlighet"
+    },
+    {
+        "title":"Pojke åtalas för utpressning efter JLC:s guldfynd",
+        "teaser_text":"En 16-årig pojke har åtalats misstänkt för bland annat försök till grov utpressning efter att ha försökt pressa JLC-profilen Lucas Simonsson på en kvarts miljon kronor i samband med humorgruppens guldfynd, rapporterar GP och Mölndals-Posten.",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-04",
+        "image_description":"Illustrationsbild.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/dc97e178-c2e8-4615-b223-1fe394e662be?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Utpressning, Brott, Tonåring"
     }
 ]
