@@ -8,6 +8,17 @@ load_dotenv()
 
 BACKEND_BASE_URL = os.getenv("BACKEND_URL")
 
+
+WEEKDAYS_SV = {
+    "Monday": "Måndag",
+    "Tuesday": "Tisdag",
+    "Wednesday": "Onsdag",
+    "Thursday": "Torsdag",
+    "Friday": "Fredag",
+    "Saturday": "Lördag",
+    "Sunday": "Söndag"
+}
+
 # För pills i chat-botten
 SUGGESTIONS_NEWS = {
     "⚽ Sport": "Ge mig de senaste sport-nyheterna",
@@ -29,8 +40,7 @@ def load_data():
         update_diary()
 
     if "news" not in st.session_state:
-            response = requests.get(f"{BACKEND_BASE_URL}/news")
-            st.session_state["news"] = pd.DataFrame(response.json())
+        update_news()
 
     if "df" not in st.session_state:
         st.session_state["df"] = st.session_state["diary"]
@@ -39,6 +49,12 @@ def load_data():
 def update_diary():
     response = requests.get(f"{BACKEND_BASE_URL}/diary")
     df = st.session_state['diary'] = pd.DataFrame(response.json())
+    
+    return df
+
+def update_news():
+    response = requests.get(f"{BACKEND_BASE_URL}/news")
+    df = st.session_state["news"] = pd.DataFrame(response.json())
     
     return df
 
@@ -60,6 +76,7 @@ def show_activities(df, mood: str, column=None, count = 5):
     
     # Få de mest förekommande aktiviteterna
     activities = df[column].value_counts().head(count).index.tolist()   
+    activities = [a.strip() for a in activities]
     
     return activities
     
