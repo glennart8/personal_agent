@@ -94,6 +94,7 @@ async def read_news():
     
     return df.to_dict(orient="records")       
 
+
 @app.get("/news/cleaned")
 async def read_news():
     file_path = f"{DATA_PATH}/omni_cleaned.json"
@@ -102,6 +103,20 @@ async def read_news():
     df = df.fillna("")
     
     return df.to_dict(orient="records")   
+    
+    
+@app.post("/news/post_news")
+async def post_news(payload: PostNews) -> str:
+
+    file_path = f"{DATA_PATH}/{payload.page_name}"
+    with open(file_path, "w", encoding="utf8") as file: 
+        file.write(payload.data)
+    
+    if payload.page_name == "omni_cleaned_with_keywords.json":
+        await ingest_crawl_to_vector_db(file_path)
+    
+    return "data was crawled and ingested with success"
+    
     
 @app.post("/text_input/news")
 async def text_input(query: Prompt) -> dict:
@@ -118,15 +133,29 @@ async def text_input(query: Prompt) -> dict:
         
         # bygger texten manuellt med BARA title och teaser_text
         script = ""
-        
+            
         for article in news_obj.articles:
-            script += f"{article.title}. {article.image_url} {article.teaser_text}.  "
+            script += f"**{article.title.replace("** ", "").replace(" **", "")}**. {article.teaser_text}.  "
         
         # tar bort markdown-shit
         answer_text = script.replace("*", "").replace("#", "")
 
         audio_output = await transcribe_text(answer_text)
         audio_base64 = base64.b64encode(audio_output).decode('utf-8')
+        
+        # reseta script str för att lägga till image och radbrytningar för markdown output
+        script = ""
+        for i, article in enumerate(news_obj.articles):
+            if article.image_url.startswith("http"):
+                image = f"![Image]({article.image_url})"
+            else:
+                image = "![Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiVYae47YQMM0qbWxlwHtXMJ02Ox9_3I6Nbg&s)"
+            script += f"""
+                {image}
+                #### {article.title.replace("** ", "").replace(" **", "")}.  \n\n
+                {article.teaser_text}.  
+
+            """
 
         return {
             "text_input": query.prompt,
@@ -141,42 +170,66 @@ async def text_input(query: Prompt) -> dict:
             "text_input": query.prompt,
             "text_output": fallback_text,
             "audio": None 
+        } 
+
+
+    
+@app.post("/transcribe/news")
+async def transcribe(file: UploadFile = File(...)) -> dict:
+    audio_bytes = await file.read()
+    transcribed_text = await transcribe_audio(audio_bytes)
+    
+    # Sätter gräns för att undvika oändliga loopar som kostar fan
+    limits = UsageLimits(request_limit=5)
+    
+    # lägg till dagens datum
+    dated_prompt = add_date_context(transcribed_text)
+    
+    try:
+        result = await news_agent_report.run(dated_prompt, usage_limits=limits)
+        news_obj = result.output
+        
+        # bygger texten manuellt med BARA title och teaser_text
+        script = ""
+            
+        for article in news_obj.articles:
+            script += f"**{article.title.replace("** ", "").replace(" **", "")}**. {article.teaser_text}.  "
+        
+        # tar bort markdown-shit
+        answer_text = script.replace("*", "").replace("#", "")
+
+        audio_output = await transcribe_text(answer_text)
+        audio_base64 = base64.b64encode(audio_output).decode('utf-8')
+        
+        # reseta script str för att lägga till image och radbrytningar för markdown output
+        script = ""
+        for i, article in enumerate(news_obj.articles):
+            if article.image_url.startswith("http"):
+                image = f"![Image]({article.image_url})"
+            else:
+                image = "![Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiVYae47YQMM0qbWxlwHtXMJ02Ox9_3I6Nbg&s)"
+            script += f"""
+                {image}
+                #### {article.title.replace("** ", "").replace(" **", "")}.  \n\n
+                {article.teaser_text}.  
+
+            """
+
+        return {
+            "text_input": transcribed_text,
+            "text_output": script,
+            "audio": audio_base64
         }
         
-
+    except UsageLimitExceeded:
+        fallback_text = "Jag fastnade i en sök-loop och avbröt för att spara pengar. Försök vara mer specifik."
+        
+        return {
+            "text_input": transcribed_text,
+            "text_output": fallback_text,
+            "audio": None 
+        } 
     
-@app.post("/news/post_news")
-async def post_news(payload: PostNews) -> str:
-
-    file_path = f"{DATA_PATH}/{payload.page_name}"
-    with open(file_path, "w", encoding="utf8") as file: 
-        file.write(payload.data)
-    
-    if payload.page_name == "omni_cleaned_with_keywords.json":
-        await ingest_crawl_to_vector_db(file_path)
-    
-    return "data was crawled and ingested with success"
-
-    
-# @app.post("/transcribe/news")
-# async def transcribe(file: UploadFile = File(...)) -> dict:
-#     audio_bytes = await file.read()
-#     transcribed_text = await transcribe_audio(audio_bytes)
-    
-#     # Skicka text till agent
-    
-    
-    
-            
-#     audio_output = await transcribe_text(output_text)
-    
-#     audio_base64 = base64.b64encode(audio_output).decode('utf-8')
-    
-#     return {
-#         "text_input": transcribed_text,
-#         "text_output": output_text,
-#         "audio": audio_base64
-#     }
 
 # region ROUTE
 async def route_input(text: str) -> str:
