@@ -4,28 +4,29 @@ services:
       context: . # start from same folder as docker-compose to be able to find data, knowledge_base and backend folder
       dockerfile: backend/Dockerfile # reference to Dockerfile in backend
     # container_name: pa_backend
-    env_file: .env
+    # env_file: .env
     ports:
       - 8000:80 # port 8000 on our local pc, port 80 on container, routes from container to local
-    environment:
-      - VECTOR_DATABASE_PATH=/app/knowledge_base
-      - DATA_PATH=/app/data
-    volumes:
-      - ./knowledge_base:/app/knowledge_base
-      - ./data:/app/data
-    #image: personalagent-bcfxg8hsf5apg7gm.azurecr.io/pa_backend:latest # azure repository / image_name:tag
+    # environment:
+    #   - VECTOR_DATABASE_PATH=/app/knowledge_base
+    #   - DATA_PATH=/app/data
+    # volumes:
+    #   - ./knowledge_base:/app/knowledge_base
+    #   - ./data:/app/data
+    image: personalagent2.azurecr.io/pa_backend:latest # azure repository / image_name:tag
 
   personal_agent_crawl:
     build: 
       context: . # start from same folder as docker-compose to be able to find data, knowledge_base and backend folder
       dockerfile: backend/Dockerfile.worker # reference to Dockerfile in backend
     # container_name: pa_backend
-    env_file: .env
-    # image: personalagent-bcfxg8hsf5apg7gm.azurecr.io/pa_crawl:latest # azure repository / image_name:tag
-    environment: 
-      - BACKEND_URL=http://personal_agent_backend:80
+    # env_file: .env
+    # # image: personalagent-bcfxg8hsf5apg7gm.azurecr.io/pa_crawl:latest # azure repository / image_name:tag
+    # environment: 
+    #   - BACKEND_URL=http://personal_agent_backend:80
     depends_on:
       - personal_agent_backend # reference to backend
+    image: personalagent2.azurecr.io/pa_crawl:latest
   
   personal_agent_frontend:
     build: 
@@ -34,13 +35,9 @@ services:
     # container_name: pa_frontend
     ports:
       - 8501:8501
-    environment:
-      - BACKEND_URL=http://personal_agent_backend:80
+    # environment:
+    #   - BACKEND_URL=http://personal_agent_backend:80
      # - BACKEND_URL=https://backend.ashyglacier-a42b6b58.swedencentral.azurecontainerapps.io
     depends_on:
       - personal_agent_backend # reference to backend
-    #image: personalagent-bcfxg8hsf5apg7gm.azurecr.io/pa_frontend:latest
-
-volumes:
-  lance_db:
-  data_folder:
+    image: personalagent2.azurecr.io/pa_frontend:latest

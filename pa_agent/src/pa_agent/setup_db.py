@@ -110,8 +110,8 @@ if __name__ == "__main__":
     
     # Kommentera ut table som du inte vill overwrita, tex 'science'
     setup_vector_db("diary")
-    # setup_vector_db("science")
-    # setup_vector_db("news")
+    setup_vector_db("science")
+    setup_vector_db("news")
     
     
     # ----- Lägg till ny data utan att overwrita table -----
