@@ -3,12 +3,11 @@ from datetime import datetime, date as dt_date
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
-# from pathlib import Path
-from typing import Optional, Literal
+from typing import Optional
 
 load_dotenv()
 
-#embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
+# embedding_model = get_registry().get("gemini-text").create(name="gemini-embedding-001")
 embedding_model = get_registry().get("openai").create(name="text-embedding-3-large")
 
 
@@ -82,15 +81,7 @@ class Prompt(BaseModel):
     
 #region MISC    
 class RoutingDescision(BaseModel):
-    intent: str = Literal["ENTRY", "QUERY"]
+    intent: str
 
 
-# # En klass så vi kan använda olika röster
-# # Använder Path för att kunna köra stem() och read_text()
-# class TTSConfig(BaseModel):
-#     input_file: Path = Field(..., description="Sökväg till textfilen som ska läsas")
-#     output_file: Optional[Path] = None
-#     voice: str = Field("sv-SE-SofieNeural") # "sv-SE-MattiasNeural"
-
-# En modell för news som LLM plockar ut
 

@@ -4,7 +4,8 @@ import requests
 from css import get_css
 import base64
 from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_combined_triggers, timeline_plot, scatter_plot
-from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, SUGGESTIONS_NEWS, SUGGESTIONS_DIARY, BACKEND_BASE_URL
+from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, update_news,SUGGESTIONS_NEWS, SUGGESTIONS_DIARY, BACKEND_BASE_URL, WEEKDAYS_SV
+
 
 
 get_css()
@@ -39,29 +40,30 @@ def sidebar_layout():
         show_trend(df)
         
         return app_mode, page
-     
 
-def col_2(app_mode):
+def show_messages(app_mode):
     if app_mode == "Diary":
-        suggestions = SUGGESTIONS_DIARY
         # Skriv ut gammal historik FÖRST 
         for message in st.session_state.messages_diary:
             with st.chat_message(message["role"]):
-                st.write(message["content"])
+                st.markdown(message["content"])
     if app_mode == "News":
-        suggestions = SUGGESTIONS_NEWS
         # Skriv ut gammal historik FÖRST 
         for message in st.session_state.messages_news:
             with st.chat_message(message["role"]):
-                st.write(message["content"])
-    # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
-    st.markdown("""
-        <h2 style='text-align: center; margin-bottom: 0; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.5);'>
-            the dAgent
-        </h2>
-        <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
-    """, unsafe_allow_html=True) 
+                st.markdown(message["content"])   
 
+
+def col_2(app_mode, chat_container):
+
+    if app_mode == "Diary":
+        suggestions = SUGGESTIONS_DIARY
+    if app_mode == "News":
+        suggestions = SUGGESTIONS_NEWS
+            
+            
+    with chat_container:
+        show_messages(app_mode)
 
     chat_input_choice = st.chat_input("Just tell me dude..")
                                     
@@ -71,7 +73,7 @@ def col_2(app_mode):
         options=suggestions.keys(), # sport, bilar osv
         label_visibility="collapsed",
         selection_mode="single",
-        key=f"{app_mode}_pills"
+        key=f"{app_mode}_key"
     )
     
     # Om man skrivit i rutan gäller det, annars kollar vi om man klickat på en pill
@@ -96,60 +98,74 @@ def col_2(app_mode):
 
     if audio and send_clicked:
         files = {"file": ("recording.wav", audio, "audio/wav")}
-        with st.spinner("Transcribing..."):
-            try:
-                response = requests.post(f"{BACKEND_BASE_URL}/transcribe/{app_mode.lower()}", files=files)
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    with st.chat_message("user"):
-                        st.write(data["text_input"])
-                    
-                    with st.chat_message("assistant"):
-                        st.write(data["text_output"])
-                        if data.get("audio"):
-                            audio_bytes = base64.b64decode(data["audio"])
-                            st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                    
-                    if "df" in st.session_state:
-                        del st.session_state["df"]
+        with chat_container:
+            with st.spinner("Transcribing..."):
+                try:
+                    response = requests.post(f"{BACKEND_BASE_URL}/transcribe/{app_mode.lower()}", files=files)
+                    if response.status_code == 200:
+                        send_clicked = False
+                        audio = None
+                        
+                        data = response.json()
+                        
+                        if app_mode == "News":
+                            st.session_state.messages_news.append({"role": "user", "content": data["text_input"]})
+                            st.session_state.messages_news.append({"role": "assistant", "content": data["text_output"]})
+                        if app_mode == "Diary":
+                            st.session_state.messages_diary.append({"role": "user", "content": data["text_input"]})
+                            st.session_state.messages_diary.append({"role": "assistant", "content": data["text_output"]})
 
-                else:
-                    st.error(f"Backend sucks: {response.status_code}")
-            except Exception as e:
-                st.error(f"Connection failed: {e}")
+                        show_messages(app_mode)
+                        with st.chat_message("assistant"):
+                            if data.get("audio"):
+                                audio_bytes = base64.b64decode(data["audio"])
+                                st.audio(audio_bytes, format="audio/wav", autoplay=True)
+                        
+                        if "df" in st.session_state:
+                            del st.session_state["df"]
+
+                    else:
+                        st.error(f"Backend sucks: {response.status_code}")
+                except Exception as e:
+                    st.error(f"Connection failed: {e}")
                     
 
     # TEXT
     elif prompt:
-        st.session_state.messages_news.append({"role": "user", "content": prompt})
+        with chat_container:      
+            with st.chat_message("user"):
+                st.markdown(prompt)
+            with st.spinner("Thinking..."):
+                try:
+                    response = requests.post(f"{BACKEND_BASE_URL}/text_input/{app_mode.lower()}", json={"prompt": prompt})
+                    if response.status_code == 200:
+                        data = response.json()
                         
-        with st.chat_message("user"):
-            st.write(prompt)
+                        answer_text = data["text_output"]
+                        if app_mode == "News":
+                            st.session_state.messages_news.append({"role": "user", "content": prompt})
+                            st.session_state.messages_news.append({"role": "assistant", "content": answer_text})
+                        if app_mode == "Diary":
+                            st.session_state.messages_diary.append({"role": "user", "content": prompt})
+                            st.session_state.messages_diary.append({"role": "assistant", "content": answer_text})
 
-        with st.spinner("Thinking..."):
-            try:
-                response = requests.post(f"{BACKEND_BASE_URL}/text_input/{app_mode.lower()}", json={"prompt": prompt})
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    answer_text = data["text_output"]
-                    
-                    st.session_state.messages_news.append({"role": "assistant", "content": answer_text})
-                    
-                    with st.chat_message("assistant"):
-                        st.write(data["text_output"])
+                        prompt = None
+                        selected_pill = None 
+                        chat_input_choice = None
+                        
+
+                        show_messages(app_mode)
                         if data.get("audio"):
                             audio_bytes = base64.b64decode(data["audio"])
                             st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                
-                    if "df" in st.session_state:
-                        del st.session_state["df"]
+                                    
+                        if "df" in st.session_state:
+                            del st.session_state["df"]
 
-                else:
-                    st.error(f"Backend sucks: {response.status_code}")
-            except Exception as e:
-                st.error(f"Connection failed: {e}")
+                    else:
+                        st.error(f"Backend sucks: {response.status_code}")
+                except Exception as e:
+                    st.error(f"Connection failed: {e}")
    
      
 def layout():
@@ -211,142 +227,75 @@ def layout():
                     if st.session_state.neg_guidance_text:
                         st.markdown(st.session_state.neg_guidance_text)
 
-            # PROMPT OCH AUDIO
-            with col2:
-                # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
-                st.markdown("""
-                    <h2 style='text-align: center; margin-bottom: 0; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.5);'>
-                        the dAgent
-                    </h2>
-                    <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
-                """, unsafe_allow_html=True) 
+        # PROMPT OCH AUDIO
+        with col2:
+            # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
+            st.markdown("""
+                <h2 style='text-align: center; margin-bottom: 0; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.5);'>
+                    the dAgent
+                </h2>
+                <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
+            """, unsafe_allow_html=True) 
+            
+            chat_container = col2.container(height=400)
+            col_2(app_mode, chat_container)
+                                
+        # HAPPY PLACE    
+        with col3:
+            with st.container():
+                if app_mode == "Diary":
+                    col="activity"
+                    kpi_col="weekday"
+                    kpi_str="Best Day"
+                    subheader_txt="Stick to the good stuff!"
+                if app_mode == "News":
+                    col="title"
+                    kpi_col="news_section"
+                    kpi_str="Best Section"
+                    subheader_txt="Lollipops and unicorns!"
 
-                # Skriv ut gammal historik FÖRST 
-                for message in st.session_state.messages_diary:
-                    with st.chat_message(message["role"]):
-                        st.write(message["content"])
-               
-                chat_input_choice = st.chat_input("Just tell me dude..")
+                st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
                 
-                # Visa pills
-                selected_pill = st.pills(
-                    "Förslag",
-                    options=SUGGESTIONS_DIARY.keys(),
-                    label_visibility="collapsed",
-                    selection_mode="single",
-                    key="diary_pills"
-                )
+                st.header("HAPPY PLACE")
                 
                 st.divider()
                 
-                if chat_input_choice:
-                    prompt = chat_input_choice
-                elif selected_pill:
-                    # hämta value från suggestions
-                    prompt = SUGGESTIONS_DIARY[selected_pill]
-                    
-                button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
-
-                with button_col:
-                    send_clicked = st.button("Send", type="primary", use_container_width=True, key="btn_send")
-
-                with mic_col:
-                    audio = st.audio_input("Voice", label_visibility="collapsed")
-
+                st.subheader(subheader_txt)
+                mood = "Positivt"
+                activities = show_activities(df, mood, column=col)
+                
+                for activity in activities:
+                    st.markdown(f"🟢 **{activity}**")
+                
                 st.divider()
+                
+                # --- KPIS ---
+                percentage, best_day, streak = show_kpis(df, mood, column=kpi_col)
+                c1, c2, c3 = st.columns(3)
+                with c1:
+                    st.metric("Percentage", percentage)
+                with c2:
+                    st.metric(kpi_str, best_day)
+                with c3:
+                    st.metric("Longest Streak", f"{streak} days")   
 
 
-                if audio and send_clicked:
-                    files = {"file": ("recording.wav", audio, "audio/wav")}
-                    with st.spinner("Transcribing..."):
-                        try:
-                            response = requests.post(f"{BACKEND_BASE_URL}/transcribe/diary", files=files)
-                            if response.status_code == 200:
-                                data = response.json()
-                                
-                                with st.chat_message("user"):
-                                    st.write(data["text_input"])
-                                
-                                with st.chat_message("assistant"):
-                                    st.write(data["text_output"])
-                                    if data.get("audio"):
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                                                                                                 
-                                if "df" in st.session_state:
-                                    del st.session_state["df"]
-
-                            else:
-                                st.error(f"Backend sucks: {response.status_code}")
-                        except Exception as e:
-                            st.error(f"Connection failed: {e}")
-                                
-                # TEXT
-                elif prompt:
-                    # spara frågan direkt
-                    st.session_state.messages_diary.append({"role": "user", "content": prompt})
-
-                    # skriv ut frågan direkt - snyggare UX 
-                    with st.chat_message("user"):
-                        st.write(prompt)
-
-                    with st.spinner("Thinking..."):
-                        try:
-                            response = requests.post(f"{BACKEND_BASE_URL}/text_input/diary", json={"prompt": prompt})
-                            if response.status_code == 200:
-                                data = response.json()
-                                
-                                answer_text = data["text_output"]
-                                
-                                # spara svaret i historiken
-                                st.session_state.messages_diary.append({"role": "assistant", "content": answer_text})
-                                
-                                with st.chat_message("assistant"):
-                                    st.write(data["text_output"])
-                                    if data.get("audio"):
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                            
-                                if "df" in st.session_state:
-                                    del st.session_state["df"]
-                                                                                                 
-                            else:
-                                st.error(f"Backend sucks: {response.status_code}")
-                        except Exception as e:
-                            st.error(f"Connection failed: {e}")
-                                    
-            # HAPPY PLACE    
-            with col3:
-                with st.container():
-                    st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
-                    
-                    st.header("HAPPY PLACE")
-                    
-                    st.divider()
-                    
-                    st.subheader("Stick to the good stuff!")
-                    mood = "Positivt"
-                    activities = show_activities(df, mood, column="activity")
-                    
-                    for activity in activities:
-                        st.markdown(f"🟢 **{activity}**")
-                    
-                    st.divider()
-                    
                 st.markdown('</div>', unsafe_allow_html=True)
                 if app_mode == "Diary":
                     # Generera och spara
                     if st.button("Smash for cash!?", key="btn_pos"):
-                        st.session_state.pos_guidance_text = give_helpful_advices(df, mood, column="activity")
+                        st.session_state.pos_guidance_text = give_helpful_advices(df, mood, column=col)
                     # Visa
                     if st.session_state.pos_guidance_text:
                         st.markdown(st.session_state.pos_guidance_text)
-                
+   
     
     # STATS
     elif page == "Stats":
         if app_mode == "Diary":
             df = update_diary()
+        if app_mode == "News":
+            df = update_news()
         
         current_df = df.sort_values(by="date", ascending=False)    
         
@@ -379,9 +328,11 @@ def layout():
             df = update_diary()
             current_df = df.copy()
         if app_mode == "News":
+            df = update_news()
             current_df = df.copy()
             current_df["date"] = pd.to_datetime(current_df["date"])
-            current_df["weekday"] = current_df["date"].dt.day_name()
+            current_df["weekday"] = current_df["date"].dt.day_name().map(WEEKDAYS_SV)
+            current_df["date"] = current_df["date"].dt.strftime('%Y-%m-%d')
             
         current_df = current_df.sort_values(by="date", ascending=False)
 
@@ -397,166 +348,6 @@ def layout():
             pie_plot_mood_weekdays = pie_plot(current_df, current_df['weekday'], current_df['mood'])
             st.plotly_chart(pie_plot_mood_weekdays)
         
-                    st.markdown('</div>', unsafe_allow_html=True)
-
-            # PROMPT OCH AUDIO
-            with col2:
-                # Centrerad rubrik och mer marginal, padding elelr va fan det hter mellan ljud o knapp
-                st.markdown("""
-                    <h2 style='text-align: center; margin-bottom: 0; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.5);'>
-                        the dAgent
-                    </h2>
-                    <hr style='margin: 10px 0 30px 0; opacity: 0.3;'> 
-                """, unsafe_allow_html=True) 
-
-                # Skriv ut gammal historik FÖRST 
-                for message in st.session_state.messages_news:
-                    with st.chat_message(message["role"]):
-                        st.write(message["content"])
-
-                chat_input_choice = st.chat_input("Just tell me dude..")
-                                             
-                # Visa "Pills" (Knapparna)
-                selected_pill = st.pills(
-                    "Förslag",
-                    options=SUGGESTIONS_NEWS.keys(), # sport, bilar osv
-                    label_visibility="collapsed",
-                    selection_mode="single",
-                    key="news_pills"
-                )
-                
-                # Om man skrivit i rutan gäller det, annars kollar vi om man klickat på en pill
-                prompt = None
-                
-                if chat_input_choice:
-                    prompt = chat_input_choice
-                elif selected_pill:
-                    # hämta value - den långa frågan baserat på key
-                    prompt = SUGGESTIONS_NEWS[selected_pill]
-
-                button_col, mic_col = st.columns([0.2, 0.8], gap="small", vertical_alignment="center")
-
-                with button_col:
-                    send_clicked = st.button("Send", type="primary", use_container_width=True)
-
-                with mic_col:
-                    audio = st.audio_input("Voice", label_visibility="collapsed")
-
-                st.divider()
-
-                if audio and send_clicked:
-                    files = {"file": ("recording.wav", audio, "audio/wav")}
-                    with st.spinner("Transcribing..."):
-                        try:
-                            response = requests.post(f"{BACKEND_BASE_URL}/transcribe/news", files=files)
-                            if response.status_code == 200:
-                                data = response.json()
-                                
-                                with st.chat_message("user"):
-                                    st.write(data["text_input"])
-                                
-                                with st.chat_message("assistant"):
-                                    st.write(data["text_output"])
-                                    if data.get("audio"):
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                
-                                if "df" in st.session_state:
-                                    del st.session_state["df"]
-    
-                            else:
-                                st.error(f"Backend sucks: {response.status_code}")
-                        except Exception as e:
-                            st.error(f"Connection failed: {e}")
-                                
-
-                # TEXT
-                elif prompt:
-                    st.session_state.messages_news.append({"role": "user", "content": prompt})
-                                    
-                    with st.chat_message("user"):
-                        st.write(prompt)
-
-                    with st.spinner("Thinking..."):
-                        try:
-                            response = requests.post(f"{BACKEND_BASE_URL}/text_input/news", json={"prompt": prompt})
-                            if response.status_code == 200:
-                                data = response.json()
-                                
-                                answer_text = data["text_output"]
-                                
-                                st.session_state.messages_news.append({"role": "assistant", "content": answer_text})
-                                
-                                with st.chat_message("assistant"):
-                                    st.write(data["text_output"])
-                                    if data.get("audio"):
-                                        audio_bytes = base64.b64decode(data["audio"])
-                                        st.audio(audio_bytes, format="audio/wav", autoplay=True)
-                                            
-                                if "df" in st.session_state:
-                                    del st.session_state["df"]
-                                    
-                            else:
-                                st.error(f"Backend sucks: {response.status_code}")
-                        except Exception as e:
-                            st.error(f"Connection failed: {e}")
-
-            # HAPPY PLACE
-            with col3:
-                 with st.container():
-                    st.markdown('<div class="happy-place-bg">', unsafe_allow_html=True)
-                    st.header("HAPPY PLACE")
-
-                    st.divider()
-                    
-                    st.subheader("Lollipops and unicorns!")
-                    mood = "Positivt"
-                    activities = show_activities(df, mood, column="title")
-                    
-                    for activity in activities:
-                        st.markdown(f"🟢 **{activity}**")
-                    
-                    st.divider()       
-                  
-                    # --- KPIS ---
-                    percentage, best_day, streak = show_kpis(df, mood, column="news_section")
-                    c1, c2, c3 = st.columns(3)
-                    with c1:
-                        st.metric("Percentage", percentage)
-                    with c2:
-                        st.metric("Best Section", best_day)
-                    with c3:
-                        st.metric("Longest Streak", f"{streak} days")   
-
-
-                    st.markdown('</div>', unsafe_allow_html=True)
-
-        elif page == "Stats":
-            # Visa plots för nyheter
-            news_df = df.sort_values(by="date", ascending=False)  
-            # raw_url = "https:\/\/gfx.omni.se\/images\/9eea82fc-83c2-4c09-b877-b44728567cda?h=708&tight=false&w=1372"  
-            # clean_url = raw_url.replace(r"\/", "/")
-            # st.image(clean_url)
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader("Top Bad Triggers")
-                negative_triggers = plot_negative_triggers(news_df)
-                st.plotly_chart(negative_triggers)
-            
-            with col2:
-                st.subheader("Pos. vs Neg. Keywords")
-                keywords_sunburst = plot_keyword_sunburst(news_df)
-                st.plotly_chart(keywords_sunburst)
-                
-            # Line plot som visar mood över tid
-            st.markdown("### Scatter of news sections")
-            line_plot_mood = scatter_plot(news_df, "count", "news_section") 
-            st.plotly_chart(line_plot_mood)       
-            
-            keyword_plot=plot_combined_triggers(news_df)
-            st.plotly_chart(keyword_plot)
-            pass
-
 
 if __name__ == "__main__":
     layout()

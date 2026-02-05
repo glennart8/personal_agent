@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 model = OpenAIChatModel('gpt-4o-mini')
+# model = "google-gla:gemini-2.5-flash"
+
 vector_db = lancedb.connect(uri=VECTOR_DATABASE_PATH)
 
 
@@ -35,7 +37,6 @@ def search_vector_db(query: str, table: str) -> str:
     return str(clean_results)
 
 diary_agent = Agent(
-    #model="google-gla:gemini-2.5-flash", 
     model=model,
     retries=2,
     system_prompt=(
@@ -54,7 +55,6 @@ diary_agent = Agent(
 )
 
 science_agent = Agent(
-    #model="google-gla:gemini-2.5-flash", 
     model=model,
     retries=2,
     system_prompt=(
@@ -74,7 +74,6 @@ science_agent = Agent(
 
 # Agent för extraktion (STT), borde testa att köra med OLLAMA
 stt_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
     model=model,
     retries=2,
     output_type=DiaryExtraction,
@@ -89,7 +88,6 @@ stt_agent = Agent(
 )
 
 news_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
     model=model,
     retries=2,
     output_type=NewsExtraction,
@@ -100,11 +98,9 @@ news_agent = Agent(
         2. För 'mood' - använd ENDAST 'positivt' eller 'negativt.'
         3. För 'keywords' - välj generella substantiv som gör det lätt att gruppera statistiken senare.
     """,
-    #tools=[search_vector_db]
 )
 
 news_agent_report = Agent(
-    #model="google-gla:gemini-2.5-flash",
     model=model,
     retries=2,
     output_type=NewsResponse,
@@ -125,7 +121,6 @@ news_agent_report = Agent(
 )
 
 route_agent = Agent(
-    #model="google-gla:gemini-2.5-flash",
     model=model,
     retries=2,
     output_type=RoutingDescision,
