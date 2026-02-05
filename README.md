@@ -1,8 +1,21 @@
 ![dAgent](./assets/dagent.png)
 
-# Projektplan: AI Voice Assistant ("Personal_Agent")
+# 🎙️ dAgent (Personal Agent)
 
-Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd, lokal-först AI-agent. Systemet designas för att vara modulärt, utbyggbart och typ-säkert.
+**Det ska vara enkelt att må bra – våga prova!**
+
+dAgent är din intelligenta, röststyrda följeslagare. Prata med din dagbok och få personlig guidning och rådgivning, helt utifrån dina egna förutsättningar.
+
+Här får du svart på vitt se vad som påverkar just ditt välmående – både positivt och negativt. Få insikter om vad du borde lägga din tid på och identifiera ditt vardags energibovar. Och, bara för att ha det lilla extra: analysera hur både du OCH omvärlden påverkas av det dagliga nyhetsflödet, kanske, eller kanske inte finns där en visst samband?
+
+---
+
+## Huvudfunktioner
+
+* **Röststyrd Dagbok & Måendeanalys:** Prata in dina tankar. Ställ frågor om ditt liv. Agenten transkriberar (STT), sparar och analyserar sentiment. Visualisera hur ditt mående korrelerar med aktiviteter.
+* **RAG-baserad Kunskapsbank:** Långtidsminne via vektordatabas. Dina frågor ställs mot forskningsrapporter och ger dig råd därefter (t.ex. *World Health Report* och *Perma model*) för faktagrundade svar.
+* **Nyhetsagent:** Skrapar nyheter, sammanfattar och läser upp dem (TTS). Presenterar KPI:er för nyhetsflödet.
+* **Typ-säker AI:** Använder Pydantic för att tvinga fram strukturerad output (JSON), vilket möjliggör programmerbar logik ovanpå AI-svaren.
 
 ## Tech Stack & Arkitektur
 
@@ -11,15 +24,28 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 | **Språk** | Python 3.11+ | Kärnlogik |
 | **Orchestration** | Python + MCP | Hanterar flödet mellan verktyg och modeller |
 | **Validering** | **Pydantic** | Tvingar strukturerad output (JSON) från LLM |
-| **LLM (Lokal)** | **Ollama** (Llama 3 / Mistral) | Snabba kommandon, routing, integritet |
-| **LLM (Cloud)** | **Google Gemini** | Komplex analys, kodning, multimodal input |
+| **LLM (Cloud)** | **OpenAI** | Komplex analys, kodning, multimodal input |
 | **Databas / RAG** | **LanceDB** | Vektordatabas för dokument och minne |
 | **Audio Input** | `faster-whisper` | Använder WhisperModel för lokal Speech-to-Text (STT) |
 | **Audio Output** | `edge-tts` | Text-to-Speech (TTS) |
-| **Scraping** | BeautifulSoup4, FireCrawl | Hämta nyheter |
+| **Scraping** | BeautifulSoup4, FireCrawl | Informationshämtning från webbsidor |
 | **Docker** | Containarize | Easy peasy för alla |
 | **FastAPI** | Api-lager | Mellanlager mellan backend och frontend |
 | **Streamlit** | Frontend | Dashboard |
+
+## Kom igång GUIDE
+
+- 1. Klona repot
+- 2. Skapa en `.env`-fil i roten med nödvändiga nycklar (t.ex. `BACKEND_URL`, `OPENAI_API_KEY`). Annan nyckel - byt modell
+
+- 3. if docker: 
+- Vad ändra i docker-compose???
+- docker-compose up --build, sedan http://localhost:8501 i webbläsaren
+
+- 3. elif Lokal utveckling:
+- Kör uv sync för att hämta dependencies
+- Terminal 1: uv run uvicorn api:app --reload, 
+- Terminal 2: uv run streamlit run app.py
 
 ---
 
@@ -43,27 +69,14 @@ Detta dokument beskriver arkitekturen och genomförandeplanen för en röststyrd
 - [x] Ingesta V-db med WorldHealthReport25 och hämta ut grejer
 - [x] Scrapa nyhetssite och - sammanfatta - läs upp
 - [x] Visa KPI:er för nyheter
-- [ ] Läs upp mail, schema för dagen/veckan
-- [ ] Plotta fördelningen mellan nyhetskategorier
-- [ ] Plotta korrelationen mellan mående och dag/aktivitet
-
-### Sprint 3 - Finlir
-- [ ] Fixa snygg README.md
-- [ ] Slides ()
+- [x] Plotta korrelationen mellan mående och dag/aktivitet
+- [x] Plotta fördelningen mellan nyhetskategorier
 
 
-### Övrigt (Om man vill och hinner):
-- [ ] Sammanfatta youtube-klipp till .md-fil och/eller .mp3-fil
-- [ ] Koppla nyhetesläget till börsen
-- [ ] Spotify - byta låt, hitta genre/vart hör den hemma, vilken lista borde låten vara i
-- [ ] Spelningar i stad?
-- [ ] Allmän google-sökning med googlesearch-biblioteket
-
-### Funderingar
-- Behövs en "vanlig" databas för strukturerad output osv?
-
-### Framtida möjligheter
+### Möjligheter
 - Koppla dagbok till spotify för att se vilken musik du lyssnar på negativa dagar, samma med filmer
 - Koppla sömn-data till dagboken för att se korrelation
 - Koppla skärmtid (scrollande osv) till upplevt känsla dagen eller dagen efter
-- Koppla mot nyheter
+- Läs upp mail, schema för dagen/veckan
+- Koppla nyhetesläget till börsen
+- Sammanfatta youtube-klipp till .md-fil och/eller .mp3-fil
