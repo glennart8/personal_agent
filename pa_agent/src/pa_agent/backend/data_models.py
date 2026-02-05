@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, date as dt_date
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
@@ -19,7 +19,8 @@ class Daily_mood(LanceModel):
     feelings: str
     mood: str
     keywords: str
-    date: datetime = Field(default_factory=datetime.now)
+    date: dt_date = Field(default_factory=dt_date.today)
+    #date: datetime = Field(default_factory=datetime.now)
     weekday: str
     content: str = embedding_model.SourceField()
     embedding: Vector(dim=3072) = embedding_model.VectorField()
