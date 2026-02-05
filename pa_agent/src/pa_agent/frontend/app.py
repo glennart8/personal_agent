@@ -327,6 +327,8 @@ def layout():
         if app_mode == "Diary":
             df = update_diary()
             current_df = df.copy()
+            current_df["date"] = pd.to_datetime(current_df["date"]).dt.strftime('%Y-%m-%d')
+            
         if app_mode == "News":
             df = update_news()
             current_df = df.copy()
