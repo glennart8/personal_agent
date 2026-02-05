@@ -65,7 +65,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-16",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Trafik, Olycka, Infrastruktur"
     },
@@ -295,7 +295,7 @@
         "news_section":"Utrikes",
         "date":"2026-01-24",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Politik, Rättvisa, Konflikt"
     },
@@ -325,7 +325,7 @@
         "news_section":"Tech",
         "date":"2026-01-09",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"Robotik, Kina, Teknik"
     },
@@ -655,7 +655,7 @@
         "news_section":"Tech",
         "date":"2026-01-29",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"AI, Teknik, Google"
     },
@@ -935,7 +935,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-14",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Olycka, Barn, Väder"
     },
@@ -1225,7 +1225,7 @@
         "news_section":"Utrikes",
         "date":"2026-01-28",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Brott, Politik, USA"
     },
@@ -1245,7 +1245,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-26",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Olyckor, Arbetsmiljö"
     },
@@ -2045,7 +2045,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-12",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Olycka, Skola"
     },
@@ -2185,7 +2185,7 @@
         "news_section":"Tech",
         "date":"2026-01-29",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"Medicin, Teknologi, Forskning"
     },
@@ -2665,7 +2665,7 @@
         "news_section":"Utrikes",
         "date":"2025-12-18",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Politik, USA"
     },
@@ -2705,7 +2705,7 @@
         "news_section":"Tech",
         "date":"2026-01-08",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"Teknologi, Innovation"
     },
@@ -3215,7 +3215,7 @@
         "news_section":"Tech",
         "date":"2026-01-09",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Teknik, AI, Innovation"
     },
@@ -3455,7 +3455,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-28",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Brott, Våld, Stockholm"
     },
@@ -3555,7 +3555,7 @@
         "news_section":"Tech",
         "date":"2026-01-30",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"AI, Teknik, Innovation"
     },
@@ -4245,7 +4245,7 @@
         "news_section":"Tech",
         "date":"2026-01-27",
         "image_description":"None",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"AI, Tech, Appar"
     },
@@ -4515,7 +4515,7 @@
         "news_section":"Inrikes",
         "date":"2026-02-01",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Olycka, Arbete"
     },
@@ -4675,7 +4675,7 @@
         "news_section":"Utrikes",
         "date":"2026-01-31",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Iran, Olycka, V\nntld"
     },
@@ -4725,7 +4725,7 @@
         "news_section":"Utrikes",
         "date":"2026-02-02",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Epstein, Skandal, Media"
     },
@@ -4885,7 +4885,7 @@
         "news_section":"Sport",
         "date":"2026-02-01",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Sport, Humor"
     },
@@ -5055,7 +5055,7 @@
         "news_section":"Inrikes",
         "date":"2026-02-01",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Brott, Stockholm"
     },
@@ -5635,7 +5635,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-31",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Olycka, Utredning"
     },
@@ -5825,7 +5825,7 @@
         "news_section":"Inrikes",
         "date":"2026-01-31",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Positivt",
         "keywords":"Säkerhet, Polis, Incident"
     },
@@ -5865,7 +5865,7 @@
         "news_section":"Nöje & kultur",
         "date":"2026-01-30",
         "image_description":"nan",
-        "image_url":null,
+        "image_url":"",
         "mood":"Negativt",
         "keywords":"Kultur, TV-serie, Recension"
     },
@@ -5988,5 +5988,1075 @@
         "image_url":"https:\/\/gfx.omni.se\/images\/8887731d-8697-454f-9a29-a2339b11e305?h=708&tight=false&w=1372",
         "mood":"Negativt",
         "keywords":"Ekonomi, Bedrägeri, Företag"
+    },
+    {
+        "title":"Netanyahu till USA inför samtal: Lita inte på Iran",
+        "teaser_text":"Lita inte på iranierna. Det var Israels premiärminister Benjamin Netanyahus budskap till USA:s sändebud Steve Witkoff under ett möte på tisdagen, rapporterar nyhetsbyråer.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Netanyahu.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/ff79e6cc-bf46-4f56-b5eb-021e59a9dc6f?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Internationella relationer, Iran"
+    },
+    {
+        "title":"Amerikansk advokat slog larm om Ehnboms nätverk",
+        "teaser_text":"Den svenska affärskvinnan Barbro Ehnboms nätverk ”Barbro's best and brightest” (BBB) förekommer i Epsteindokumenten. År 2020 anmälde den amerikanska advokaten John Ray nätverket till myndigheter i USA, rapporterar flera medier.",
+        "news_section":"Inrikes",
+        "date":"2026-02-03",
+        "image_description":"Företagsledaren Barbro Ehnbom.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/15e84507-e273-49dc-b84d-cb9c94158847?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Rättsväsende, Nätverk"
+    },
+    {
+        "title":"Sverige kan få roll i ny europeisk kärnvapenstrategi",
+        "teaser_text":"        ",
+        "news_section":"Perspektiv på världen",
+        "date":"2026-02-05",
+        "image_description":"HMS Vengeance. ",
+        "image_url":"https:\/\/watermark-gfx.omni.se\/images\/24e35a0d-96a1-4458-8a6f-3b6455cd9644?h=1372&tight=true&w=1372&watermark=https:\/\/storage.omni.se\/watermarks\/the_economist-2x1.png",
+        "mood":"Negativt",
+        "keywords":"Politik, Säkerhet, Kärnvapen"
+    },
+    {
+        "title":"Volvo Cars halverade rörelseresultatet",
+        "teaser_text":"Volvo Cars rörelseresultat kom in långt under vad analytikerna hade förutspått. Även omsättningen var sämre än väntat. ",
+        "news_section":"Ekonomi",
+        "date":"2026-02-05",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/5c81b099-14cf-42a2-abbd-06ae86edb318?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Ekonomi, Företag, Fordon"
+    },
+    {
+        "title":"Wall Street faller när AI hotar mjukvarubolag",
+        "teaser_text":"Gårdagens techturbulens på Wall Street slog brett och drog med sig alla möjliga aktier i bolag som på ett eller annat sätt säljer eller investerar i mjukvara, skriver Wall Street Journal. Sammantaget beräknas börsvärden på 300 miljarder dollar – motsvarande nästan 2 700 miljarder kronor – ha gått förlorade i rötan.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/7d4dc89d-e391-42da-813d-4cf25fb2cf9d?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Ekonomi, Teknologi, Aktier"
+    },
+    {
+        "title":"Hovrätten fastställer livstidsdom för mordet i Akalla",
+        "teaser_text":"Svea hovrätt fastställde på onsdagen livstidsdomen mot den 41-årige Gudmundur Mogensen som dömts för mordet på en kvinna i 60-årsåldern i Akalla 2024, rapporterar TT.",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Gudmundur Mogensen.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/eba0f099-ac25-47b8-b740-c7d64cc34a62?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Rättsväsende, Mord"
+    },
+    {
+        "title":"Mjukvaruaktier studsade upp: Dömts ut på förhand",
+        "teaser_text":"Bolag vars affärsmodeller tros hotas av AI:s snabba utveckling föll tungt i början av onsdagen innan sektorn vände upp. ",
+        "news_section":"Ekonomi",
+        "date":"2026-02-05",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/abdd7c62-09da-4ae1-b717-dd51954955e8?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Ekonomi, Teknologi, Aktier"
+    },
+    {
+        "title":"Svenska ”scouten”: ”Kommer inte svara på någonting”",
+        "teaser_text":"Den svenske man i 70-årsåldern som förekommer i Epsteindokumenten och som enligt dokumenten ska ha ”scoutat” kvinnor åt den avlidne sexförbrytaren Jeffrey Epstein har nåtts av Expressen.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Dokument med Jeffrey Epstein som fotograferats i början av januari. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/49782881-7bc2-4b53-bcba-69b6f5d5f4bf?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Rättsväsende, Epstein"
+    },
+    {
+        "title":"Uppgift: Ryssland kräver att Donbas erkänns som ryskt",
+        "teaser_text":"Under de pågående fredssamtalen om Ukraina i Abu Dhabi uppges Ryssland kräva ett internationellt erkännande av hela Donbas som ryskt territorium. Det rapporterar Ekot med hänvisning till ryska statskontrollerade medier. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Staden Donetsk i samband med det ryskadministrerade valet 2023.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f230e907-5a38-491c-a30e-81cbce93255e?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Ryssland, Ukraina"
+    },
+    {
+        "title":"Kvinnor beskriver resan hem till Gaza som ”skräck”",
+        "teaser_text":"Palestinska kvinnor tvingas ha ögonbindel och handfängsel under förhör när de försökt ta sig hem till Gaza, rapporterar Reuters.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"nan",
+        "image_url":"",
+        "mood":"Negativt",
+        "keywords":"Konflikt, Mänskliga rättigheter, Gaza"
+    },
+    {
+        "title":"Italien har stoppat ryska cyberattacker mot OS",
+        "teaser_text":"Italiens utrikesminister Antonio Tajani uppger att landet har stoppat flera ryska cyberattacker riktade mot vinter-OS, rapporterar AFP och TT.",
+        "news_section":"Sport",
+        "date":"2026-02-04",
+        "image_description":"Italiens utrikesminister Antonio Tajani.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/e6715419-ebca-420f-9743-f03606e402ed?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Säkerhet, Cyberattacker, Ryssland"
+    },
+    {
+        "title":"Kristersson om L:s siffror: ”Ska inte ge några råd”",
+        "teaser_text":"Tidöpartierna ligger bakom oppositionen i opinionsmätningarna i kampen om att behålla makten efter höstens val. Statsminister Ulf Kristersson (M) säger i en intervju med TT att det är en brant uppförsbacke, men att det fortfarande är möjligt att vinna.",
+        "news_section":"Politik",
+        "date":"2026-02-03",
+        "image_description":"Plakat på Liberalernas partiledare Simona Mohamsson (L) under hennes tal när partiets landsmöte på Karlstad.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/221acb3f-564d-49eb-a4ba-215993d7e91f?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Opinion, Val"
+    },
+    {
+        "title":"Analyser: Sista avtalet löper ut – ny era för världen",
+        "teaser_text":"När Nya Start-avtalet mellan USA och Ryssland löper ut på torsdagen går världen in i en ny era, skriver Expressens Mats Larsson i en analys. Nu finns inte längre någon överenskommelse som begränsar stormakternas kärnvapen.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Kärnvapensprov i USA.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/8a3c3cae-7351-4787-8693-20227ad499ec?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Kärnvapen, Säkerhet"
+    },
+    {
+        "title":"Kungen tänder ljus för att hedra offren i Örebro",
+        "teaser_text":"Kung Carl XVI Gustaf har under dagen tänt ett ljus i Slottskyrkan i Kungliga slottet för att hedra de människor som dödades i Örebro för ett år sedan.",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Kung Carl XVI Gustaf tänder ljus i Slottskyrkan på Kungliga slottet. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/1b8bfe21-3a93-4546-a5f1-c59786f2ba21?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Kungahuset, Tragedi, Minne"
+    },
+    {
+        "title":"Forsberg bidrog när Nashville skrev klubbhistoria",
+        "teaser_text":"Under gårdagen vände Tampa Bay ett 1–5-underläge mot Boston Bruins till seger med 6–5. I nattens NHL-spel var det Nashville Predators tur att göra samma sak – och samtidigt skriva klubbhistoria genom att göra sin största vändning, rapporterar Sportbladet.",
+        "news_section":"Sport",
+        "date":"2026-02-03",
+        "image_description":"Filip Forsberg i matchen mot Colorado Avalanche i januari.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/9d65a463-6e4d-4f6b-9f83-567a002e3190?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Sport, Hockey, Rekord"
+    },
+    {
+        "title":"V vill se generell arbetstidsförkortning",
+        "teaser_text":"Vänsterpartiet vill driva på för en arbetstidsförkortning i Sverige, meddelar partiledaren Nooshi Dadgostar på en pressträff.",
+        "news_section":"Politik",
+        "date":"2026-02-05",
+        "image_description":"Vänsterpartiets ledare Nooshi Dadgostar och partiets arbetsmarknadspolitiska talesperson Ciczie Weidby.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2d751f55-e9a4-4e42-a66d-93fa92f6f2f3?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Arbete, Fackfrågor"
+    },
+    {
+        "title":"Därför öppnar fotbollens högste topp för Ryssland",
+        "teaser_text":"    ",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"I en intervju med Sky News uppgav Fifas president Gianni Infantino att förbudet mot Rysslands deltagande i VM borde upphävas.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d7aacda1-2e61-491e-af3c-d227a1b78715?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Politik, Ryssland"
+    },
+    {
+        "title":"Poddar: På jakt efter problemet med svenskar och millenials",
+        "teaser_text":"Är det i själva verket helt rimligt att millennials är bittra? Har artisten Jason Williamsson någonsin hittat guld? Och finns det något som utlänningar inte tycker att svenskar gör fel? ",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-01",
+        "image_description":"En man med metalldetekor. Arkivbild. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f0ffe06b-e124-4143-af81-ee8260118854?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Samhälle, Generationer, Poddar"
+    },
+    {
+        "title":"Luigi Mangione kommer inte att dömas till döden",
+        "teaser_text":"Det är inte aktuellt att döma Luigi Mangione till döden för mordet på sjukförsäkrings-vd:n Brian Thompson. Det har den federala domaren i fallet beslutat enligt amerikanska medier. ",
+        "news_section":"Utrikes",
+        "date":"2026-01-30",
+        "image_description":"Luigi Mangione i rätten under förra året.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/c75eec6a-3762-4653-b1f6-731f219d3915?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Juridik, Mord, Domstol"
+    },
+    {
+        "title":"Hundratals politiska fångar i Venezuela kan släppas",
+        "teaser_text":"Venezuelas tillförordnade president Delcy Rodríguez har lagt fram ett förslag om ”generell amnestilag” i landet, vilket skulle innebära att hundratals politiska fångar kan släppas fria. Det rapporterar AP.",
+        "news_section":"Utrikes",
+        "date":"2026-01-31",
+        "image_description":"Anhöriga till politiska fångar i Venezuela demonstrerar i Caracas.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/82e05be7-c73a-4b50-ad22-920d0d8f7a27?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Fångar, Venezuela"
+    },
+    {
+        "title":"Liam, 5, släppt från ICE:s förvar: ”Han är glad”",
+        "teaser_text":"Femårige Liam Conejo Ramos och hans pappa Adrian har friats från migrationspolisens förvar i Texas, rapporterar ABC News. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-01",
+        "image_description":"Adrian och  Liam Conejo Ramos. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/72216012-b2dd-4921-ab89-71c97de980c1?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Migration, Familj, Frihet"
+    },
+    {
+        "title":"Labourprofil lämnar – tog emot pengar från Epstein",
+        "teaser_text":"Den mångårige Labourprofilen Peter Mandelson lämnar det brittiska partiet efter att det framkommit att han mottagit 75 000 pund, omkring en miljon i svenska kronor, av den nu döde sexförbrytaren Jeffrey Epstein. Det rapporterar brittisk press. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-01",
+        "image_description":"Peter Mandelson tillsammans med en kvinna. Bilden är från den amerikanska utredningen av Jeffrey Epstein. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/b6fe2564-7b57-4204-8f59-84ea816e31e2?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Skandal, Labour"
+    },
+    {
+        "title":"Expert: Krävs jordbävningar för att rädda Liberalerna",
+        "teaser_text":"Efter att ha radat upp svaga opinionsmätningar i januari får Liberalerna bara 2,0 procent i Omnipoll – den lägsta nivån under hela mandatperioden. Det visar Omnis och Demoskops sammanvägning av sex opinionsmätningar.",
+        "news_section":"Politik",
+        "date":"2026-02-02",
+        "image_description":"L-ledaren Simona Mohamsson.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/4126dd6e-e4c7-4ab8-aaab-3e886ef09527?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Opinionsmätning, Liberalerna"
+    },
+    {
+        "title":"Därför kan Europa ta revansch om Trump släcker ner molnet",
+        "teaser_text":"    ",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"President Donald Trump.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3b0ad651-0885-42e6-bb85-3e1950c1f3ad?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Geopolitik, Teknik, Europa"
+    },
+    {
+        "title":"Skogsbranden utanför Halmstad har släckts",
+        "teaser_text":"En brand bröt ut i ett skogsparti i Åled i Halmstads kommun på lördagseftermiddagen, rapporterar SVT Nyheter Halland. Larmet kom vid 14.30-tiden från en person som varit på skogspromenad.",
+        "news_section":"Inrikes",
+        "date":"2026-01-31",
+        "image_description":"nan",
+        "image_url":null,
+        "mood":"Positivt",
+        "keywords":"Brand, Räddningstjänst, Halmstad"
+    },
+    {
+        "title":"Ash Pournouri lämnar ”Idol”",
+        "teaser_text":"Ash Pournouri lämnar uppdraget som jurymedlem i ”Idol” efter två år. Det skriver han på Instagram. ",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-04",
+        "image_description":"Ash Pournouri.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/c46ffe73-f7cb-4872-b398-1a75a259c487?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Television, Underhållning, Idol"
+    },
+    {
+        "title":"Dr Doom: Kryptoapokalyps väntar – en pseudovaluta",
+        "teaser_text":"Kryptobranschens dagar är räknade, skriver ekonomiprofessorn och strategen Nouriel ”Dr. Doom” Roubini för debattsajten Project Syndicate.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"Nouriel ”Dr. Doom” Roubini",
+        "image_url":"https:\/\/gfx.omni.se\/images\/6307c878-0c64-40dd-88c2-e229609d3d59?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Ekonomi, Krypto, Valuta"
+    },
+    {
+        "title":"Indien allt hetare för amerikanska techbolag",
+        "teaser_text":"Indien har seglat upp som en av de hetaste marknaderna för amerikanska techbolag, skriver Wall Street Journal. ",
+        "news_section":"Tech",
+        "date":"2026-02-05",
+        "image_description":"Hyderabad, Indien.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/da15e103-8178-4cfa-be3d-85d1a3df108f?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Ekonomi, Teknik, Indien"
+    },
+    {
+        "title":"Interna poliskritiken efter insatsen: ”Tar inte höjd”",
+        "teaser_text":"Polisens akuta insats efter skjutningen på Campus Risbergska för ett år sedan fungerade bra. Det konstaterar den interna utredaren Erik Nord, rapporterar Expressen. Först på plats var sex unga poliser som visade prov på stort mod och som fattade rätt beslut, enligt Nord. ",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Poliser vid Risbergska efter dådet.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/311fed8b-58c1-44fe-9413-900d6eba3e4c?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Polis, Kritik, Säkerhet"
+    },
+    {
+        "title":"Källor: USA och Iran möts – ska försöka trappa ner",
+        "teaser_text":"Högt uppsatta amerikanska och iranska företrädare ska mötas i Istanbul på fredag för att försöka gjuta olja på vågorna, uppger källor för flera medier.",
+        "news_section":"Utrikes",
+        "date":"2026-02-02",
+        "image_description":"Kushner och Witkoff.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/6b8c4515-6786-4224-8018-cd86b6dbd85c?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Diplomati, USA, Iran"
+    },
+    {
+        "title":"Svenska studenters uppgifter läckta i Epsteinfilerna",
+        "teaser_text":"Flera kvinnliga studenter som sökte stipendiet ”Female Economist of the Year” har fått sina uppgifter läckta i Epsteindokumenten som släpptes av det amerikanska justitiedepartementet i fredags. Det rapporterar Dagens Nyheter.",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Dokument från utredningen.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/9100ae2e-08fc-4d07-a6ab-a19238a607de?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Dataskydd, Skandal, Studenter"
+    },
+    {
+        "title":"Analyser: Kreml var aldrig seriöst med vapenvilan",
+        "teaser_text":"Det enorma ryska anfallet mot Ukrainas energisystem natten mot tisdag visar att Kreml aldrig menade allvar med att använda den korta energivapenvilan för att trappa ner kriget eller driva de USA-ledda fredsförhandlingarna framåt. Det skriver tankesmedjan ISW i sin dagliga lägesanalys.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Bombat kraftverk i Kyiv.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2bfca87b-12a0-44b9-bf6e-469823501b39?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Krig, Ukraina, Diplomati"
+    },
+    {
+        "title":"Bonusprinsen googlade sitt namn och ordet ”våldtäkt”",
+        "teaser_text":"Redan flera veckor före det att den norske bonusprinsen Marius Borg Høiby blev misstänkt för våldtäkt googlade han på sitt namn tillsammans med orden ”våldtäkt” och ”sovvåldtäkt”. Det visar hans sökhistorik enligt Aftenposten. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Stort pressuppbåd utanför rättssalen.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/9e2539b0-bdf2-42d5-8dba-706627f9538e?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Kungahus, Skandal"
+    },
+    {
+        "title":"Majoritet av USA-väljare: ICE använde övervåld",
+        "teaser_text":"En majoritet av amerikanska väljare är kritiska till ICE:s dödsskjutning av Alex Pretti, och ser inte myndigheternas version av händelsen som trovärdig, enligt två färska mätningar.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Minnesstund för Alex Pretti.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/0f1fc39b-953c-4d5a-864a-9de09b4d3fd4?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Polis, Kritik, USA"
+    },
+    {
+        "title":"Vad säger forskningen om de märkliga hjälmarna i amerikansk fotboll?",
+        "teaser_text":"      ",
+        "news_section":"Innovation & framtid",
+        "date":"2026-02-04",
+        "image_description":"New England Patriots tight end CJ Dippre runs with teammates during an NFL football availability, Thursday, Jan. 29, 2026, in Foxborough, Mass.",
+        "image_url":"https:\/\/watermark-gfx.omni.se\/images\/fda65f87-306b-4b52-b380-7f26b940ba8c?h=1372&tight=true&w=1372&watermark=https:\/\/storage.omni.se\/watermarks\/the_new_york_times-2x1.png",
+        "mood":"Positivt",
+        "keywords":"Sport, Forskning, Säkerhet"
+    },
+    {
+        "title":"OS-medaljer är mer värda än någonsin ",
+        "teaser_text":"Vinter-OS i Italien i år delar ut de dyraste medaljerna någonsin, skriver CNN och Fortune. Anledningen: priserna på guld och silver har rusat. ",
+        "news_section":"Ekonomi",
+        "date":"2026-02-05",
+        "image_description":"USA:s president Donald Trump håller upp medaljer från OS 1984",
+        "image_url":"https:\/\/gfx.omni.se\/images\/b2a409a7-8175-49cc-938b-627df56533cc?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Sport, Ekonomi, OS"
+    },
+    {
+        "title":"Sam Altman om Anthropics reklam: ”Kul men oärlig”",
+        "teaser_text":"Open AI-chefen Sam Altman kallar Anthropics Super Bowl-reklam om Chat GPT både rolig, oärlig och vilseledande, skriver Business Insider och hänvisar till ett inlägg på X. Reklamen driver med Open AI för att företaget planerar annonser i sin språkmodell.",
+        "news_section":"Tech",
+        "date":"2026-02-05",
+        "image_description":"Träning inför Super Bowl.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/e4fcaf82-9242-41b8-bd25-9cc2d5a249c2?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"AI, Reklam, Kritik"
+    },
+    {
+        "title":"TCO-facken växer – störst ökning inom polis och försvar",
+        "teaser_text":"Tjänstemannafacken fortsatte att växa förra året, skriver TT. Vid årsskiftet hade de tolv TCO-förbunden fått 1,3 procent fler medlemmar till knappt 1,3 miljoner.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"Illustrationsbild.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/64cb6080-73db-458e-8ec5-1a51013281a2?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Arbetsmarknad, Fackförbund, Ekonomi"
+    },
+    {
+        "title":"SVT måste spara 355 miljoner kronor",
+        "teaser_text":"SVT ska spara 355 miljoner kronor. ”Publiken kommer påverkas\", skriver företagsledningen i ett meddelande till sina anställda. Det rapporterar SVT Kulturnyheterna. ",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Anne Lagercrantz, vd på Sveriges television. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3094b628-6147-498f-ad4c-ff5a9a06dbc0?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Media, Ekonomi, SVT"
+    },
+    {
+        "title":"Bitcoin rasar – är på lägsta nivån sedan 2024",
+        "teaser_text":"Bitcoin rasar över 6 procent till strax över 73 000 dollar under tisdagskvällen. Det är den lägsta nivån sedan 2024, enligt data från Yahoo Finance. Mitt under det brinnande tullraset 2025 bottnade priset runt 74 000 dollar.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-03",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d7a583c3-3adb-46d7-8770-1c5dc1c665ae?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Krypto, Ekonomi, Valuta"
+    },
+    {
+        "title":"Myndighet: Regeringen har inte räknat på vad sänkt straffålder kostar",
+        "teaser_text":"Arbetsgivarverket är kritiskt till att det inte gjorts en analys över kostnaden i samband med att straffåldern sänks till 13 år. Det rapporterar Ekot.",
+        "news_section":"Politik",
+        "date":"2026-02-02",
+        "image_description":"Gunnar Strömmer (M).",
+        "image_url":"https:\/\/gfx.omni.se\/images\/ff750667-3079-4520-b313-37d225aac5c9?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Ekonomi, Lagstiftning"
+    },
+    {
+        "title":"EU plockar fram tullavtalet med USA ur frysboxen",
+        "teaser_text":"EU-parlamentet återupptar arbetet med att godkänna unionens handelsavtal med USA. Beskedet kommer efter att man lagt avtalet på is i samband med Donald Trumps militära och finansiella hot i Grönlandsfrågan. Det rapporterar AFP.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"Ursula von der Leyen.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f33835d0-696c-4a1c-95a1-3742072d1228?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Handel, EU, USA"
+    },
+    {
+        "title":"USA sköt ner iransk drönare – var på väg mot amerikanskt hangarfartyg",
+        "teaser_text":"USA har skjutit ner en iransk drönare som ”aggressivt” närmade sig deras hangarfartyg USS Abraham Lincoln i Arabiska havet, rapporterar AFP.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Hangarfartyget USS Abraham Lincoln.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f99e32bc-37ca-4235-a7c3-1e40be32d377?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Konflikt, Militär, USA, Iran"
+    },
+    {
+        "title":"Assa Abloy i linje med förväntan –  höjer utdelningen",
+        "teaser_text":"Assa Abloy redovisar en omsättning och ett rörelseresultat nästan helt i linje med förväntningarna., framgår det av bokslutet. ",
+        "news_section":"Ekonomi",
+        "date":"2026-02-05",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/785f787d-aca8-477d-8867-6802b025bd32?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Ekonomi, Företag, Aktier"
+    },
+    {
+        "title":"Leverantör stänger av elen för Stegra: ”Har inte betalat”",
+        "teaser_text":"Underleverantören Hallix har stängt av elen på delar av Stegras område i Boden på grund av obetalda fakturor. Det bekräftar projektchefen Samppa Kalliosalo för Affärsvärlden.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"Stegra i Boden.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2b762f0e-b22d-4bdc-9cf0-60068715cd3b?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Ekonomi, Företag, Skuld"
+    },
+    {
+        "title":"Expert: Kylan kan ha fått gängen att sluta skjuta",
+        "teaser_text":"Det kan finnas ett samband mellan det ovanligt vintriga januarivädret och att månaden blev den första sedan mars 2018 utan en dödsskjutning. Det säger Manne Gerell, kriminolog vid Malmö universitet, till SvD. ",
+        "news_section":"Inrikes",
+        "date":"2026-02-02",
+        "image_description":"Illustrationsbild.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/eafbec4f-d6fb-4736-9c12-1a710333ee2b?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Brott, Samhälle, Kriminalitet"
+    },
+    {
+        "title":"Forssmed om Infantinos ord: ”Synnerligen allvarligt”",
+        "teaser_text":"Fifapresidenten Gianni Infantino vill släppa in Ryssland i fotbollsvärmen igen. Ett ”synnerligen allvarligt” ställningstagande, enligt Sveriges idrottsminister Jakob Forssmed (KD).",
+        "news_section":"Politik",
+        "date":"2026-02-03",
+        "image_description":"Jakob Forssmed (KD).",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f2985db0-c71f-491d-8b01-870ebb8a9e53?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Politik, Kritik"
+    },
+    {
+        "title":"Ny nässprej visar lovande resultat mot fågelinfluensa",
+        "teaser_text":"Bara under vintern har nio miljoner fåglar avlivats efter fågelinfluensautbrott i Europa och Nordamerika. Nu hoppas forskarna att en ny nässprej ska kunna förhindra framtida pandemier, rapporterar The Telegraph.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"En fågel som har dött av fågelinfluensa samlas in i tyska Brandenburg i oktober.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/e25107a9-284a-4e6b-8885-667d41281598?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Medicin, Forskning"
+    },
+    {
+        "title":"Mette-Marit låg bakom möte mellan prinsen och Epstein",
+        "teaser_text":"Mellandagarna 2012 möttes sexbrottslingen Jeffrey Epstein och det norska kronprinsparet på en gata på den karibiska ön St Barts. Mötet har varit känt länge, men norska TV2 rapporterar nu att det hela inte var någon slump. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/fc18f315-6329-4c95-ba40-018995a0c652?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Kungahus, Brott"
+    },
+    {
+        "title":"Expert: Stor risk att Nyberg blir av med polisjobbet",
+        "teaser_text":"Om Katja Nyberg, som lämnade Sverigedemokraterna förra veckan, döms för narkotikainnehav eller rattfylleri är risken stor att hon också bli av med sitt jobb på Polismyndigheten. Det säger arbetsrättsexperten Mikael Hansson till Ekot. ",
+        "news_section":"Politik",
+        "date":"2026-02-02",
+        "image_description":"Katja Nyberg. Arkivbild från 2023. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/842235f9-8fa0-4296-8350-c6e0ebab8b7a?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Polis, Juridik"
+    },
+    {
+        "title":"Ukraina: Produktiva samtal i Abu Dhabi i dag",
+        "teaser_text":"Ukrainas chefsförhandlare Rustem Umerov är positiv efter dagens samtal med USA och Ryssland i Abu Dhabi.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Rustem Umerov.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/c4f4ed9e-7d71-4be8-b93f-c6d18663d6c3?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Internationella relationer"
+    },
+    {
+        "title":"JD Vance om Grönland: ”Fått mer än vi hade innan”",
+        "teaser_text":"Alla detaljer i avtalet om Grönland som fick Donald Trump att backa från sina strafftullar tidigare i januari är fortfarande oklara. I en intervju i ”Megyn Kelly Show” säger dock USA:s vicepresident JD Vance att USA har fått ”mer än vad landet hade tidigare”, rapporterar TV2.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"USA:s vicepresident JD Vance.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d562a825-8d61-486f-bcc0-53a8dce1a291?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Internationella relationer"
+    },
+    {
+        "title":"Trump: Ingen ICE-hjälp om jag inte hör ordet snälla",
+        "teaser_text":"USA:s federala styrkor ska bara skydda federala byggnader i demokratstyrda städer och ska inte under några omständigheter hjälpa till med brottsbekämpning eller protester, såvida de inte ber om hjälp och ”använder ordet snälla”. Det skriver Donald Trump i ett långt inlägg på Truth Social. ",
+        "news_section":"Utrikes",
+        "date":"2026-01-31",
+        "image_description":"Demonstranter i USA som flyr de federala agenternas tårgas. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d9fd1609-faf5-41fc-bcca-fc4bd984f5c6?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, USA"
+    },
+    {
+        "title":"Regeringen vill att kusten öppnas upp för ny kärnkraft",
+        "teaser_text":"Regeringen vill häva förbudet mot att bygga ny kärnkraft längs stora delar av Sveriges kust, rapporterar TT.",
+        "news_section":"Politik",
+        "date":"2026-02-05",
+        "image_description":"Klimat- och miljöminister Romina Pourmokhtari (L), under en pressträff på kärnkraftsområdet och kärnkraftverket Forsmark.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/56dbbb4a-ac58-4dc3-8145-d1868c4afc58?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Energi, Politik"
+    },
+    {
+        "title":"Forsberg gjorde mål i natt – inför OS-premiären",
+        "teaser_text":"Nashvillesvensken Filip Forsberg förlängde i natt sin målsvit till fyra matcher i NHL-mötet med Minnesota Wild, rapporterar Expressen.",
+        "news_section":"Sport",
+        "date":"2026-02-05",
+        "image_description":"Filip Forsberg i nattens match.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/1ac75b3d-67ba-4821-9ceb-fd754cd6788d?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Sport, Hockey"
+    },
+    {
+        "title":"Facket: AI-kravet är ett hot mot rikets säkerhet ",
+        "teaser_text":"Kravet på att myndigheter ska använda AI är inte bara ett ”hot mot medborgarnas integritet, utan även rikets säkerhet”. Det skriver Akademikerförbundet SSR på DN Debatt.",
+        "news_section":"Opinion",
+        "date":"2026-02-02",
+        "image_description":"Heike Erkers, ordförande för Akademikerförbundet SSR.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2548cef1-73cc-42f7-bc6c-0421c165d3f8?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"AI, Politik, Säkerhet"
+    },
+    {
+        "title":"Hugo Bolin är klar för Borussia Mönchengladbach",
+        "teaser_text":"Malmö FF:s Hugo Bolin är klar för den tyska klubben Borussia Mönchengladbach, rapporterar Sydsvenskan. ",
+        "news_section":"Sport",
+        "date":"2026-02-02",
+        "image_description":"Hugo Bolin.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/e03c9401-7b83-4374-9dc8-56b83d76ab2e?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Sport, Fotboll"
+    },
+    {
+        "title":"Finland varnar USA: Undvik att tala om artikel fem",
+        "teaser_text":"Finland har uppmanat att USA att inte tala om framtida säkerhetsgarantier till Ukraina som ”artikel 5-liknande”. Det rapporterar Politico. Detta eftersom ett sådant språkbruk kan försvaga förtroendet för Natos interna försvarsåtaganden. ",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Elina Valtonen\/Natosoldater under övning.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/9087a7ff-55aa-42cb-9a30-9ab15146e97e?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Internationella relationer, Säkerhet"
+    },
+    {
+        "title":"Ny video visar insatsen på Risbergska: ”Offrens telefoner ringde konstant”",
+        "teaser_text":"Videoklipp från insatsen på Risbergska i Örebro förra året har spridits till flera medier. I videon syns poliser springa till sina bilar när larmet om skjutning kommer. På plats arbetar de systematiskt igenom korridorerna. I ett av klippen står flera poliser samlade.",
+        "news_section":"Inrikes",
+        "date":"2026-02-02",
+        "image_description":"nan",
+        "image_url":null,
+        "mood":"Negativt",
+        "keywords":"Brott, Polis, Samhälle"
+    },
+    {
+        "title":"Marjorie Taylor Greene: Maga var en stor lögn",
+        "teaser_text":"Donald Trumps slogan ”Make America great again” var en enda stor lögn. Det säger Marjorie Taylor Greene, tidigare lojal Trumpallierad och numera avhoppad republikansk kongressledamot, enligt The Hill.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Marjorie Taylor Greene.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/1ee93d1c-c016-4550-ba46-37a50a9707ac?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, USA"
+    },
+    {
+        "title":"Källor: Open AI letar alternativ till Nvidias chip",
+        "teaser_text":"Open AI är inte nöjt med vissa av Nvidias chip och har i månader sett sig om efter alternativ, uppger åtta källor till Reuters. Det handlar enligt källorna om de chip som till exempel används när en användare får svar av ChatGPT, till skillnad från de chip som mer används för att träna stora AI-modeller. ",
+        "news_section":"Tech",
+        "date":"2026-02-03",
+        "image_description":"Nvidias vd Jensen Huang",
+        "image_url":"https:\/\/gfx.omni.se\/images\/4af63c4e-6e25-43b4-8624-985e72cd01a8?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"AI, Teknik, Industri"
+    },
+    {
+        "title":"Kaliforniens nya valkarta får grönt ljus av HD",
+        "teaser_text":"Högsta domstolen i USA motsätter sig inte Kaliforniens nya valkarta som har ritats om till Demokraternas fördel, rapporterar The Hill. Därmed ser den demokratiska guvernören Gavin Newsom ut att ha lyckats med sitt mål att neutralisera den omritade valkartan i Texas som gynnade Republikanerna inför höstens mellanårsval.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Kaliforniens guvernör Gavin Newsom.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/36783120-a9eb-4e27-aac5-e781eed6b10e?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, USA, Juridik"
+    },
+    {
+        "title":"Vårdcentral i Trollhättan stängs ner efter brister",
+        "teaser_text":"Västra Götalandsregionen häver sitt avtal med vårdcentralen Alovia i Trollhättan. Detta efter att flera brister i bemanningen samt ledningens kunskap och erfarenhet har påpekats, men inte åtgärdats, rapporterar GP. ",
+        "news_section":"Inrikes",
+        "date":"2026-02-02",
+        "image_description":"Illustrationsbild. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/055a5530-7fca-4850-9559-e2fc39c0e828?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Vård, Samhälle"
+    },
+    {
+        "title":"Alphabet toppar estimaten – dubblar AI-utgifterna 2026",
+        "teaser_text":"Alphabets vinst rusade 31 procent i årstakt under det fjärde kvartalet. Omsättningen steg nästan 18 procent. Googles molnsegment såg en intäktstillväxt på 48 procent. Samtliga siffror är starkare än väntat.",
+        "news_section":"Ekonomi",
+        "date":"2026-02-04",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/b9aed8f8-641e-4752-9698-3c748b4561b5?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Ekonomi, Teknik, AI"
+    },
+    {
+        "title":"Idrottare från flera länder drabbade av magsjuka ",
+        "teaser_text":"Idrottare från flera länder har drabbats av magsjuka, samma dag som OS drar i gång. Det säger Fredrik Joulamo, truppchef för Sveriges olympiska kommitté, till TT. ",
+        "news_section":"Sport",
+        "date":"2026-02-04",
+        "image_description":"OS i Milano och Cortina drar igång under onsdagen. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/e29996db-a550-474b-a933-bc46fe438930?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Hälsa"
+    },
+    {
+        "title":"Ryssland rear ut flygplats – Kremls vänner gynnas i skuggan av kriget",
+        "teaser_text":"      ",
+        "news_section":"Perspektiv på världen",
+        "date":"2026-01-31",
+        "image_description":"Russian President Vladimir Putin.",
+        "image_url":"https:\/\/watermark-gfx.omni.se\/images\/82c256e9-68b1-4016-a814-8269f9bc3376?h=1372&tight=true&w=1372&watermark=https:\/\/storage.omni.se\/watermarks\/the_new_york_times-2x1.png",
+        "mood":"Negativt",
+        "keywords":"Politik, Ekonomi, Ryssland"
+    },
+    {
+        "title":"Ukrainas plan B vid fred: En egen jättearmé",
+        "teaser_text":"Ukraina behöver kunna försvara sig själva när det inte går att lita på eventuella säkerhetsgarantier från USA och Europa, säger landets Nato-ambassadör Aljona Getmantjuk till Politico.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Aljona Getmantjuk \/ Soldaten ”Muza” vid uppvisning i november 2025.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/b0ca0558-2f43-4c79-a0c3-f9b043a86f30?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Säkerhet, Krig"
+    },
+    {
+        "title":"Konståkare får anväda musik från ”Minionerna”",
+        "teaser_text":"Konståkaren Tomás-Llorenc Guarino Sabaté får använda musik från filmen ”Minionerna” under sitt nummer på OS, rapporterar Expressen. ",
+        "news_section":"Sport",
+        "date":"2026-02-03",
+        "image_description":"Tomás-Llorenc Guarino Sabaté\/ Två minioner.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/ac12b7a2-c8f2-4d71-949c-5d1dfa51a03e?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Sport, Kultur"
+    },
+    {
+        "title":"Bakslag för Le Pen – kravet om valet 2027 kvarstår",
+        "teaser_text":"Åklagarsidan yrkar fortsatt på att Nationell samlings frontfigur Marine Le Pen ska stoppas från alla offentliga ämbeten i Frankrike i fem år. Det framgår under åklagarnas slutpläderingar när överklagandefallet nu börjar gå i mål.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Marine Le Pen i rättssalen den 20 januari.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/71ef8e3f-f801-4b0b-bec1-fc25687b54d8?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Juridik, Frankrike"
+    },
+    {
+        "title":"Protester i Venezuela – vill se Maduro frisläppt",
+        "teaser_text":"En månad efter frihetsberövandet av president Nicolás Maduro samlades tusentals demonstranter på gatorna i Venezuelas huvudstad Caracas under tisdagen. Det rapporterar AFP.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Protester i Caracas under tisdagen. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/5ce196bf-ec9e-4440-aa20-20a0eebd9486?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Samhälle, Venezuela"
+    },
+    {
+        "title":"Ännu ett nationellt isdygn uppmätt – andra i rad",
+        "teaser_text":"Sverige har haft två nationella isdygn i rad. Väderstationer landet runt höll sig under 0 grader under både söndagen och måndagen, rapporterar Aftonbladet.",
+        "news_section":"Inrikes",
+        "date":"2026-02-03",
+        "image_description":"Ännu ett isdygn uppmätt.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d7c4a74d-daf2-4b91-a783-d9f1a8896cb1?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Väder, Klimat"
+    },
+    {
+        "title":"Anthropics AI-verktyg kan ta över juridiskt arbete",
+        "teaser_text":"Ett nytt AI-verktyg från bolaget Anthropic kan automatisera juridiska arbetsuppgifter, som att granska avtal, hantera sekretessavtal och sammanfatta juridiskt material.",
+        "news_section":"Tech",
+        "date":"2026-02-04",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/94cfe795-7895-4ea7-8bab-ac29a8c9646f?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"AI, Juridik, Teknik"
+    },
+    {
+        "title":"AI gav svar på olösta matematiska problem",
+        "teaser_text":"Ett AI-verktyg från startupbolaget Axiom sägs ha löst fyra matematiska problem som länge har gäckat forskarna, rapporterar Wired. Matematikern Ken Ono säger till sajten att AI-verktyget lyckades ”hitta sådant som alla människor hade missat”.",
+        "news_section":"Tech",
+        "date":"2026-02-05",
+        "image_description":"Illustration av matematiska ekvationer.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/36cb7388-c209-4401-b5c2-e69787584421?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"AI, Forskning, Matematik"
+    },
+    {
+        "title":"Biljetter kan vara fusk – för vem ser Melania Trumps sågade film?",
+        "teaser_text":"    ",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-02",
+        "image_description":"Melania Trump vid premiären 29 januari.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2a647377-31fd-4286-9d6c-78acbcff2b50?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Underhållning, Brott"
+    },
+    {
+        "title":"Man försökte locka barn in i bil i Vallentuna",
+        "teaser_text":"En man försökte locka ett främmande barn in i en bil i Vallentuna. Det ska ha skett när barnet var på väg till skolan under onsdagsmorgonen, skriver polisen på sin hemsida.",
+        "news_section":"Inrikes",
+        "date":"2026-02-04",
+        "image_description":"Illustrationsbild. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/918dc6aa-09a1-489a-a79f-a24796206eba?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Samhälle"
+    },
+    {
+        "title":"AI förändrar alla bilder i telefonen: ”Hallucinationer”",
+        "teaser_text":"En modern smartphone gissar hur fotot hade sett ut om kameran var bättre och bygger ihop det åt dig, säger Ziv Attar, som deltog i arbetet med porträttläget på Iphone, till BBC.",
+        "news_section":"Tech",
+        "date":"2026-02-04",
+        "image_description":"Iphone Air.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/6457b3ca-fef0-4495-bf00-bebea0842d07?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"AI, Teknik, Foto"
+    },
+    {
+        "title":"Regeringen skrotar förslag om nytt yrkesprogram",
+        "teaser_text":"Regeringen kommer inte att gå vidare med ett förslag om att införa gymnasiala yrkesprogram med lägre studietakt, rapporterar Altinget. ",
+        "news_section":"Politik",
+        "date":"2026-02-03",
+        "image_description":"Lotta Edholm.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/6dcb765f-3055-4ba7-8bc5-026d720bac04?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Utbildning"
+    },
+    {
+        "title":"Kendrick Lamar historisk på Grammygalan",
+        "teaser_text":"Kendrick Lamar petar ner Jay-Z från tronen och blev i natt den mest Grammyprisade hiphopartisten genom tiderna, skriver The Guardian. ",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-02",
+        "image_description":"Kendrick Lamar tar emot priset för bästa rap-album på Grammygalan. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/dfd00dfc-35c1-41c3-b6a0-940f2b974296?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Musik, Gala, Pris"
+    },
+    {
+        "title":"”Ansvaret för äldreomsorg ligger inte hos anhöriga”",
+        "teaser_text":"Det är inte rimligt att Sahlgrenska universitetssjukhuset i Göteborg vädjar till anhöriga att hjälpa äldre och sköra familjemedlemmar på grund av att sjukhusen är överfulla. Det skriver Eva Sixt och Lena Hultén på Anhörigas riksförbund på DN Debatt. ",
+        "news_section":"Opinion",
+        "date":"2026-02-04",
+        "image_description":"Ett äldre par promenerar. Illustrationsbild. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/4e105463-15af-4046-aa33-c2466b7f08c4?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Vård, Äldreomsorg, Ansvar"
+    },
+    {
+        "title":"Borg Høiby var tungt medicinerad i rättssalen",
+        "teaser_text":"När den norske ”bonusprinsen” Marius Borg Høiby intog vittnesbåset i rättssalen på onsdagen bad han på förhand om ursäkt för att det kunde gå lite trögt.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Borg Høiby\/Oslo tingsrätt.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/ae1f3f15-90c7-48ad-9e63-d6d4f580a03d?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Rättssal, Hälsa, Medicin"
+    },
+    {
+        "title":"Alla är trötta på techjättarnas flöden – ändå är vi fast",
+        "teaser_text":"    ",
+        "news_section":"Tech",
+        "date":"2026-02-05",
+        "image_description":"Techjättarna har haft närmast monopol på sociala medier i över tio år. Än ser inget ut att ändra den saken. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/1758176b-5232-494c-b7cc-49301b9c569e?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Teknik, Sociala medier, Användarupplevelse"
+    },
+    {
+        "title":"Prisbonus vid medalj – men skicrossåkarna får inget",
+        "teaser_text":"För längdåkarna ger ett OS-guld 200 000 kronor, ett silver 60 000 och ett brons 30 000, rapporterar Expressen. ",
+        "news_section":"Sport",
+        "date":"2026-02-04",
+        "image_description":"Skicrossåkaren Sandra Näslund.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/5a0c69f5-4d71-4c7a-ad19-26483bbccae0?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Ersättning, Bonus"
+    },
+    {
+        "title":"Tidigare CNN-profilen släpps ur häktet – åtal kvarstår",
+        "teaser_text":"Den tidigare CNN‑profilen Don Lemon har släppts ur federalt häkte efter att ha anklagts formellt för att ha kränkt religionsfriheten.",
+        "news_section":"Utrikes",
+        "date":"2026-01-31",
+        "image_description":"Journalisten Don Lemon vinkar  till pressen efter att ha släppts ur häktet under natten mot lördag.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/0365ec47-198a-4205-a3a5-bc3cf93f5e84?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Rättssystem, Medier"
+    },
+    {
+        "title":"Bonusprinsen i rätten: ”Har haft ett extremt behov av bekräftelse”",
+        "teaser_text":"Den norska bonusprinsen Marius Borg Høiby har under onsdagen förhörts i rätten om en av de våldtäkter han är misstänkt för. Han uppger bland annat att han känt sig förföljd av pressen sedan han var tre år gammal, och känt sig trakasserad.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Stort pressuppbåd.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/f544eb6a-20d1-4e90-bffa-e9d459f23591?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Rättssal, Kunglighet, Vittnesmål"
+    },
+    {
+        "title":"Polisen: Nyberg bör bli av med sin anställning ",
+        "teaser_text":"Riksdagspolitikern Katja Nyberg (SD), som misstänks för rattfylleri och ringa narkotikabrott, bör bli av med jobbet på Polismyndigheten. Det anser arbetsgivaren, som nu har lämnat över ärendet till personalansvarsnämnden, enligt DN. ",
+        "news_section":"Politik",
+        "date":"2026-02-04",
+        "image_description":"Katja Nyberg. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3c10f89e-b62e-43d2-9412-d28e320c2578?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Brott, Anställning"
+    },
+    {
+        "title":"Kyivborna får 4–6 timmar el per dygn i februari",
+        "teaser_text":"Invånarna i Kyiv kan bara vänta sig ström i fyra till sex timmar per dygn i februari efter Rysslands massiva attacker mot energisystemet, rapporterar Kyiv Post.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Strömavbrott i Kyiv.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/c268ce66-16d2-46bd-a8c8-f9d7df06906a?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Krig, Energi, Ukraina"
+    },
+    {
+        "title":"Efter storförlusten – AIK:s tränare sparkas ",
+        "teaser_text":"AIK Hockey sparkar huvudtränaren Fredrik Hallberg efter storförlusten i söndagens match mot Kalmar HC, rapporterar TT.",
+        "news_section":"Sport",
+        "date":"2026-02-02",
+        "image_description":"Fredrik Hallberg när han var assisterande tränare i Leksand.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3caf76be-8887-4bb9-b560-e6c4d0a92e96?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Ishockey, Anställning"
+    },
+    {
+        "title":"Svenskar döms till fängelse efter terrordåd i Danmark",
+        "teaser_text":"Två svenskar döms till 12 respektive 14 års fängelse för terrorbrott efter att ha kastat två handgranater mot Israels ambassad i Danmark. Det rapporterar danska TV2.",
+        "news_section":"Inrikes",
+        "date":"2026-02-03",
+        "image_description":"Polis utanför Köpenhamns tingsrätt.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/87a62832-878b-420c-9836-292e5ebaea62?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Terrorism, Rättssystem"
+    },
+    {
+        "title":"Epsteins förra assistent: Två offer i huset när Mette-Marit var på besök i Florida",
+        "teaser_text":"2013 var Norges kronprinsessa Mette-Marit på besök i Jeffrey Epsteins lyxvilla i Florida. På en bild – en inramad kopia av den beslagtogs senare på Epsteins karibiska ö – sitter hon leende i en soffa bredvid en kvinna i bikini.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Epsteins Floridahus\/Assistenten och Mette-Marit.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/5b85b55c-164e-435c-8483-b78a29693840?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Kunglighet, Skandal"
+    },
+    {
+        "title":"Vill göra det lättare att utvisa sexbrottslingar",
+        "teaser_text":"Regeringen har tagit initiativ för att ändra tolkningen av FN:s flyktingregler så att personer som döms för grova sexualbrott och våldtäkt ska kunna utvisas. Det säger migrationsminister Johan Forssell (M) till TV4 Nyheterna.",
+        "news_section":"Politik",
+        "date":"2026-02-05",
+        "image_description":"Migrationsminister Johan Forssell (M).",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2893b4bb-a3fd-4de1-a6cf-d0f19522e0b2?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Lag, Brott"
+    },
+    {
+        "title":"Allt fler tecken på att Claude Sonnet 5 är nära",
+        "teaser_text":"Anthropic väntas inom kort lansera språkmodellen Claude Sonnet 5, enligt uppgifter i flera medier. Modellen väntas ha betydligt kraftfullare prestanda än tidigare versioner men inte vara dyrare, vilket lyfts som en konkurrensfördel.",
+        "news_section":"Tech",
+        "date":"2026-02-05",
+        "image_description":"nan",
+        "image_url":"https:\/\/gfx.omni.se\/images\/1a0f9077-1504-432e-8bef-45be3150b0a5?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Teknik, AI, Språkmodell"
+    },
+    {
+        "title":"Statsapparaten i USA stänger delvis trots avtal",
+        "teaser_text":"Klockan 06.00 svensk tid stängde delar av den amerikanska statsapparaten återigen ner. Detta efter att ett budgetpaket visserligen fått grönt ljus i senaten men inte hunnit godkännas fullt ut innan tidsfristen löpte ut, rapporterar flera medier.",
+        "news_section":"Ekonomi",
+        "date":"2026-01-31",
+        "image_description":"Chuck Schumer och Patty Murray.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/2a357c74-b693-408b-8b78-c104b482df58?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Regering, Ekonomi"
+    },
+    {
+        "title":"EU enigt om lån på 950 miljarder till Ukraina",
+        "teaser_text":"EU-länderna är slutligt överens om ett lån på 90 miljarder euro, motsvarande 953 miljarder kronor, till Ukraina. Det rapporterar TT.",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"Bombat kraftverk i Ukraina.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/0ac1415d-d58d-456f-80d3-78edc5c5cb03?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Ekonomi, Ukraina"
+    },
+    {
+        "title":"Klipptes av Epsteins frisör och hade med sig guru ",
+        "teaser_text":"Sexbrottslingen Jeffrey Epsteins frisör säger till VG att han klippte norska kronprinsessan Mette-Marit vid minst två tillfällen.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Epsteins hus i Palm Beach.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/7778fe64-a83d-453d-ba97-cf46a349d9c1?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Kunglighet, Skandal"
+    },
+    {
+        "title":"Sändebud: Kina låtsas inte veta om ryska exporten",
+        "teaser_text":"Varor från EU smugglas in i Ryssland bland annat genom tidigare sovjetrepubliker i Centralasien och länder som Serbien och Turkiet.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Vladimir Putin och Xi Jinping, vars länder har en ”vänskap utan gränser”, har ett videomöte onsdagen den 4 februari.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3db282ef-bfea-40fd-bfd1-d786efd84a1a?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Politik, Handel, Relationer"
+    },
+    {
+        "title":"S-ledaren: Finns grund för ett samarbete med KD",
+        "teaser_text":"Det finns en ”grund för samarbete” mellan Socialdemokraterna och Kristdemokraterna. Det säger S-ledaren Magdalena Andersson till DN efter uppgifterna om att KD-ledningen inte längre ser det som uteslutet att regera med S om Tidösidan förlorar valet. ",
+        "news_section":"Politik",
+        "date":"2026-02-05",
+        "image_description":"Ebba Busch (KD) och Magdalena Andersson (S).",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3838d7b3-16fd-40d4-b7f0-fc71c03615e3?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Samarbete, Regering"
+    },
+    {
+        "title":"Strömmen gick fem minuter efter att OS drog i gång",
+        "teaser_text":"OS smygstartade med mixeddubbel-tävlingarna i curling under onsdagen. Fem minuter in i den första matchen – den mellan det svenska syskonparet Isabella och Rasmus Wranås och Sydkorea – gick strömmen. ",
+        "news_section":"Sport",
+        "date":"2026-02-04",
+        "image_description":"Strömmen gick fem minuter in i OS-tävlingarna. ",
+        "image_url":"https:\/\/gfx.omni.se\/images\/d5c9b5a9-d023-4b5e-a2f0-34132e04af25?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, OS, Strömavbrott"
+    },
+    {
+        "title":"Tidöpartierna vill korta riksdagens sommarlov",
+        "teaser_text":"För att hinna driva igenom så mycket politik som möjligt före höstens val vill regeringen och Sverigedemokraterna kalla in riksdagen under sommaren. Det säger statsminister Ulf Kristersson (M) till TT.",
+        "news_section":"Politik",
+        "date":"2026-02-03",
+        "image_description":"Statsminister Ulf Kristersson (M) bjöd in till möte med partiledarna för Tidöpartierna, Simona Mohamsson (L), Ebba Busch (KD) och Jimmie Åkesson (SD), i Strängnäs.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/34d91932-a96c-49aa-b3f1-52c3fbbc3fb1?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Riksdag, Lagstiftning"
+    },
+    {
+        "title":"”Juridiskt team” ska övervaka ICE i New York ",
+        "teaser_text":"New York ska inrätta ett team av ”juridiska observatörer\" som ska övervaka insatserna av ICE, rapporterar Reuters.",
+        "news_section":"Utrikes",
+        "date":"2026-02-03",
+        "image_description":"Letitia James.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/4480f544-056b-4132-8741-60d851d397e3?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Juridik, Migration, Övervakning"
+    },
+    {
+        "title":"Trump: Indien slutar köpa rysk olja – får sänkta tullar",
+        "teaser_text":"USA sänker tullarna mot Indien till 18 procent från tidigare 25 procent. I utbyte ska Indien sluta köpa rysk olja och sänka sina tullar och handelshinder mot USA till noll. Det framgår av ländernas nya handelsavtal, skriver Donald Trump på Truth Social.",
+        "news_section":"Utrikes",
+        "date":"2026-02-02",
+        "image_description":"Modi på besök i Vita huset 2025.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/b4c5be8a-8a6e-4324-ad63-28b5ce5630aa?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Handel, Olja"
+    },
+    {
+        "title":"Polistopp om fängelse för 13-åringar: ”Ett dilemma”",
+        "teaser_text":"Att Polismyndigheten skulle säga nej till lagförslaget om fängelse för 13-åringar var inte självklart. Det säger Stefan Hector, biträdande rikspolischef, till DN.",
+        "news_section":"Inrikes",
+        "date":"2026-02-01",
+        "image_description":"Biträdande rikspolischef Stefan Hector talar under antivåldsgalan ”Det Räcker!” på 3Arena i Stockholm på lördagen.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/97ff98f6-9e0d-4ea3-b581-55f04f5d1d22?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Juridik, Ungdom, Brott"
+    },
+    {
+        "title":"Magsjuka i finska landslaget inför premiären",
+        "teaser_text":"De finska hockeydamerna har drabbats av vinterkräksjuka inför OS-premiären, rapporterar Iltalehti.",
+        "news_section":"Sport",
+        "date":"2026-02-04",
+        "image_description":"Ett av husen där finska atleter bor i OS-byn.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/3b1e65aa-31ac-4c1e-aaca-b24546e41328?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Sport, Hälsa, Tävling"
+    },
+    {
+        "title":"Kenyaner hoppas på jobb i Ryssland – skickas till kriget: ”Ni är maskiner”",
+        "teaser_text":"        ",
+        "news_section":"Perspektiv på världen",
+        "date":"2026-02-03",
+        "image_description":"From left, Peter Shitanda Malalu, Evans Khagola and Jack Odhiambo try to reach someone in the Kenyan government who might know something about their relatives who went to Russia.",
+        "image_url":"https:\/\/watermark-gfx.omni.se\/images\/5c099d0b-5164-4bce-8131-a99b5e4a4708?h=1372&tight=true&w=1372&watermark=https:\/\/storage.omni.se\/watermarks\/washington_post-2x1.png",
+        "mood":"Negativt",
+        "keywords":"Krig, Arbete, Migration"
+    },
+    {
+        "title":"Taiwan om samtalen: Tror det bidrar till stabilitet",
+        "teaser_text":"USA:s president Donald Trump har haft ett telefonsamtal med Kinas president Xi Jinping, ett samtal som Trump beskriver som ”fenomenalt”, rapporterar AFP.",
+        "news_section":"Utrikes",
+        "date":"2026-02-05",
+        "image_description":"Taiwanesiskt stridsplan under övning.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/8fd26459-f196-4be9-9ecf-1d0c164b9bf8?h=708&tight=false&w=1372",
+        "mood":"Positivt",
+        "keywords":"Politik, Diplomati, Stabilitet"
+    },
+    {
+        "title":"Hellström nobbar Göteborg under sin sommarturné",
+        "teaser_text":"Det blir ingen Göteborgsspelning för Håkan Hellström under den stundande sommarturnén. Inte heller Stockholm eller Malmö får något besök, rapporterar GP.",
+        "news_section":"Nöje & kultur",
+        "date":"2026-02-02",
+        "image_description":"Håkan Hellström under en av sommarens spelningar på Ullevi.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/aae3ac19-da8e-42cc-87ba-530de1fdeb09?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Musik, Turné, Konsert"
+    },
+    {
+        "title":"Dottern pekas ut som Kims efterträdare – expert: Hon kan ha en annan roll ",
+        "teaser_text":"      ",
+        "news_section":"Perspektiv på världen",
+        "date":"2026-02-03",
+        "image_description":"This photo provided on Wednesday, Jan. 1, 2025, by the North Korean government, shows North Korean leader Kim Jong Un with his daughter attend a New Year celebration in Pyongyang, North Korea on Dec. 31, 2024.",
+        "image_url":"https:\/\/watermark-gfx.omni.se\/images\/ee9f9018-d94b-4ef7-8128-1f921df0f171?h=1372&tight=true&w=1372&watermark=https:\/\/storage.omni.se\/watermarks\/the_diplomat-2x1.png",
+        "mood":"Negativt",
+        "keywords":"Politik, Ledarskap, Succession"
+    },
+    {
+        "title":"Så var Epstein som person – därför lockades så många till honom",
+        "teaser_text":"    ",
+        "news_section":"Utrikes",
+        "date":"2026-02-04",
+        "image_description":"En bild från Epsteinutredningen visar hans nätverk av vänner och finansiella rådgivare.",
+        "image_url":"https:\/\/gfx.omni.se\/images\/c105cda6-7716-4efe-a48c-290c24461908?h=708&tight=false&w=1372",
+        "mood":"Negativt",
+        "keywords":"Brott, Skandal, Personlighet"
     }
 ]

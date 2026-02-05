@@ -2,8 +2,6 @@ from firecrawl import Firecrawl
 from dotenv import load_dotenv
 import pandas as pd
 import os
-import json
-from constants import DATA_PATH
 from datetime import datetime, timedelta
 from rag_agent import news_agent
 import asyncio
@@ -49,9 +47,8 @@ def sort_crawl(crawl_list) -> list:
         for item in full_crawl.data: 
             metadata_dict = item.metadata.model_dump() #Hämta ut kolumen og:type från varje artikel i CrawlJob. 
             date = metadata_dict.get("published_time")
-            # date = pd.to_datetime(date).dt.date
             
-            if date is not None and date > str(datetime.today() - timedelta(days=2)):
+            if date is not None and date > str(datetime.today() - timedelta(days=4)):
                 relevant_crawls.append(item)
                 
             json_data =[item.model_dump() for item in relevant_crawls]
@@ -64,7 +61,6 @@ def save_crawl_to_json(json_data: list, page_name: str):
     """
     Save relevant crawls to a json file for reading into vectorDB later. 
     """
-    # old_df = pd.read_json(f"{DATA_PATH}/{page_name}_cleaned.json")
     data = requests.get(f"{BACKEND_BASE_URL}/news/cleaned")
     
     old_df = pd.DataFrame(data.json())
@@ -117,14 +113,18 @@ async def add_keywords_with_agent(new_data):
     old_df = pd.DataFrame(data.json())
     old_df["date"] = pd.to_datetime(old_df["date"]).dt.strftime('%Y-%m-%d') #konvertera till datetime, ta bara date
     
-    df_to_process = new_data.copy()
-    df_to_process =  new_data[~new_data["title"].isin(titles_already_processed)] #om den nya data inte innehåller de gamla titlarna, skicka in det till agenten
+    df_to_process = new_data[~new_data["title"].isin(titles_already_processed)].copy() #om den nya data inte innehåller de gamla titlarna, skicka in det till agenten
 
     df_for_agent = pd.DataFrame(df_to_process)[["title", "description"]]
-    print("Agent is analyzing..")
-    result = await news_agent.run(f"Analysera dessa artiklar: {df_for_agent.to_json(orient="records")}")
-    output_list.append(result.output) # dessa är nya rader med keyword och mode. dom ska fyllas på i den json_fil som inte har det. 
-        
+    
+    batch_size = 30
+    for i in range(0, len(df_for_agent), batch_size):
+        batch_df = df_for_agent.iloc[i:i + batch_size]
+    
+        print("Agent is analyzing..")
+        result = await news_agent.run(f"Analysera dessa artiklar: {batch_df.to_json(orient="records")}")
+        output_list.append(result.output) # dessa är nya rader med keyword och mode. dom ska fyllas på i den json_fil som inte har det. 
+
     keywords = []
     moods = []
 
@@ -164,6 +164,7 @@ async def add_keywords_with_agent(new_data):
     merged_df['keywords'] = merged_df['keywords'].apply(lambda x: ", ".join([w[0].upper() + w[1:] for w in x.split(", ")]))
     
     merged_df_json = merged_df.to_json(indent=4, orient="records", force_ascii=False, date_format="iso")
+    page_name = "omni"
     data_to_send = {
         "page_name": f"{page_name}_cleaned_with_keywords.json",
         "data": merged_df_json
@@ -175,7 +176,7 @@ async def add_keywords_with_agent(new_data):
 if __name__ == "__main__":
     
     url = "https://omni.se" #Lägg till vilken länk den ska crawla
-    limit = 500 #ange hur många sidor den ska ta
+    limit = 250 #ange hur många sidor den ska ta
     print("Your limit is: ", limit)
     crawl_list, page_name = crawl(url, limit)
     json_data = sort_crawl(crawl_list)
