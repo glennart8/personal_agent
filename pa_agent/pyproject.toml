@@ -26,3 +26,6 @@ backend = {workspace = true}
 
 [tool.uv.workspace]
 members = ["src/pa_agent/frontend", "src/pa_agent/backend"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

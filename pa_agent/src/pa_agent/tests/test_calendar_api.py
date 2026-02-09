@@ -33,7 +33,7 @@ def test_insert_and_verify_event():
         end_time=end
     )
     
-    # Här gör vi de faktiska testerna (assertions)
+    # Här görs de faktiska testerna - pytest kör ALLA funktioner som börjar eller slutar med test
     assert event is not None, "Event-objektet får inte vara None"
     assert 'id' in event, "Eventet skapades men saknar ett ID från Google"
     assert event['summary'] == "PYTEST: Verifiering", "Titeln på det skapade eventet matchar inte"
