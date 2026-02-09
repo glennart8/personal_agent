@@ -17,6 +17,7 @@ dependencies = [
     "google-api-python-client>=2.189.0",
     "google-auth-httplib2>=0.3.0",
     "google-auth-oauthlib>=1.2.4",
+    "pytest>=9.0.2",
 ]
 
 [tool.uv.sources]

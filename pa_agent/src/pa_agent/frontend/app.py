@@ -348,13 +348,37 @@ def layout():
             st.plotly_chart(pie_plot_mood_weekdays)
     
     elif page == "Upcoming events":
+        # HÄMTA EVENTS
         response = requests.get(f"{BACKEND_BASE_URL}/events")
-        
         events = response.json()
         
+        upcoming_events = [] # Sparar hela objektet med all info i stället för bara summary
+                
         if events:
             for event in events:
-                st.write(event.get("summary", "Ingen titel"))
+                title = event.get("summary", "Ingen titel")
+                st.write(title)
+
+                upcoming_events.append(title) # lägger bara till titlarna för agenten
+                
+        # ANALYSERA EVENTS        
+        prompt=f""" 
+            1. Read upcoming events {upcoming_events}
+            2. Look for simular events in the past, focus on the feelings related to those events
+            3. Give advices - learn from history
+        """
+        
+        if st.button("Analysera veckan"):
+            with st.spinner("Analyserar historik och framtid..."):
+                try:
+                    response = requests.post(f"{BACKEND_BASE_URL}/analyze_events", json={"prompt": prompt})
+                    if response.status_code == 200:
+                        data = response.json()
+                        st.markdown(data.get("answer"))
+                    else:
+                        st.error(f"Något gick fel: {response.status_code}")
+                except Exception as e:
+                    st.error(f"Kunde inte ansluta: {e}")
 
 if __name__ == "__main__":
     layout()

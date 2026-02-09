@@ -79,10 +79,14 @@ https://pa-frontend-cffkhcaueqhgc8cw.swedencentral-01.azurewebsites.net/
 - Läs upp mail, schema för dagen/veckan
 - Koppla nyhetesläget till börsen
 - Sammanfatta youtube-klipp till .md-fil och/eller .mp3-fil
+- TESTS
+- Se över antalet data_modeller och agenter - banta ner
+
 
 ### För Google Calender
 1. Skapa ett projekt i Google Cloud Console. Aktivera Google Calendar API.
 2. Gå till Credentials, skapa en OAuth 2.0 Client ID och ladda ner JSON-filen. Döp om den till credentials.json. Lägg till testuser för den mail du vill använda
 3. I projektrooten - kör uv add --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-4. 
-5. 
+4. Kör calender.py - godkänn åtkomst till din kalender
+5. token.json skapas, lägg till den och credentials.json i .gitignore
+6. Kör streamlit och prova "Analysera veckan"-knappen

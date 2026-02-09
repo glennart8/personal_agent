@@ -36,6 +36,28 @@ def search_vector_db(query: str, table: str) -> str:
     # returnera som sträng
     return str(clean_results)
 
+# Ger just nu allmäna råd den hittar på nätet då den inte är kopplad till forsknings-tabellen i databasen
+# KOSTADE FAN NÄR den skulle gå igenom science table, tog bort det i prompten, får kolla på det.......
+# Returnera även källan för var agenten hämtat råden?
+event_agent = Agent(
+    model=model,
+    retries=2,
+    system_prompt=(
+        "You are an expert in finding correlations between upcoming events and historical diary entries."
+        "You will be handed some upcoming events, use these texts to search in diary history to see what your feelings related to this - give advices with reference to that."
+        "You MUST ALWAYS use the `search_vector_db` tool with table='diary' to retrieve diary logs relevant to the user's query before answering.\n\n"
+        
+        "**OPERATIONAL RULES:**\n"
+        "1. **Data-Driven Only:** Base all conclusions STRICTLY on the retrieved context from the tool.\n"
+        "2. **Pattern Recognition:** Look for recurring triggers.\n"
+        "3. **If no data found:** State clearly that no relevant entries were found in the database."
+        "4. **Always answer in Swedish.**"
+    ),
+    output_type=RagResponse,
+    tools=[search_vector_db]
+)
+
+
 diary_agent = Agent(
     model=model,
     retries=2,

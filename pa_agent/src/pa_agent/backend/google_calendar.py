@@ -50,6 +50,8 @@ def fetch_next_week():
     return events_result.get('items', [])
 
 
+
+
 # INSERT FÖR ATT LÄGGA IN, Bygg body, skicka med body och calenderId
 def add_event(summary, location, description, start_time, end_time):
     service = get_calendar_service()

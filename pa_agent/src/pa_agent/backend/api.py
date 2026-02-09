@@ -1,6 +1,6 @@
 import lancedb
 from fastapi import FastAPI, UploadFile, File
-from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report
+from rag_agent import diary_agent, science_agent, stt_agent, route_agent, news_agent_report, event_agent
 from data_models import Prompt, PostNews
 from datetime import datetime
 from data_ingestion import add_data, ingest_crawl_to_vector_db
@@ -10,7 +10,7 @@ from voice_transcription import transcribe_audio, transcribe_text
 import base64
 import time
 from pydantic_ai import UsageLimits, UsageLimitExceeded
-from calender import fetch_next_week
+from google_calendar import fetch_next_week
 
 app = FastAPI()
 
@@ -20,6 +20,8 @@ async def root():
     return {"message": "Health check"}
 
 #region EVENTS
+
+#Hämta events
 @app.get("/events")
 async def get_events():
     events = fetch_next_week()
@@ -30,7 +32,11 @@ async def get_events():
     else:
         return events
 
-
+#Analysera events
+@app.post("/analyze_events")
+async def analyze_events(query: Prompt):
+    result = await event_agent.run(query.prompt)
+    return result.output
 
 
 #region DIARY
