@@ -7,7 +7,6 @@ from plots import pie_plot, plot_keyword_sunburst, plot_negative_triggers, plot_
 from utils import load_data, show_activities, give_helpful_advices, show_kpis, show_trend, init_state, update_diary, update_news,SUGGESTIONS_NEWS, SUGGESTIONS_DIARY, BACKEND_BASE_URL, WEEKDAYS_SV
 
 
-
 get_css()
 
 def sidebar_layout():
@@ -27,7 +26,7 @@ def sidebar_layout():
         df = st.session_state["df"]
 
         if app_mode == "Diary":
-            menu = ["Dashboard", "Stats", "Read Diary"]
+            menu = ["Dashboard", "Stats", "Read Diary", "Upcoming events"]
         else:
             menu = ["Dashboard", "Stats", "Read News"]
 
@@ -347,7 +346,15 @@ def layout():
             # Pie plot som visar mood över veckodagarna
             pie_plot_mood_weekdays = pie_plot(current_df, current_df['weekday'], current_df['mood'])
             st.plotly_chart(pie_plot_mood_weekdays)
+    
+    elif page == "Upcoming events":
+        response = requests.get(f"{BACKEND_BASE_URL}/events")
         
+        events = response.json()
+        
+        if events:
+            for event in events:
+                st.write(event.get("summary", "Ingen titel"))
 
 if __name__ == "__main__":
     layout()

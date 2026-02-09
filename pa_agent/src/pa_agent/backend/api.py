@@ -10,7 +10,7 @@ from voice_transcription import transcribe_audio, transcribe_text
 import base64
 import time
 from pydantic_ai import UsageLimits, UsageLimitExceeded
-
+from calender import fetch_next_week
 
 app = FastAPI()
 
@@ -18,6 +18,19 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Health check"}
+
+#region EVENTS
+@app.get("/events")
+async def get_events():
+    events = fetch_next_week()
+    
+    if not events:
+        print("Inga händelser hittades för den kommande veckan.")
+        return None
+    else:
+        return events
+
+
 
 
 #region DIARY
